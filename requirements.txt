@@ -1,0 +1,29 @@
+# Core deep learning
+
+torch>=2.1.0
+transformers>=4.40.0
+accelerate>=0.30.0
+peft>=0.10.0
+
+# QLoRA / quantization
+
+bitsandbytes>=0.43.0
+
+# Data + ML
+
+pandas>=2.0.0
+numpy>=1.24.0
+scikit-learn>=1.3.0
+
+# NLP
+
+spacy>=3.7.0
+
+# Utils
+
+tqdm>=4.65.0
+
+# HF + tokenizer dependencies
+
+sentencepiece>=0.1.99
+protobuf>=4.25.0
