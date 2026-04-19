@@ -34,7 +34,12 @@ class SemanticEncoder(nn.Module):
             for p in self.backbone.parameters():
                 p.requires_grad = False
 
-        target_modules = ["q_proj", "k_proj", "v_proj", "o_proj"] if "bert" in cfg.llm_name.lower() else ["q_proj", "k_proj", "v_proj", "o_proj"]
+        if "deberta" in cfg.llm_name.lower():
+            target_modules = ["query_proj", "key_proj", "value_proj"]
+        elif "bert" in cfg.llm_name.lower():
+            target_modules = ["query", "key", "value"]
+        else:
+            target_modules = ["q_proj", "k_proj", "v_proj", "o_proj"]
         peft_cfg = LoraConfig(
             r=cfg.lora_r,
             lora_alpha=cfg.lora_alpha,
@@ -304,6 +309,7 @@ class LLMKGKAN(nn.Module):
             a.mean(dim=0) if len(a) > 0 else torch.zeros(self.cfg.kg_emb_dim, device=device)
             for a in aspect_vecs
         ])
+        kg_summary = self.kg.proj(kg_summary)
 
         # --- semantic with prefix ---
         sem = self.semantic(

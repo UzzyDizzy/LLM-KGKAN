@@ -4,7 +4,7 @@ from dataclasses import dataclass
 
 @dataclass
 class LLMKGKANConfig:
-    llm_name: str = "meta-llama/Meta-Llama-3-8B-Instruct"
+    llm_name: str = "mistralai/Mistral-7B-Instruct-v0.2"
     hidden_size: int = 4096   # IMPORTANT (llama hidden dim)
     batch_size: int = 16       # GPU constraint
     epochs: int = 10          # paper uses 10

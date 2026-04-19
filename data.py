@@ -16,45 +16,63 @@ DEP2ID = {}
 
 class ABSADataset(Dataset):
     def __init__(self, file_path, cfg, kg, domain_id=0):
-        self.data = []
         self.tokenizer = AutoTokenizer.from_pretrained(cfg.llm_name)
+        # 🔥 ADD THIS
+        if self.tokenizer.pad_token is None:
+            self.tokenizer.pad_token = self.tokenizer.eos_token
+
         self.max_len = cfg.max_len
         self.domain_id = domain_id
         self.kg = kg
-
         self.label2id = cfg.LABEL2ID
 
         df = pd.read_csv(file_path)
 
+        # ---- GROUP BY SENTENCE ----
         self.data = []
-
-        for sent_id, group in df.groupby("sentence_id"):
-            tokens = group["token"].tolist()
+        for text, group in df.groupby("text"):
             aspects = group["aspect"].tolist()
-            sentiments = group["sentiment"].tolist()
+            sentiments = group["polarity"].tolist()
+            starts = group["from"].tolist()
+            ends = group["to"].tolist()
 
-            self.data.append((tokens, aspects, sentiments))
+            self.data.append((text, aspects, sentiments, starts, ends))
 
     def __len__(self):
         return len(self.data)
 
     def build_dep_graph(self, doc):
+        # 🔥 truncate safely
+        doc = doc[:self.max_len]
+
         n = len(doc)
 
         adj = torch.zeros(n, n).bool()
         rel_ids = torch.zeros(n, n).long()
 
-        for token in doc:
-            if token.head.i != token.i:
-                adj[token.i][token.head.i] = 1
+        # 🔥 remap old indices → new indices
+        idx_map = {token.i: new_i for new_i, token in enumerate(doc)}
+
+        for new_i, token in enumerate(doc):
+
+            head_i = token.head.i
+
+            # 🔥 skip if head is outside truncated doc
+            if head_i not in idx_map:
+                continue
+
+            new_head_i = idx_map[head_i]
+
+            if new_head_i != new_i:
+                adj[new_i][new_head_i] = 1
 
                 dep = token.dep_
                 if dep not in DEP2ID:
                     DEP2ID[dep] = len(DEP2ID)
 
-                rel_ids[token.i][token.head.i] = DEP2ID[dep]
+                rel_ids[new_i][new_head_i] = DEP2ID[dep]
 
-        # PAD
+        # ---- pad ----
         adj_padded = torch.zeros(self.max_len, self.max_len)
         rel_padded = torch.zeros(self.max_len, self.max_len).long()
 
@@ -63,15 +81,18 @@ class ABSADataset(Dataset):
 
         return adj_padded, rel_padded
 
-    def normalize_text(s):
-        return s.lower().replace("_", " ").strip()
-
     def __getitem__(self, idx):
-        tokens, aspects, sentiments = self.data[idx]
+        tokens, aspects, sentiments, starts, ends = self.data[idx]
 
+        # ---- TOKENIZATION (SPACY) ----
         doc = nlp(" ".join(tokens))
+
+        # 🔥 TRUNCATE DOC TO max_len
+        doc = doc[:self.max_len]
+
         tokens = [t.text for t in doc]
 
+        # ---- HF TOKENIZER ----
         enc = self.tokenizer(
             tokens,
             is_split_into_words=True,
@@ -84,40 +105,52 @@ class ABSADataset(Dataset):
         input_ids = enc["input_ids"].squeeze(0)
         attention_mask = enc["attention_mask"].squeeze(0)
 
-        # ---- LABELS (convert triplets → token tags) ----
-        word_ids = enc.word_ids()
-        labels = torch.full((self.max_len,), -100)
-
+        # ---- CHAR → TOKEN SPANS ----
         aspect_spans = []
 
-        for aspect, sentiment in zip(aspects, sentiments):
+        sentiment_map = {
+            "positive": "POS",
+            "negative": "NEG",
+            "neutral": "NEU"
+        }
+
+        for aspect, sentiment, start_char, end_char in zip(aspects, sentiments, starts, ends):
             if aspect == "NULL":
                 continue
 
-            sentiment = sentiment.upper()
-            aspect_tokens = [self.normalize_text(t) for t in aspect.split()]
+            sentiment = sentiment_map.get(sentiment.lower(), "NEU")
 
-            token_norm = [self.normalize_text(t) for t in tokens]
+            token_start, token_end = None, None
 
-            for i in range(len(token_norm)):
-                if token_norm[i:i+len(aspect_tokens)] == aspect_tokens:
-                    aspect_spans.append((i, i+len(aspect_tokens), sentiment))
+            for i, token in enumerate(doc):
+                if token.idx <= start_char < token.idx + len(token):
+                    token_start = i
+                if token.idx < end_char <= token.idx + len(token):
+                    token_end = i + 1
 
-        for idx, word_id in enumerate(word_ids):
+            if token_start is not None and token_end is not None:
+                aspect_spans.append((token_start, token_end, sentiment))
+
+        # ---- LABELS (BIO) ----
+        word_ids = enc.word_ids()
+        labels = torch.full((self.max_len,), -100)
+
+        for i, word_id in enumerate(word_ids):
             if word_id is None:
                 continue
 
             for start, end, sent in aspect_spans:
                 if word_id == start:
-                    labels[idx] = self.label2id[f"B-{sent}"]
+                    labels[i] = self.label2id[f"B-{sent}"]
                 elif start < word_id < end:
-                    labels[idx] = self.label2id[f"I-{sent}"]
-        # for Non-aspect tokens
+                    labels[i] = self.label2id[f"I-{sent}"]
+
+        # fill O
         for i in range(len(labels)):
             if labels[i] == -100:
                 labels[i] = self.label2id["O"]
 
-        # ---- dependency ----
+        # ---- DEP GRAPH ----
         adj, rel_ids = self.build_dep_graph(doc)
 
         # ---- KG ----
@@ -144,57 +177,32 @@ class ABSADataset(Dataset):
             tails.extend(t)
             aspect_ids.extend([i] * len(h))
 
-        k = len(heads)
-
-        if k == 0:
-            k = 1
-            heads = [0]
-            rels = [0]
-            tails = [0]
+        if len(heads) == 0:
+            heads, rels, tails = [0], [0], [0]
 
         kg_heads = torch.tensor(heads).long()
         kg_rels = torch.tensor(rels).long()
         kg_tails = torch.tensor(tails).long()
         kg_mask = torch.ones(len(heads), dtype=torch.float)
         kg_token_map = torch.zeros(self.max_len, len(heads)).float()
-        kg_aspect_ids = torch.tensor(aspect_ids).long()
+        kg_aspect_ids = torch.tensor(aspect_ids if len(aspect_ids) > 0 else [0]).long()
 
+        # ---- TOKEN ↔ ENTITY MATCH ----
+        from difflib import SequenceMatcher
 
         def token_entity_match(token, entity):
-            """
-            Strong matching:
-            - exact
-            - substring
-            - token overlap
-            - fuzzy (lightweight)
-            """
             token = token.lower()
             entity = entity.lower()
 
-            # 1. exact
             if token == entity:
                 return True
-
-            # 2. substring
             if token in entity or entity in token:
                 return True
-
-            # 3. multi-token overlap
-            ent_tokens = entity.split()
-            if token in ent_tokens:
+            if token in entity.split():
                 return True
-
-            # 4. simple fuzzy (character overlap ratio)
-            # overlap = len(set(token) & set(entity))
-            # ratio = overlap / max(len(token), len(entity))
-
-            # if ratio > 0.6:
-            #     return True
             if SequenceMatcher(None, token, entity).ratio() > 0.7:
                 return True
-
             return False
-
 
         for i, tok in enumerate(tokens[:self.max_len]):
             tok_norm = self.normalize_text(tok)
@@ -218,7 +226,7 @@ class ABSADataset(Dataset):
             "kg_mask": kg_mask,
             "kg_token_map": kg_token_map,
             "kg_aspect_ids": kg_aspect_ids,
-            "aspect_spans": torch.tensor(aspect_spans) if len(aspect_spans) > 0 else torch.zeros(1,3),
+            "aspect_spans": aspect_spans
         }
 
 
@@ -243,19 +251,14 @@ def pad_tensor_list(tensor_list, pad_value=0):
 def collate_fn(batch):
     out = {}
 
-    # standard tensors
     for key in ["input_ids", "attention_mask", "labels", "domain_ids", "dep_adj", "dep_rel_ids"]:
         out[key] = torch.stack([b[key] for b in batch])
 
-    # KG variable tensors
     out["kg_heads"] = pad_tensor_list([b["kg_heads"] for b in batch], 0)
     out["kg_rels"] = pad_tensor_list([b["kg_rels"] for b in batch], 0)
     out["kg_tails"] = pad_tensor_list([b["kg_tails"] for b in batch], 0)
-
-    # mask must match padded size
     out["kg_mask"] = pad_tensor_list([b["kg_mask"] for b in batch], 0)
 
-    # kg_token_map → (T, K)
     max_k = out["kg_heads"].size(1)
     T = batch[0]["kg_token_map"].size(0)
 
@@ -272,6 +275,8 @@ def collate_fn(batch):
 
     out["kg_token_map"] = torch.stack(maps)
     out["kg_aspect_ids"] = pad_tensor_list([b["kg_aspect_ids"] for b in batch], 0)
+
+    # ⚠️ KEEP AS LIST (DO NOT STACK)
     out["aspect_spans"] = [b["aspect_spans"] for b in batch]
 
     return out
