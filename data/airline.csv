@@ -1,0 +1,978 @@
+id,text,aspect,category,polarity,from,to
+0,thank YOU for your kindness. Your agents went above and beyond to get my stranded family home.,agents,staff,positive,34,40
+1,I have no way of making phones calls... Need to handle via Twitter/email/web. Thank you!,reservation,service,negative,-1,-1
+2,Terrific. Many thanks. Looking forward to being back on UA tomorrow. Had a great flight up to Vancouver.,flight,flight,positive,81,87
+3,", dropped a track on you...",implicit,implicit,neutral,-1,-1
+4,"classiq, luv Virgin America. Greetingz",Virgin America,airline,positive,13,27
+5,Thanks for the lack of help and the canned response from the 1K desk!,help,service,negative,23,27
+6,"Ok thank you, do you provide complimentary hotel accommodations since I'll have to stay overnight?",hotel accommodations,service,negative,43,63
+7,Not encouraged that I'll have my CPAP tonight.,mileage members,service,negative,-1,-1
+8,how about 3659 YUL-ORD?,private jet,flight,neutral,-1,-1
+9,thank you. Been trying for two days to set this up.,setup,service,positive,-1,-1
+10,even on international flight Glasgow to the U.S.? Then what about orlando to Newark? All 90 mins?,airport,travel,neutral,-1,-1
+11,Thanks for your great customer service today and for helping me get all my travel sorted out!,customer service,service,positive,22,38
+12,can you ask your guys with flight 1146 to BWI to wait for us to get off a delayed flight from San Diego? Pretty please?,flight,service,negative,27,33
+13,"Is it me, or is your website down? BTW, your new website isn't a great user experience. Time for another redesign.",check in,service,negative,-1,-1
+14,we're still waiting to find out your rep is working hard - most upset about having to wait to tomorrow pm to get to mammoth,rep,service,negative,37,40
+15,I tried but no one was available in bogota and everyone was rude in Houston. I was stuck for 35 hours because of you guys,delay,flight,negative,-1,-1
+16,fav airline,airline,airline,positive,4,11
+17,"it’s just a bug report, guys",bug report,service,neutral,12,22
+18,can u help with flights to get a 2y old battling cancer who needs treatment in 🇺🇸 💗 🎀 💗,flights,service,neutral,16,23
+19,how are you gonna have a deal from Dallas to DC but no deal from DC to Dallas? sad,deals,pricing,negative,-1,-1
+20,Thanks!,implicit,general,positive,-1,-1
+21,ok! first time flying with you tonight :),flight,flight,positive,-1,-1
+22,Any luck with finalizing my reservation? I DM'd information to you. Please let me know what else you need. Want to confirm ASAP. Thx,reservation,service,neutral,28,39
+23,wtf I paid for direct flight on purpose not to have to stop for fuel exhausted frequent flier and nothing for inconvenience!,direct flight,airline,negative,15,28
+24,it was credit from my last trip that never came in the mail!,credit,finance,negative,7,13
+25,"on iPad and iPhone, clicking the CHECKIN link in the email I received at 24hrs before flight",link,service,neutral,41,45
+26,"Do you provide complimentary upgrades to first class, if there are available seats?",upgrades,service,neutral,29,37
+27,You should still develop an app - then you will be my favorite airline.,entertainment system,service,neutral,-1,-1
+28,Thanks for making my flight from LAX to JFK a nightmare by forcing me to check my carry on bag at the gate. (1),carry on bag,baggage,negative,82,94
+29,You guys charged me $100 to reschedule a flight that was then Cancelled Flighted and are now refusing to refund it. What's the deal?,flight,service,negative,41,47
+30,awesome. I flew yall Sat morning. Any way we can correct my bill ?,bill,service,positive,60,64
+31,and again! Another rep kicked butt! Naelah represents your team so beautifully!! Thank you!!!,rep,service,positive,19,22
+32,agent split up my reservation? Now can't Cancelled Flight and refund credit for 2wks? Why,reservation,service,negative,18,29
+33,I like the customer service but a 40 min delay just for connecting passengers seems too long. VA370,delay,service,negative,41,46
+34,just 1 last thing. U guys shouldn't be charging $ for drinks on a transatlantic flight,drinks,service,negative,54,60
+35,"flight arrives 30 minutes early, but then have we to wait for an hour for our bags.",wallet,personal belongings,negative,-1,-1
+36,"yes, after this awful weather it appears I can get home",customer service,service,neutral,-1,-1
+37,6533 ORD to DCA,flight,flight,neutral,-1,-1
+38,UA276 sitting at EWR nearly an hour after sked. Pilot says computers down but no clue when we will leave. Can you help?,computers,service,negative,59,68
+39,"2 Cancelled Flighted flights Late Flightr, agent claimed she put me on a new flight but then Cancelled Flighted it. Coworker got on flight- now delayed. Now?",flights,service,negative,21,28
+40,"is todays flight from Palm Springs, Ca to JFK in NY Cancelled Flightled?",flight,service,negative,10,16
+41,What is the reason for the delay of the departure of VX 413 from JFK this afternoon?,flight,service,negative,-1,-1
+42,trying to book a flight with you guys and your website won't let me... about to lose my business,flight,airline,negative,17,23
+43,"help, left expensive headphones on flight 89 IAD to LAX today. Seat 2A. No one answering LandF number at LAX!",self-service option,service,negative,-1,-1
+44,"Really missed a prime opportunity for Men Without Hats parody, there.",opportunity,implicit,neutral,22,33
+45,spent hundreds to rectify the situation and you guys go quiet,situation,service,negative,30,39
+46,how come ABC is the only one of the network channels you don't have?,ABC,service,neutral,9,12
+47,I'm sure a lot of your 747 and 777 JFK-LHR flights go a lot faster than 513mph with a strong tailwind.,flights,service,positive,43,50
+48,wonderful bag claim people - finally have my bag. But why did I catch earlier flight? Original flight just landed. wastedtime,flight,flight,negative,78,84
+49,delayed to10.30!!,delays,flight,negative,-1,-1
+50,Any way to change from Main Cabin to Main Cabin Select (on same flight) without paying a change fee penalty?,change fee penalty,service,neutral,89,107
+51,what's a good number to call to speak with someone about how you can fix what you did to 50 people and their luggage on Saturday?,luggage,baggage,negative,109,116
+52,you have amazing staff and super helpful as I just ran the PrincessHalf they have spoiled me with comfort!!!,staff,service,positive,17,22
+53,This is what you missed . Next trip to the 407.,trip,implicit,neutral,31,35
+54,Boo for a not refunding a seat upgrade fee I did not want to buy in the first place!,seat upgrade fee,airline,negative,26,42
+55,Is there anything going on with the website? I've been getting a lot of errors past 30 minutes.,website,technical issues,negative,36,43
+56,why is flight 345 redirected?,website,app,neutral,-1,-1
+57,"Awesome! RT : Watch nominated films at 35,000 feet. MeetTheFleet Oscars",flight,service,positive,-1,-1
+58,thanks for the info I already knew...,credit,service,neutral,-1,-1
+59,"why Cancelled Flight flight VX413? One sec its delayed, on my to airport, the next its Cancelled Flightled?Gonna email or call me to reschedule?",flight,service,negative,14,20
+60,Just DM'd. Same issue persisting.,flights,airline,negative,-1,-1
+61,status match program. I applied and it's been three weeks. Called and emailed with no response.,status match program,loyalty,negative,0,20
+62,"once he found out we had a problem he avoided me like the plague. Was told ""we can't find a supervisor.""",supervisor,staff,negative,92,102
+63,plus what about food? And taxis?,food,service,negative,16,20
+64,here is the ticket 0162424965446 please refund my unnecessary upgrade fee,upgrade fee,service,negative,62,73
+65,Atlantic ploughs a lone furrow in the MiddleEast,moodlighting,flight,neutral,-1,-1
+66,check out new music,implicit,implicit,neutral,-1,-1
+67,"thank you for the easy itinerary shift for impending weather. Quick, painless and free.",itinerary,service,positive,23,32
+68,Flying LAX to SFO and after looking at the awesome movie lineup I actually wish I was on a long haul.,movie lineup,entertainment,positive,51,63
+69,so what’s the deal? Do u provide voucher for overnight or am I cozy on the floor at OHare ? gross HelpMePlease AnyoneThere,voucher,service,neutral,33,40
+70,FYI the info.com email address you say to contact in password reset emails doesn't exist. Emails bounce.,app,service,negative,-1,-1
+71,", this is the line in Denver to rebook due to weather issues. DO BETTER.",line,service,negative,14,18
+72,you Cancelled Flighted our flights for no reason and now we have been on the phone for AN HOUR on our vacation. Why?,flights,service,negative,27,34
+73,I send an email about my bad experience and you send back a generic response. Yet another reason why I'll never fly with you again.,experience,service,negative,29,39
+74,keep me updated. Let me know that the bags make the flight to j-burg,bags,baggage,neutral,38,42
+75,I’m looking forward to watching the Oscars on my flight home tomorrow. I might even get something bubbly to drink! ;),flight,service,positive,49,55
+76,"I applied for a position in ,and I was wondering if you guys received my application.",application,employment,neutral,73,84
+77,"also during the run I was instructed to do, I shattered my computer.",computer,baggage,negative,59,67
+78,“: The baggage fee is waived for Premier members. Please see ^JP” what's the point of membership?,bag claim,baggage,negative,-1,-1
+79,heyyyy guyyyys.. been trying to get through for an hour. can someone call me please? :/,customer service,service,negative,-1,-1
+80,Yeah sorry but there's always a problem with United. And you have an international reputation for having problems.,problems,airline,negative,105,113
+81,should NOT sell tickets for on has terrible service and UA staff cannot reach Silver,service,service,negative,44,51
+82,Umm so no reason as to why this is? Is there someone different I should contact (or contact me) to get a definitive answer?,contact,service,negative,72,79
+83,shares up on 4Q results -,results,implicit,neutral,16,23
+84,my drivers license is expired by a little over a month. Can I fly Friday morning using my expired license?,license,documents,neutral,11,18
+85,YOU GUYS ARE HORRIBLE.,service,airline,negative,-1,-1
+86,Can't leave the Tarmac ..united's gate agent cannot agree on a head count. 20 min now counting a 100 people max epicfailunited,head count,flight,negative,63,73
+87,crashed trying to check in.,ticket,service,negative,-1,-1
+88,How about some free drinks on the flight back for the free promo?,drinks,service,positive,20,26
+89,"seriously, though. will there not be direct flights from SFO-FLL in may???",flights,service,negative,44,51
+90,"you'll need to upgrade the seats too, even in economy plus it's like sitting on a concrete bench.",seats,comfort,negative,27,32
+91,wjere is our luggage so slow at lax,luggage,service,negative,13,20
+92,"thanks for that. Been needing a way to make those Austin trips from DCA, and now you've come through!",Austin trips,route,positive,50,62
+93,"8602947, jon at thanks.",airline,service,neutral,-1,-1
+94,"I rang, but there is a wait for 35 minutes!! I can book the same ticket through a vendor, fix your site",wait,service,negative,23,27
+95,I need you to follow back in order to DM.,implicit,general,neutral,-1,-1
+96,Very poor experience. First computer problem now seat malfunction. Stuck. Missing meeting in San Diego.,deals,service,negative,-1,-1
+97,service so far has been horrid. We wanted to end the trip on a high note. Guess that's not an option.,service,airline,negative,0,7
+98,why would they make me share a room?,room,service,negative,31,35
+99,"why am I to believe they will help when customer service couldn't? Like I said, I want a number to someone who can fix what you did.",customer service,service,negative,40,56
+100,I've never experienced worst customer service. Placing blame on codeshare partners and not assuming responsibility is unacceptable,customer service,service,negative,29,45
+101,"While other airlines weren't Cancelled Flighting flights into BOS, and helping their customers get home, Virgin was saying Good luck!",flight,flight,negative,39,45
+102,they told to check with the airline regulation first so that is why I contacted you.,airline regulation,policy,neutral,28,46
+103,i would like help with some flights please.,flights,flight,neutral,28,35
+104,"has not responded to my various requests for contact numbers, does anyone know the UK customer service number for UnitedAirlines",contact numbers,service,negative,45,60
+105,has made my no fly list. Other airlines wait when connector Late Flight. Stuck in IAH.,connector,flight,negative,50,59
+106,when are you putting some great deals from PDX to LAS or from LAS to PDX show me your love!,deals,pricing,positive,32,37
+107,- Your site seems a little wonked right now. May want to have a look. Tried on two browsers. No CSS?,website,service,negative,-1,-1
+108,Site down? help,site,service,negative,0,4
+109,spruce moose!,implicit,implicit,neutral,-1,-1
+110,thanks for gate checking my baggage on your full flight dfw-lax 883 and giving me early boarding too sweet,baggage,airline,positive,28,35
+111,how's a direct flight FLL-&gt;SFO have unexpected layover in Vegas 4 fuel yet peeps next to me bought for Vegas flight. sneaky,layover,flight,negative,50,57
+112,Only way to fly! Elevate Gold,Gold,airline,positive,25,29
+113,you are offering us 8 rooms for 32 people FAIL,rooms,service,negative,22,27
+114,What happened 2 ur vegan food options?! At least say on ur site so i know I won't be able 2 eat anything for next 6 hrs fail,vegan food options,food,negative,19,37
+115,empathizes w/ my disappointment that 1stClass flight w/nonworking entertainmnt is worth $50. UnFriendlySkies,entertainment,service,negative,-1,-1
+116,so 8 hotels for 32 people but feel like we are being held hostage because someone has our boarding passes so we can't leave! FAIL,boarding passes,boarding,negative,90,105
+117,"By the way, a simple apology goes a long way, even if it's a hollow one. It's obvious that you don't care about me or my well-being,",experience,service,negative,-1,-1
+118,"He needs to get to home the 24th, they're telling him it'll be the 25th @ night. Is there compensation or anything that can be done?",membership,service,negative,-1,-1
+119,Nice RT : Vibe with the moodlight from takeoff to touchdown. MoodlitMonday ScienceBehindTheExperience,experience,experience,neutral,91,101
+120,had to change to another airline to get to DC today ... Why is able to land in DC but not you? Cost me $800 ...ugh,airline,service,negative,25,32
+121,I didn't today... Must mean I need to take another trip!,trip,travel,neutral,51,55
+122,i think he actually did not like your screen 😃😃😃,screen,service,negative,38,44
+123,"not really the experience I was hoping 4, I ws forced 2 check in a small carry on, w/ nothing but empty cabin space on board",experience,service,negative,15,25
+124,Can't bring up my reservation online using Flight Booking Problems code,Flight Booking Problems,flight,neutral,43,66
+125,"but if i tweet the ID number, won't that reveal my home address to anyone on the web?",employee,service,negative,-1,-1
+126,"moved my seat with no notice. ""Better seat"" is cabin select not behind the row I selected👎 DISAPPOINTED",seat,airline,negative,9,13
+127,Delayed due to lack of crew and now delayed again because there's a long line for deicing... Still need to improve service united,luck,service,negative,-1,-1
+128,at what pt do u just Cancelled Flight! Finally got stndby 4 1pm flight. What a day! missedWork clientNotHappy,flight,service,negative,31,37
+129,"I paid the premium to fly you across the country, you Cancelled Flight my flight and offer no check fee or upgrade love? Sad face :(",flight,flight,negative,64,70
+130,I've filed the claim but have no way of calling for updates. Is there another way to do this?,updates,service,neutral,52,59
+131,Apparently they are asking 20 people to off board the plane--how can such a big miscalculation be made?!,off board,flight,negative,40,49
+132,You have any flights flying into Boston tomorrow? I need to be home and you Cancelled Flightled my flight and didn't do anything,flight,airline,negative,13,19
+133,thanks so much!,implicit,implicit,positive,-1,-1
+134,"I asked a legitimate question about systemwide vs. localized problems, and got back an unreLate Flightd copy/paste. You can do better.",response,airline,negative,-1,-1
+135,does this process ever end? Still waiting for the reply since 2 months pathetic customerservice,customerservice,customer service,negative,80,95
+136,Okay thank you,implicit,implicit,neutral,-1,-1
+137,thanks -- we filled it out. How's our luck with this? Is it common?,connections,service,positive,-1,-1
+138,we would...how do I contact you to discuss? A few poor experiences with customer service but would give it a shot!,customer service,service,negative,72,88
+139,"cs thinks that miles can repair the damage done, it will be interesting if they travel in and exp the worst flight ever!",travel issue,service,negative,-1,-1
+140,you stink. Flight Cancelled Flighted from PSP to JFK and no notification or ability to rebook disappointed. expected better,flight,airline,negative,11,17
+141,has the WORST customer svcs! This Kevin rep at call center must be investigated. My baggage's lost and there's no help but argument!,baggage,service,negative,84,91
+142,Debbie Baldwin gave a rockstar performance of the safety demo this evening on VX919 LAS2SFO BestCrew SheRocks,safety demo,service,neutral,50,61
+143,can you please have flights in SJC ? I have no choice but to fly Southwest to Vegas 😩😭,flights,airline,neutral,20,27
+144,I luv ur people and product! 1 thing is y do u charge for herbal tea but not black tea? I'm not a caffeine drinker,herbal tea,service,positive,58,68
+145,But I don't see AA,implicit,implicit,neutral,-1,-1
+146,can you assist with current flight status for flt 1016 out of DFW tomorrow at 6:55am?,flight status,flight,neutral,28,41
+147,"lost my luggage 4 days ago on flight VX 112 from LAX to IAD and I'm calling every day, no response.Please give me back my stuff",luggage,baggage,negative,8,15
+148,"it's frustrating, as a frequent flyer, loyal since Continental. Upgrade equals paying 3 times or more on top of purchase ticket.",upgrade,service,negative,64,71
+149,i DMed you the details,baggage claim,baggage,neutral,-1,-1
+150,"that would help! or how about integrate it into the App so I can just ""activate"" it and surf...",app,technology,positive,52,55
+151,I flew back w other company since United didnt have an earlier flight,flight,service,negative,63,69
+152,"Do I need to use a Chase United Club pass for my 8yr old son, or can he come in with me on my pass?",Chase United Club pass,service,neutral,19,41
+153,boarding time shows 35 min and your gate agent started at 45. showed up at 4:00 and they had to check bag.,boarding time,service,negative,0,13
+154,Why do I have to pay $ 17 for wifi with an international business ticket? pennypincher,wifi,airline,negative,30,34
+155,7 WEEKS Late FlightR AND I STILL HAVE NOT RECEIVED MY MILES FROM THE MileagePlus Gift Card $150 STARBUCKS CARD I HANDED OVER!!!,miles,loyalty,negative,54,59
+156,thanks,customer service,service,positive,-1,-1
+157,Could you update me on the suitcase please? The online and phone tracking told me nothing. I was told I'd have it back yesterday!,suitcase,baggage,negative,27,35
+158,Comenity Bank is a joke! Please change. Nothing but constant problems with this bank,Comenity Bank,service,negative,0,13
+159,thank you. I flew into Newark from Vail/Eagle.,Newark,destination,positive,23,29
+160,are flights leaving Dallas for Seattle on time Feb 24?,flights,service,neutral,4,11
+161,achieves a second year of profitability despite revenue pressure ... -,profitability,financial,neutral,26,39
+162,Your website deserves a new design. html5 FTW!,baggage,baggage,negative,-1,-1
+163,is my favorite airline.,airline,service,positive,15,22
+164,sad to learn you no longer fly SFO &gt; PHL. Hope it returns!,route,service,negative,-1,-1
+165,you have to follow me in order for me to DM...come on now,bag,baggage,negative,-1,-1
+166,trying to check-in...but looks like your site is down?,site,service,negative,41,45
+167,Thank you!!,implicit,general,positive,-1,-1
+168,"is the best airline I have flown on.Easy to change your reservation,helpful representatives and a comfortable flying experience",airline,airline,positive,12,19
+169,"got a flight (we were told) for 4:50 today..,checked my email and its for 4;50 TOMORROW. This is unacceptable.",flight,schedule,negative,6,12
+170,I &lt;3 Flying VA But Life happens and I am trying to change my trip JPERHI Can you help.VA home page will not let me ?,trip,flight,neutral,64,68
+171,flying gla-mco in a few weeks. How long do we have to be at airport for before departure for both international and domestic? Ta,customer service,service,neutral,-1,-1
+172,Lovely new plane from LGA to ORD but no power outlets?,bag,service,negative,-1,-1
+173,"flight ua3576, gate b1. And tell ray I somehow made it on to the 736 flight out of IAH and didn't have to wait for the 917 one. :)",razor,baggage,positive,-1,-1
+174,"Why tell us flight is delayed, then tell us it's on time again with 20 min to spare? Don't say it's delayed unless you're sure!",flight,delays,negative,12,18
+175,Did you find out where it is? Thanks,implicit,implicit,neutral,-1,-1
+176,sounds like fun !,implicit,implicit,positive,-1,-1
+177,Thanks. It is on the same ticket.,security logic,service,positive,-1,-1
+178,"to be clear on my luggage comment, I am referencing the photo attached. Flight 6232 to JAC",luggage,baggage,neutral,18,25
+179,Twitter isn't letting me DM you..,agent,staff,neutral,-1,-1
+180,"flight was scheduled for 11:56, it's 1:05 and we haven't moved. I have never been on a flight where everyone moved without a sense",flight,service,negative,0,6
+181,gate announcement states delay due to maintenance yet app says Late Flight arriving aircraft tell the truth!,gate announcement,communication,negative,0,17
+182,Airline trouble this winter and not getting good customer service? contact we negotiate resolutions for You!,departure,flight,neutral,-1,-1
+183,I filed a delayed bag report on Saturday! my flight was Cancelled Flightled and I never went anywhere!,flying,experience,negative,-1,-1
+184,how can you not put my bag on plane to Seattle. Flight 1212. Waiting in line to talk to someone about my bag. Status should matter.,bag,baggage,negative,23,26
+185,dm these nuts,customer service,service,neutral,-1,-1
+186,ZCC82U Cancelled Flight flight 16h in advance??? Need connect flight reschedule so the link isn't helping. Help!? Gf waited months to see me.,Cancelled Flight,flight,negative,7,23
+187,cool picture of another VirginAmerica plane off our wing. What a site!,plane,airline,positive,38,43
+188,Thanks! I'll fill up the form as soon as I land. I don't like being duped so I hope you will appreciate my feedback and will be better,feedback,service,negative,107,115
+189,Grouping Virgin in with the others now. BOS weather has exposed their actual Cus Serv model. Never Flight Booking Problems with Virgin again!,customer service,service,negative,-1,-1
+190,"..back for the expensive holiday, he worked all year to pay for, that you RUINED! We want compensation and his original case back!",compensation,service,negative,90,102
+191,started my flight with a scolding for using an overhead bin that was then offered to the person seated next to me.,overhead bin,baggage,negative,47,59
+192,Just submitted my response on the link you sent.,response,service,neutral,18,26
+193,what is the real deal with the delay on flight UA 1032 from Denver to Vegas?,delay,flight,negative,31,36
+194,nah you wouldn't,implicit,implicit,neutral,-1,-1
+195,. For those playing along at home:,service,service,neutral,-1,-1
+196,pedophile airline. Split myself and my 10 yr old daughter rows apart on flight 1254 to boston,flight,service,negative,72,78
+197,Julie Andrews first but Lady Gaga wow'd me last night. Carrie? Meh.,flights,service,neutral,-1,-1
+198,thanks to your outstanding NYC-JFK crew who moved mountains to get me home to San Francisco tonight!,crew,staff,positive,35,39
+199,your beautiful front-end design is down right now; but it was cool to still book my ticket b/c all your back-end was secure.,design,app,positive,25,31
+200,plz help me win my bid upgrade for my flight 2/27 LAX---&gt;SEA!!! 🍷👍💺✈️,upgrade,service,neutral,23,30
+201,thanks for listening! I definitely was not the only person in line who thought it was absurd.,line,service,positive,62,66
+202,husband and I ordered three drinks via my screen and they never came. Awesome!,drinks,service,negative,28,34
+203,Can You Help ourprincess in need of some help in USA 🎀🇬🇧🎀🇺🇸🎀,flight,service,neutral,-1,-1
+204,is anyone doing anything there today? Website is useless and no one is answering the phone.,website,app,negative,38,45
+205,luggage was severely dented/missing wheel coming off baggage claim in SAN. Luggage agent Miranda (I think) wasn't any help.,baggage,baggage,negative,53,60
+206,"Cancelled Flighted our flight, didn't rebook us on added flight, now have to drive from a Denver to KC....thanks!",preboarding,service,neutral,-1,-1
+207,you should have 39 dollar LAX-Las fares!!!,status match,service,neutral,-1,-1
+208,great. Well deserved.,website,service,positive,-1,-1
+209,agent helps the person in front of me. Finishes up with them and then walks away. The guy behind me is as shocked as I am.,CPAP,service,negative,-1,-1
+210,we have a hot female pilot! Sweet! DCA to SFO! :-),pilot,airline,positive,21,26
+211,I sent in my feedback. Thank you.,feedback,service,neutral,13,21
+212,why not? Is it a law or a policy?,customer service,service,neutral,-1,-1
+213,"I mean. Probably inappropriate while on board.. But, it's on!",on board,service,positive,37,45
+214,"Hey, first time flyer next week - excited! But I'm having a hard time getting my flights added to my Elevate account. Help?",flights,service,negative,81,88
+215,Applied for Status Match on Feb 1. Got confirmation email same day. Still no news though. You guys have dropped ball Late Flightly 😥,airline,general,negative,-1,-1
+216,"Now, when will we see VirginAmerica come to Philadelphia (PHL).",route,service,neutral,-1,-1
+217,beginning of Feb I called United they said they would send another voucher by mail. Never got anything. tiredofwaiting,voucher,service,negative,67,74
+218,"I send you an urgent message via eservice.com. BG0KWM Narayanan. Please respond ASAP. Also, NO local United Tel @ KUL",service,service,neutral,34,41
+219,Your ERI-ORD express connections are hugely popular .. now if only we could have an ERI-EWR hop! :),flight,travel,negative,-1,-1
+220,"Well, I didn't…but NOW I DO! :-D",trip,travel,positive,-1,-1
+221,Just bought tix for ATX - Dallas route - thanks for adding that! Love yr airline and yr website is BEST transactional site EVER,tix,flight,positive,12,15
+222,"Is flight 769 on it's way? Was supposed to take off 30 minutes ago. Website still shows ""On Time"" not ""In Flight"". Thanks.",flight,service,neutral,3,9
+223,I was scheduled for SFO 2 DAL flight 714 today. Changed to 24th due weather. Looks like flight still on?,flight,flight,neutral,30,36
+224,How do I reschedule my Cancelled Flightled flights online? The change button is greyed out!,flight,flight,negative,33,39
+225,you guys messed up my seating.. I reserved seating with my friends and you guys gave my seat away ... 😡 I want free internet,seating,service,negative,22,29
+226,I'm disappointed that the agent at the designated silver status check in line closed to assist all pasengers,agent,staff,negative,26,31
+227,This is such a great deal! Already thinking about my 2nd trip to and I haven't even gone on my 1st trip yet! ;p,deal,pricing,positive,21,25
+228,twitter team. you guys killed it for rescheduling me asap. thank you!,team,staff,positive,8,12
+229,. If only you guys were starting those flights at the end of the month! Guess I’m still road tripping on Feb 27…,flights,service,neutral,39,46
+230,"- can you tweet me the Cancelled Flight/chng fee for a flight? or can I rebook under one of your affiliates? If so, who are afiliates?",Cancelled Flight/chng fee,service,neutral,23,48
+231,"Thanks; might want to fix this line: ""Our Customer Care team is currently responding to most inquiries within 7-10 business days.""",Customer Care,service,negative,42,55
+232,This isn't a one time thing either! It's a shocking pattern of repeated neglect and disrespect.,fix,service,negative,-1,-1
+233,got it squared away. Someone picked up as soon as I tweeted. Should have tweeted sooner. 😉,service,service,positive,-1,-1
+234,Really? Sprint? I thought you guys were 'kewl'! 0_0,planes,service,neutral,-1,-1
+235,seriously would pay $30 a flight for seats that didn't have this playing. it's really the only bad thing about flying VA,seats,comfort,negative,37,42
+236,okay ase24766m. Find our luggage.,luggage,baggage,negative,25,32
+237,blocked me from DM'ing them because they would rather I complain about them in a public forum,forum,service,negative,88,93
+238,"My post was just more of disappointment. I'm a frequent United flyer, it was a simple ??. 1 bad apple doesn't spoil the bunch.",Houston,location,neutral,-1,-1
+239,yea get me to phoenix already. Delays all day with you people. It's bullshit.,staff,staff,negative,-1,-1
+240,“:You've met your match.Got status on another airline? Upgrade : ? 🙉,airline,airline,neutral,46,53
+241,is helping me step up my game! TinderTips tinderchamp,product,implicit,neutral,-1,-1
+242,"- amazing customer service, again! 💕💕 RaeAnn in SF - she's the best! customerservice virginamerica flying",customer service,service,positive,10,26
+243,. They were very understanding and helped me out. Thx! Comps,understanding,service,positive,17,30
+244,I love this graphic.,graphic,branding,positive,12,19
+245,A measly $50 e-certificate is not how you appreciate loyal customers after they wait 3hrs on the tarmac during UA1116. unacceptable,e-certificate,service,negative,13,26
+246,Why is it taking 12 years to fly home to Dallas? Get your shit together.,flight,service,negative,-1,-1
+247,the person is currently bettween gates 71A and 73 in LAX,response,service,neutral,-1,-1
+248,you know I'm flying virgin for the fight MayweatherPacquiao,flight,airline,neutral,-1,-1
+249,checking to see why flight 3466 (atl-ord) got Cancelled Flighted?,flight,airline,negative,20,26
+250,"for an early flt, I think a call is appropriate. Yes, reviewed and nada avail until next day. Expect full refund",refund,service,negative,106,112
+251,trying to add my boy Prince to my ressie. SF this Thursday from LAX,reservation,service,neutral,-1,-1
+252,us too! Terrible airline! Just gave us a hotel hotline number and said sorry,airline,service,negative,17,24
+253,I am all about the in flight artisanal cheese and wine pairing.,cheese and wine pairing,service,positive,39,62
+254,Good point!,implicit,implicit,neutral,-1,-1
+255,I am trying to book awards for September and need flights on but they will not show even w/ many award seats availab,flights,service,negative,50,57
+256,I need to register a service dog for a first class ticket from SFO &gt; Dulles. The phone queue is an hour or longer. Pls advise,service dog,service,negative,21,32
+257,Looks like a broken link for your assets,flights,service,negative,-1,-1
+258,is saving my sanity right now:,sanity,implicit,neutral,13,19
+259,Ok thank again for your help!,bags,service,positive,-1,-1
+260,how do you lose a gate checked bag DEN to ORD? Direct flight. Ugh.,gate checked bag,baggage,negative,18,34
+261,Hi! Just wanted to see if you have any new routes planned this year for Newark. Love flying you guys and hope to do so more!,routes,service,positive,43,49
+262,Had to spend 5 hours worrying that items in carryon would be broken/stolen since I couldn't carry them on plane or lock bag.,carryon,baggage,negative,44,51
+263,I wonder if sharing all this on FB and insta would produce a number. 140 characters really limits my story telling.,pilot,staff,negative,-1,-1
+264,i have a weekend of dealing with your company that would say otherwise.,company,service,negative,38,45
+265,called your service line and was hung up on. This is awesome. sarcasm,service line,service,negative,12,24
+266,is flight 587 from DFW to ORD currently on-time? I see an advisory that DFW may be affected by weather,flight,airline,neutral,3,9
+267,amazing to me that we can't get any cold air from the vents. VX358 noair worstflightever roasted SFOtoBOS,middle seat,seating,negative,-1,-1
+268,and what am I suppose to do with that number?,number,service,neutral,38,44
+269,pls properly train your agents. Requested to speak to 1k customer service and was transferred to a dead end. Not even open at this hr,agents,staff,negative,24,30
+270,what's the point of asking for details about a servicedog when you book if your flight crew doesn't read them? (Continued),baggage,baggage,negative,-1,-1
+271,I’m having trouble adding this flight my wife booked to my Elevate account. Help?,Elevate account,app,negative,59,74
+272,"Anytime, sugafly.",service,flight,neutral,-1,-1
+273,"Soooo, it's been 15 days and you've offered no response. So I assume poor treatment by gate agents is the norm now?",treatment by gate agents,staff,negative,74,98
+274,Digging the swanky pink mood lighting during the flight from NYC to SFO. Just needs a cabaret singer. Think about it!,mood lighting,flight,neutral,24,37
+275,it was UA flight 1001! Now I'm currently stuck in Portland because I missed my ride because of the 3 hour delay. GetMartyHome,delay,service,negative,106,111
+276,thanks for effing up our holidays - we're missing a full day of skiing due to your baggage team's incompetence at,DM,service,negative,-1,-1
+277,. ..I received on other flights. united truly breaks guitars. unitedbreaksguitars wantmymoneyback,guitars,service,negative,53,60
+278,Results Handily Exceed Forecasts -,implicit,general,neutral,-1,-1
+279,"Arriving 25 minutes early is nice, but not if equipment isn't ready. Waiting 30 minutes for luggage, so far. Time gains wiped out.",delays,service,negative,-1,-1
+280,a brilliant brisk am in Boston in cue for vx363,flight,flight,neutral,-1,-1
+281,Thanks!,schedule,service,positive,-1,-1
+282,kudos for not Cancelled Flightling flights from DFW this morning. United usually first to panic...,flights,airline,positive,35,42
+283,"tried calling too, but w/25 min phn wait means we'd miss options anyway",wait,service,negative,36,40
+284,I wasn't asking for a full refund but delaying me 3 hours and giving no reason should be enough to give partial credit,credit,service,negative,112,118
+285,I did DM the details but still no response. I have to book today.,property,baggage,negative,-1,-1
+286,What's going on with your website? I'm Flight Booking Problems three tickets today and I've been booted off the system umpteen times.,website,technology,negative,26,33
+287,How can I watch the Oscars2015 on my JFK-&gt;SFO flight?,flight,service,neutral,49,55
+288,UA938 ORD-LHR. bags are being loaded 30min Late Flight. Frigid air into cabin! Plane feels like falling apart! Upgrade long haul fleet!,plane,service,negative,79,84
+289,DM does not work what do I do?,TravelBank,baggage,neutral,-1,-1
+290,please be good to me this weekend!,implicit,airline,neutral,-1,-1
+291,I know this is probably a no but is there a way to get a cheaper airfare ticket if the flight is leaving in a few hours? 🙏,confirmation number,implicit,neutral,-1,-1
+292,"well, considering every agent before claimed they were unable to help with everything else, why waste more time to hear 'call corp'",agent,service,negative,24,29
+293,Lost bag process is broken. Agent promised they'd call and hold my bag when found. Now they're waking me at 3am w/ delivery. fail,lost bag process,baggage,negative,0,16
+294,has been such a disappointment today. Simply put. Rather unpleased with things currently. Flight delayed; cant wait to just get home,United Airlines,airline,negative,-1,-1
+295,"It's still a valid flight. Just seems strange to delay for Late Flight inbound crew, 7 hours from now, when the plane is already here.",flight,flight,negative,19,25
+296,Had to explain to a very over eager flight attendant trying to ask about my vision that my was not a guide dog!,mechanical problems,flight,negative,-1,-1
+297,worst2unitedflightsever UA1429 IAD to LAS 2/19 mechanical problems - switched aircraft delayed 3.5 hours!,service,service,negative,-1,-1
+298,Why is the site down? When will it be back up?,website,app,negative,-1,-1
+299,It's fine. Already done with my purchase. But you should try it. Just go most of the way through then go back 3,purchase,service,negative,32,40
+300,"the ones who suffer. I understand delays, I don't understand trying speed up a process that has been delays to this extent.",process,service,negative,79,86
+301,"hi! I just bked a cool birthday trip with you, but i can't add my elevate no. cause i entered my middle name during Flight Booking Problems 😢",hours of operation,service,negative,-1,-1
+302,would love to do more for virgin just like I do for,implicit,general,positive,-1,-1
+303,for the record- Rozana at Newark was lovely and helpful. choosekind,Rozana,staff,positive,16,22
+304,"Hi, I'm trying to do check-in but the website is not working. I tried 3 different browsers and the problem continues",website,service,negative,38,45
+305,there is something wrong with you website in Safari iPhone,website,airline,negative,34,41
+306,still waiting to hear back. My wallet was stolen from one of your planes so would appreciate a resolution here,experience,service,negative,-1,-1
+307,WTF is happening in PDX Late Flight March such that one way from SFO is ~$550?,flight,service,negative,29,35
+308,I did... no response back,flight,service,negative,-1,-1
+309,Do you guys know your check-in links from emails are broken?,check-in links,service,negative,22,36
+310,you guys are perfect as always! &lt;3 WeRVirgin,customer service,service,positive,-1,-1
+311,flt 1249 Cancelled Flightled and I get email :30 AM? What happened to courtesy phn call? Had to book diff airline and city,baggage,baggage,negative,-1,-1
+312,already contacted Central Baggage and sent DM. is charging me for the dress that was in the lost suitcase help,baggage,lost luggage,negative,26,33
+313,i left an item on the plane and have been calling non stop and no one has been answering can you please help,item,baggage,negative,10,14
+314,I have an unused ticket but moved to a new city where you don't fly. How can I fly with you before it expires? travelhelp,ticket,service,neutral,17,23
+315,plus you've added commercials to the experience... tacky.,experience,service,positive,37,47
+316,"Funny story, your website is broken, you have missing javascript and stylesheets on the checkin process. I dislike this!",website,technical issues,negative,18,25
+317,is flight 882 Cancelled Flightled and what do I do if it is?,flight,service,neutral,3,9
+318,it's highly unprofessional for you to overbook a flight by 12 seats andfeel that I should rearrange my schedule for your mismanagement,flight,service,negative,49,55
+319,Been trying since 1230 to file a report.,report,service,negative,33,39
+320,to start 5xweekly A319 flights from to Dallas Austin on 28APR avgeek,earphone jack,service,neutral,-1,-1
+321,so you're telling me there is no number to call after being left in an airport because of a negligent pilot and staff?,email,implicit,negative,-1,-1
+322,kinda sucked my earphone jack didn't work on my flight. They may want to look into that for future passengers,route,service,negative,-1,-1
+323,"not just refunded, but for those of us who are on vacation to get a free room night to make up for making us sleep in DIA",room night,service,positive,73,83
+324,I don’t use Passbook =/ I still love you though &lt;3 :) I’ll just use my email in the future.,Passbook,app,positive,12,20
+325,what happened to Doom?!,Doom,entertainment,neutral,17,21
+326,lots of reports of system failures delaying flights over the last week. Currently sitting on the tarmac at OGG for over an hour.,flights,flight,negative,44,51
+327,"no I don't, but I'm sure United have my info on its system.",info,service,neutral,40,44
+328,Thanks for the lovely soft views! travel SAN to SFO,views,service,positive,27,32
+329,so if I'm flying 1st class just one leg to Chicago but not on my long flight to China am I still able to use the lounge in Chicago,lounge,service,neutral,113,119
+330,These are great fares!!!!!,fares,pricing,positive,16,21
+331,for all my flight stuff wrong and did nothing about it. Had worst flight ever,flight,airline,negative,11,17
+332,Can you give me Silver Status for 12 months?,Cancelled Flightlation fees,service,neutral,-1,-1
+333,love the 90s music blasting at gate in Boston while waiting for flight to SanFrancisco. Only if I could get an iced coffee!,music,experience,positive,13,18
+334,I did it but there was a problem in the link from the email for check-in. thanks,check-in,service,negative,64,72
+335,". not only was it great, but you return my calls the day after. Couldn't ask for more. myVXexperience",customer service,service,positive,-1,-1
+336,"the CSS on your site is a 404 right now, please fix. Site unusable.",website,service,negative,-1,-1
+337,yes I do.,team,service,neutral,-1,-1
+338,"Just trying to book tickets to NYC and facing super fun broken styling. Don't worry, I'll keep trying :)",tickets,booking,negative,20,27
+339,"- thanks for your help...got me what I need, but its an issue with . I guess I sit awhile longer.",refund,service,positive,-1,-1
+340,Calls to 800 resulted in 2hrs of hold time and 2day wait to check suspect code share fare. Nothing investigated—my time wasted (2/2),hold time,service,negative,33,42
+341,really wish you'd fly out of Fargo those fares are amazings,sign up bonuses,service,positive,-1,-1
+342,"Dear Virgin customer, while you're stranded in SF for 3 days and $1000cost- we'll do the very least we can to accommodate you!",accommodation,service,neutral,-1,-1
+343,we just flew with United from AUS (Austin Bergstrom) to Cancun Intl. Best flight ever! The 737's are not too big... Not too small!,flight,flight,positive,74,80
+344,come back to PHL already. We need you to take us out of this horrible cold. pleasecomeback,cold,implicit,positive,70,74
+345,"This must be a drone “: We understand your frustration. Our Bag team is working hard to get your bag(s) to you...""",baggage,service,negative,-1,-1
+346,ok. I just submitted. Thanks for the opportunity to give feedback.,baggage claim,service,positive,-1,-1
+347,albanyairport delayed departure to check bags at gate claiming space filled and walk on to open spaces a delay poorcustomerservice,departure,flight,negative,22,31
+348,Asked Flight attendant what typical compensation would be and says we might get free TV. Unacceptable,compensation,service,negative,36,48
+349,man I can't wait to book my ticket now! Thanks JP you're a life sabe,ticket,service,positive,28,34
+350,1k and had problem getting out of FLL to IAH sent DM to you about making my connection please let me know,1st Class service,service,negative,-1,-1
+351,thanks,tickets,pricing,positive,-1,-1
+352,Thanks for the reminder. It's been a fun ride.,ride,service,positive,41,45
+353,I'm flying your fabulous Seductive skies again! U take all the stress away from travel,skies,service,positive,35,40
+354,yes lots. You have terrible customer service at Newark and despite raising a complaint there we were ignored hence the tweet,plane,service,negative,-1,-1
+355,4 passengers after a 2 hour delayed flight left with no hotel at the end of the night @ hou airport. Wtf??!!,delayed flight,flight,negative,28,42
+356,I see what you did there ;),implicit,implicit,positive,-1,-1
+357,my flight was delayed due to maintenance in LIT and caused me to miss my connection at IAH to MSY. Can you help?,flight,flight,negative,3,9
+358,of course I did. The bag should be here by now :( frustrated,bag,baggage,negative,21,24
+359,your no Late Flight bag check just lost you my business. I missed flight and AM apt. Three other people on flight had same exp.,business,service,negative,47,55
+360,Thank you for that. Am I able to claim any interim expenses or is the cost of the stuff up on me?,interim expenses,service,positive,43,59
+361,thank you !,flight crew,staff,neutral,-1,-1
+362,What is your phone number. I can't find who to call about a flight reservation.,phone number,service,negative,13,25
+363,everything was fine until you lost my bag,bag,baggage,negative,38,41
+364,"but then again, maybe the would care more to hear what went on than whoever listens to issues you caused",story telling,implicit,negative,-1,-1
+365,Thanks for remembering to load my bag onto my connecting flight. Oh wait you forgot. Iceland should be fun with no clothes....,bag,baggage,negative,34,37
+366,"so loyal that I'm driving to NYC from PA, to fly Virgin, since you cut Philly flights ;)",flights,flight,positive,78,85
+367,done,flight,flight,neutral,-1,-1
+368,thanks again for your concern. I will contact customer care upon our return from Australia.,over booking,service,neutral,-1,-1
+369,@ Denver International Airport,Denver International Airport,location,positive,2,30
+370,flight home to dc sunset globe in' backtowinter back to work! refreshed,flight,flight,positive,0,6
+371,well someone should tell that to the employees at the Denver baggage claim. Still no bag!!!!,bag,baggage,negative,61,64
+372,this is too cool! Never been on ur planes but now I will!!,fares,pricing,positive,-1,-1
+373,it's like you're trying to make me hate your airline. Fee for each checked bag that's never mentioned in the ticket + rude agents 👿,airline,service,negative,45,52
+374,wish I can afford to fly with you next Friday going back home.. love everything about your airline,airline,service,positive,91,98
+375,I sure did. I had to drive a total of 3 hours to get my own bag. I'd like to explain that debacle but no one wants to talk to me.,bag,baggage,negative,60,63
+376,"It's an incredibly easy fix, but you would rather stay in your comfort zone, while I get forced out of mine.",tickets,booking,negative,-1,-1
+377,"Late Flight to Denver, Late Flight to Newark...let's not even get into the disaster that was checking bags. Unacceptable.",checking bags,baggage,negative,93,106
+378,I've applied more then once to be a member of the inflight crew team...Im 100% interested. flightattendant dreampath -G,inflight crew team,staff,positive,50,68
+379,shares rise on Q4 financial results - USA TODAY,financial results,implicit,neutral,18,35
+380,the people at the counter have been very helpful. As you can see nobody is there. Flight to Austin 10:55 and still sitting here.,counter staff,staff,negative,-1,-1
+381,"also, the mere fact that I have to go online to issue a statement vice calling and talking to some directly is one good example.",statement,service,negative,56,65
+382,We've had a ton of problems with getting our bags and have been given the run around for a day. Whats up with that?,luggage,service,negative,-1,-1
+383,So do I need to book two one ways in order for her to fly as an unaccompanied minor?,unaccompanied minor,policy,neutral,64,83
+384,I have 2d and 3d embossed badges and patches superior to the ones you are currently using.,badges and patches,service,negative,26,44
+385,my goodness your people field are amazing under pressure ❤️from Texas beatstheothers in crisis Please fly me to NY,people,staff,positive,17,23
+386,terminal at MIA should have food open before 5am esp when there are flights at 6am. Two hours early like recommended. Can't eat.,food,service,negative,28,32
+387,Male agnt in LAS threatens Canadian cust when cust takes pic of him at gate after agents announce can't help rebook. friendlyskies?,employees,staff,negative,-1,-1
+388,the os isn't controlled by me but rather . App is new.,app,technology,neutral,43,46
+389,If only you guys had flights from CMH.,flights,airline,neutral,21,28
+390,is the website down?,website,service,negative,7,14
+391,seriously fail on making strangers share a room,room,service,negative,43,47
+392,Just checking in again - what is the status of our claim. It is going on 2 months with no attention to this? We are very upset.,claim,service,negative,51,56
+393,: We don't like to hear you had a poor experience. Please share details w/our Customer Care team,experience,experience,negative,39,49
+394,Mobile boarding pass disappeared from phone while standing in line to board. Second time this week... Hmm.,boarding pass,technology,negative,7,20
+395,Julie Andrews all the way though was very impressive! NO to,implicit,implicit,positive,-1,-1
+396,"I am buying 2 yo own seat on 3 legs of intl trip, car seat? Required? If not- then allowed? Can child still sit w/mom after takeoff?",car seat,service,neutral,50,58
+397,"I've sent the message, let me know if you got it. I'm not very twitter-literate. Also, is he REALLY going to be stuck for 18hrs?",customer service,service,negative,-1,-1
+398,"Follow me back, please, and I'll happily DM you the link because I'd rather not share my travel plans publicly.",airline,service,neutral,-1,-1
+399,"v upset with your disability ""services"". When I told one of your employees I was carrying medical equipment she was very rude.",services,service,negative,30,38
+400,"mood lighting on point🙌 Reclining my seat, kickin up my feet💤",staff,service,negative,-1,-1
+401,happy to spend the day together. Let's do this!,day together,service,positive,19,31
+402,", the only airline based in Silicon Valley! disruption FCmostinnovative incubator 's",airline,service,positive,11,18
+403,"If it's any consolation, your staff was stellar. Just not the hour+ delays I encountered with every one of my 4 flights.",flight,flight,negative,112,118
+404,Flight from BOS &gt; LAS tomorrow was Cancelled Flightled. No notification; wait times are 1+ hour. Will you rebook on another airline?,Flight,airline,negative,0,6
+405,why Cancelled Flight flights today? No precipitation to be scared of! ❄️❄️❄️,flights,service,negative,21,28
+406,Man of steel flies to more cities though...and with more frequency too.,cities,destination,negative,27,33
+407,"Never had a bad experience before, but this one took the cake. Now extortion for carry on items as well?",carry on items,baggage,negative,81,95
+408,Yo yo yo stuck on the tarmac for over 2 hours at ... Going to miss my ride at help please! HelpImStuck United,tarmac,service,negative,22,28
+409,Because we never rec'd Cancelled Flightlation notice we were left w no options to fly out of PS. Driving to LA for a red eye Mon w kids,flight,airline,negative,33,39
+410,this is great news! America could start flights to Hawaii by end of year via,moodlighting,experience,positive,-1,-1
+411,awesome I'll book my next Christmas vacatinn this December any other ways you want to devalue mileage plus.,mileage plus,loyalty program,positive,94,106
+412,my flight (6000) scheduled for 1pm departure still says on time but no plane at gate. Any update on how long of a delay?,elevate points,service,negative,-1,-1
+413,"thanks! It's 35K miles from RTB to Europe, to do a multiple destination so we could stop over in US on way/way back- mileage diff?",miles,service,neutral,17,22
+414,landed in Boston at 9 last night. The 15 hours of traveling was rough tho.,traveling,experience,negative,50,59
+415,why can't you supp the biz traveler like and have customer service like neverflyvirginforbusiness,customer service,service,negative,50,66
+416,"question:are there onboad 110 volt outlets in all planes? If so, where?",website,app,neutral,-1,-1
+417,"I'm rebooked now, but the line was 300 people deep.",baggage,service,negative,-1,-1
+418,about 3 hours ago. I need to work out if my bag can make it to my hotel here in time or if it will need to go elsewhere.,bag,baggage,negative,44,47
+419,Greetings. UA Club member here. Any idea if I can use the Air Canada Lounge at YVR. Flying UA tomorrow.,Air Canada Lounge,lounge,neutral,58,75
+420,That's correct—I've spent hours trying to book online only to receive an error when clicking final purchase button. (1/2),booking online,app,negative,-1,-1
+421,where's my damn bag??,bag,baggage,negative,16,19
+422,"despite shaky connections, looks like I'll get home tonight. Great job, - was touch and go for a while..",connections,flight,positive,14,25
+423,In the process of recovering their car rental - condo rental $ in Florida. They called United for an alternate flight NOANSWER,flight,flight,negative,111,117
+424,"Thank you, ^JH, appreciate the prompt responses--me and other passengers will be doing so.",staff,service,neutral,-1,-1
+425,nervous about my flight from DC to LAX getting Cancelled Flightled tomorrow! Just sent you a DM to help me!,flight,service,neutral,17,23
+426,"hi, i did not get points on my elevate account for my most recent flight, how do i add the flight and points to my account?",Cancelled Flight,flight,neutral,-1,-1
+427,It's too bad UA has had another unforeseeable operational issue on my return flight.,operational issue,service,negative,46,63
+428,“: We'll see what we can do. ^KN” We are running! Most of this plane is running. Thanks for the help!,plane,flight,positive,63,68
+429,your assistance yesterday when u Cancelled Flightled our flight was to give us a hotel hotline Shame on you!,hotel hotline,service,negative,81,94
+430,I was denied getting on the plane w/o getting the chance to prove it fits. I'm not a rookie. Read my bio.,boarding,service,negative,-1,-1
+431,do you have an application for iOS? Was looking and only saw Virgin Mexico :( &lt;/3,application,app,neutral,15,26
+432,really? Someone called in sick and then someone FORGOT to call a replacement?! Now an hour Late Flight to take off. theworst,Late Flight,flight,negative,91,102
+433,"if the car seat is lost should just reimburse me for a new one, this is not a pair of shoes, it's a necessity for my child",car seat,baggage,negative,7,15
+434,"as a 1k, I'm always hoping for improvement.",improvement,service,negative,31,42
+435,your inflight team makes the experience amazing!,experience,airline,positive,29,39
+436,", am I dreaming? Did you really just open up a route between Dallas and Austin?! And does this mean Houston might be next?",route,service,positive,47,52
+437,After our unscheduled refueling stop and missing 2 connecting flights we r home n looking 4ward to our bed and a big PBandJ sandwich.,refueling stop,service,negative,22,36
+438,Yes. Did file a claim as soon as the carousel stopped without my bag on it. Got an email that its found but not sched for delivery,Delay,flight,negative,-1,-1
+439,"iah to charlotte. Baggage claim rep latrice h. customerservice non existent, Ignored customer then inappropriately touched customer",overhead bin,baggage,negative,-1,-1
+440,that doesn't look to fat to me! It looks yummy!,flight,flight,positive,-1,-1
+441,OMG FINALLY,flights,service,positive,-1,-1
+442,"I just sent an email to Customer Care, telling them I may have to break up with you 😢. I sincerely hope they can help me!!",Customer Care,service,negative,24,37
+443,I see you guys are at it again. Amazing how one company continually makes mistakes yet fails to be held accountable for their error,mistakes,airline,negative,74,82
+444,thnx for quick reply but don't think you can assist. Our intl grp will be put to considerable inconvenience today.,inconvenience,service,negative,94,107
+445,I was so glad it was mentioned. I took my first virgin flight a few years back and it was a transformative experience.,flight,service,positive,55,61
+446,has once again let me down. Don't think I've ever flown with them and not had problems. Worst airline period.,airline,service,negative,94,101
+447,thanks for taking care of on her flight!! rockstars travel,implicit,general,positive,-1,-1
+448,I am deeply disappointed that your birthday promo was not applied to a trip I booked mere days before I received the email,promo,service,negative,44,49
+449,will not have to honor absurdly low mistake fares. vía,mistake fares,pricing,neutral,36,49
+450,It was last night's 1235/ORD-LGA.,flight,flight,neutral,-1,-1
+451,yes please! Trying to get to POP- in Newark now....,entertainment system,service,neutral,-1,-1
+452,Can you please follow for a Dm on a missing bag?,missing bag,baggage,negative,36,47
+453,"UA 746. Pacific Rim and Date Night cut out. Not constantly or randomly, but one spot, repeatably.",entertainment,service,negative,-1,-1
+454,diverted and missed our connecting flight. Was just told that my bag is on it's way to MSY. If you only had people that cared,connecting flight,flight,negative,24,41
+455,"just promoting the product is all, had a problem with southwest and recommend noneother than the best!",routes,service,positive,-1,-1
+456,I love the hipster innovation. You are a feel good brand.,innovation,branding,positive,19,29
+457,rude rude,rudeness,staff,negative,-1,-1
+458,"good to know you will open the closed doors for ""premier passengers"" after safety briefings on delayed flights. annoyed.",premier passengers,service,negative,49,67
+459,😎 RT : You’ve met your match. Got status on another airline? Upgrade (+restr):,airline,airline,positive,52,59
+460,thank you for checking in. tickets are purchased and customer is happy ;-),customer,service,positive,53,61
+461,"spending my birthday night with you, DAL-DCA. Get me home!",flight,service,negative,-1,-1
+462,you too!,implicit,implicit,positive,-1,-1
+463,"hi I just booked a flight but need to add baggage, how can I do this?",baggage,baggage,neutral,42,49
+464,to battle on - route via,nerdbird,service,neutral,-1,-1
+465,"is horrible!! They lost our carseat and expect us to use a loner carseat, safety regulations say it's illegal to use a used car seat",carseat,baggage,negative,28,35
+466,Will flights be leaving Dallas for LA on February 24th?,implicit,implicit,neutral,-1,-1
+467,"For my Grandma Ella's 80th, she would &lt;3 a bday greeting from your flight crew! She was a stewardess for Eastern Airlines.",bday greeting,service,positive,46,59
+468,worst2unitedflightsever UA 236 LAS to IAD 2/24 mechanical problems again - took off - had to land for fix - delayed again wtfodds!,seats,seats,negative,-1,-1
+469,I left my comment with customer care. Thanks for contacting me.,customer care,service,positive,23,36
+470,". it will be because I'm moving to because of talk, no service",service,airline,negative,55,62
+471,another fail for the United ticket agents in OKC. LESS than helpful and could care less about our problems. American here we come.,ticket agents,staff,negative,28,41
+472,this is atrocious customer service.,customer service,service,negative,18,34
+473,is that thestarter??😁,flight,service,neutral,-1,-1
+474,I will but right now I'm to angry,communication,service,negative,-1,-1
+475,thank you.,service,service,positive,-1,-1
+476,When will email address/username sign-on be available? It's been a while.,sign-on,app,negative,33,40
+477,please upload the March on-demand entertainment listing on your website! ✈️,entertainment,service,neutral,34,47
+478,yall should probably work on that.,issues,airline,neutral,-1,-1
+479,Please help... I am in Ethiopia adopting a two year old child. Have an existing confirmation . Need to add child to reservation.,outlets,seats,neutral,-1,-1
+480,UnitedAirlines Pls Fix AspenBaggageFail issues. Had to pay my own way to Aspen after flight Cancelled Flight. Left us in the cold in DEN.,baggage,baggage,negative,28,35
+481,"See? We were told repeatedly that the pilot was Late Flight and kept getting Late Flightr. After we boarded, there was a defibrillator issue.",pilot,staff,negative,38,43
+482,Our vacation's going to be ruined w/ 3 days of rain. : ( The change fee for 2 of us is nearly cost of original flight. Can you help?,change fee,service,neutral,61,71
+483,. does that mean you don't have a policy for destroyed luggage?,luggage,baggage,negative,55,62
+484,we needed them here asap. Will they make it on today's flight?,flight,service,negative,55,61
+485,"I spoke with a representative that offered no solution, I am a loyal customer who flies on as well",representative,service,negative,15,29
+486,Stressed and rude agents. Overwhelmed by delyd flight LAS-DEN 1657. Yelling at several people. Not pretty. This is friendlyskies??,agents,staff,negative,18,24
+487,"View of downtown Los Angeles, the Hollywood Sign, and beyond that rain in the mountains!",flights,service,positive,-1,-1
+488,"it was amazing, and arrived an hour early. You're too good to me.",arrival,service,positive,-1,-1
+489,no Cancelled Flightn just left us to fend for ourselves when flt came in Late Flight. Getting runaround for 3 hrs. Each employee blaming previous 1.,employees,staff,negative,-1,-1
+490,. I don't understand why you need a DM to give me an answer on if you have a damaged luggage policy.,luggage,baggage,negative,85,92
+491,"again I ask, who can I call to get this fixed? Tweeting me BS questions to stall only makes things worse. Phone number please.",phone number,service,negative,106,118
+492,"all are great , but I have to go with CarrieUnderwood 😍👌",CarrieUnderwood,entertainment,neutral,38,53
+493,well that's big of you but I don't have terribly high expectations at this point.,expectations,service,negative,54,66
+494,"Change made in just over 3 hours. For something that should have taken seconds online, I am not thrilled. Loved the agent, though.",agent,staff,negative,116,121
+495,then why have I not received my call back its been 3 days...it's an infant car seat how am I supposed to go anywhere with my child,gate,airport,negative,-1,-1
+496,what is going on with customer service? Is there anyway to speak to a human asap? Thank you.,customer service,service,negative,22,38
+497,Yes!! Thanks so much!!! 💜“: We see you spoke with our Reservations team and they've reinstated the flight. Thanks. ^EY”,flight,flight,positive,99,105
+498,I was really looking forward to my flight. can you let me know when it will be rescheduled? diehardvirgin,flight,service,negative,35,41
+499,I think DM would be better,app,service,negative,-1,-1
+500,"my luggage is gone. I've filed my paperwork, promised a call/email. Still no resolution or response from central luggage.",luggage,baggage,negative,3,10
+501,comically on the return flight from ASE there were two United flights boarding at adjacent gates and not clear which plane to board,boarding,flight,negative,70,78
+502,I ❤️ flying . ☺️👍,flight,travel,positive,-1,-1
+503,Another delayed flight? likingyoulessandless,flight,service,negative,16,22
+504,"not worried, it's been a great ride in a new plane with great crew. All airlines should be like this.",plane,service,positive,45,50
+505,"All of group E was told there was no more room in the bins. when I got on the plane, was room for at least 4 bags in my row!",bins,baggage,negative,54,58
+506,your airline is awesome but your lax loft needs to step up its game. $40 for dirty tables and floors?,lax loft,service,negative,33,41
+507,how can your app show arriving aircraft is early but departing flight is delayed due to Late Flight arriving aircraft?,departing flight,flight,negative,53,69
+508,Atlantic ploughs a lone furrow in the MiddleEast,support ticket,customer service,neutral,-1,-1
+509,I would love if someone could get me back to Austin tonight and I do not wish to wait til tomorrow morning.,agents,staff,neutral,-1,-1
+510,"however, is completely under your control—the price was and still is displayed on",price,service,negative,46,51
+511,on flight VX399 headed to LA from JFK - dirtiest VA plane I have ever been on. Sad for a great airline.,plane,cleanliness,negative,52,57
+512,ok it's now been 7 months waiting to hear from airline. I gave them quite a bit more than the 30 days requested! Terrible service,service,customer service,negative,122,129
+513,"tag numbers 0016 964012, 0016 964077, 0016 964078 - let's find these bags.",support staff,staff,negative,-1,-1
+514,missed my flight. How does standby work?,missed flight,flight,neutral,-1,-1
+515,and it's a really big bad thing about it,thing,implicit,negative,26,31
+516,That's not the issue. The fact that no one even called (despite promises) to confirm the bag's location is.,baggage,baggage,negative,-1,-1
+517,"first time flying Virgin, went to SanFrancisco .Thanks for the smooth ride. Easily my new fav airline!",flight,service,positive,-1,-1
+518,searched for mileage tickets to BOM couldn't find a single one is saver awards - I see how you play. Earn miles but can't use them.,flight name change,flight,negative,-1,-1
+519,thanks guys! Sweet route over the Rockies airplanemodewason,route,flight,positive,19,24
+520,don't see a justifiable cost to get on an early flight with seats. No airline charges to conveniently get their passengers in early,seats,service,negative,60,65
+521,flight 404 delayed 2 hours in LA due to mechanical problems. Handle like pros but you could have tossed us a free drink.,flight,service,negative,0,6
+522,any updates on flight 413 from Jfk &gt; Lax,flight,flight,neutral,15,21
+523,how do I get my account number if your website says email is unavailable?,account number,account management,negative,16,30
+524,"has unrivalled access to California with flights to the U.S. from 7 UK airports, with nonstop or one-stop connections year-round",flights,airline,positive,41,48
+525,cutest salt and pepper shaker ever. Just when I think you guys can't get any better you just do!,salt and pepper shaker,implicit,positive,7,29
+526,"of urgency, but this is ridiculous. Your ceo claims to be customer focused, yet when delays happen, planes sit and customers are",delays,service,negative,85,91
+527,what time? Who can I call. I need my skis. I will go to the airport and get them. No more faith in United.,skis,baggage,negative,37,41
+528,Thank you!,flight,service,positive,-1,-1
+529,too bad you say it takes 10 to 14 days via YOUR confirmation email. When I inquired after 3 weeks you claim 6 to 8 weeks!,confirmation email,airline,negative,48,66
+530,why must a traveler miss a flight to Late Flight check a bag? I missed my morning appointments and you lost my business. sfo2lax,flight,service,negative,27,33
+531,LHR arrival lounge fail. Waited 20 mins for shower then left to find hotel. U know how many passengers u carry. Planning???,arrival lounge,service,negative,4,18
+532,Congrats VX on the new route! ✈️🎉,route,service,positive,23,28
+533,what is your policy on flying after surgery? I am still waiting for answer so I can tell me doctor.,policy,implicit,neutral,13,19
+534,airlines is the absolute worst. They have no idea what they are doing. neveragain UnitedAirlines,airlines,airline,negative,0,8
+535,Well the bar is set low! You guys are really good at the apology game! What will change? When will u guys learn?,disappointment,service,negative,-1,-1
+536,add DTW and I'm sold!,DTW,route,neutral,4,7
+537,thanks for the free birthday points! y'all are ALL RIGHT with me!,birthday points,service,positive,20,35
+538,​ is flying from Love to Austin now. That is most excellent news.,flight,service,positive,-1,-1
+539,to speak to a real person to get this resolved politely and efficiently. (2/2),plane,airline,negative,-1,-1
+540,booked flights for 2 for $779. Was charged $389.50 twice. Means I can't redeem CC points properly. Would have gone elsewhere.,bags,service,negative,-1,-1
+541,Like,implicit,implicit,positive,-1,-1
+542,I was originally trying to share details but the link Jimmy Samartzis Vice President - Customer Experience sent me expired.,link,technology,negative,49,53
+543,Have clients with an 11 hr layover at IAH (during the day). Will they have to claim and recheck luggage. Or will it be taken care of?,car seat,baggage,neutral,-1,-1
+544,still no refund or word via DM. Please resolve this issue as your Cancelled Flightled flight was useless to my assistant's trip.,service,service,negative,-1,-1
+545,at Logan airport and waiting to checkin for my 9am flight. Checkin desk not open !!!!! Why?!,check-in,service,negative,-1,-1
+546,thanks!,flight,airline,positive,-1,-1
+547,all crap channels which is why I pay to watch UK tv,slots,service,negative,-1,-1
+548,"I will, as soon as I am done with my article. Thanks! ~Tom",flights,service,positive,-1,-1
+549,I can't DM you so here's the confirmation G8CVWJ - please is there any way I can make it to Kailua tonight? Thank you,boarding time info,service,neutral,-1,-1
+550,"I understand, but it's tough when there is no way to get to the airport w/o serious risk of an accident. It's a steep price.",flights,travel,neutral,-1,-1
+551,What said.,commercials,entertainment,neutral,-1,-1
+552,why don't any of the pairings include red wine?! Only white is offered :( redwineisbetter,red wine,beverage,negative,38,46
+553,ours in July. You have ZERO excuses for this. You have an out-of-date system that causes problems like this.,flights,travel,negative,-1,-1
+554,"Nope. Walked up and down the ORF terminal, and not a United agent to be found. Showed up @ last minute to board us. Many panicked people",personal time,experience,negative,-1,-1
+555,current bug on website shows ‘select departure city’ when selecting destination city,website,service,negative,15,22
+556,your Avis rental continue button doesn't work on your website to book car. Tried 4 times on phone. This sucks!,website,service,negative,54,61
+557,the aircraft closest to gate was for the other flight and the one closest to our gate was going to Chicago.,aircraft,flight,neutral,4,12
+558,thx for update,flight attendant,staff,positive,-1,-1
+559,I love the dancing little richard. cool beans.,implicit,implicit,positive,-1,-1
+560,Just sent thank u RT : Please DM your confirmation number if reFlight Booking Problems is needed. Thank you. ^EY,rebooking,service,neutral,-1,-1
+561,Keep up the great work :),work,service,positive,18,22
+562,"I tried that. You offered to charge me an additional $1k for a new ticket or be stranded until Thurs. 1st time, last time.",ticket,service,negative,67,73
+563,Pls Help Baby Hannah get the life saving surgeries she requires.She needs your help.Pls Donate/RT,help,support,neutral,4,8
+564,follow me please this airline is beautifull ♥,airline,service,positive,22,29
+565,AND my luggage has been broken!! youcouldntmakethis up brokenwheel,luggage,airline,negative,7,14
+566,just flew to TelAviv paid $100 from a third suitcase which didn't even make it on the plane! Besides for the impolite service...,suitcase,baggage,negative,44,52
+567,After last night tribute SoundOfMusic Oscars2015 ! I think agree,implicit,implicit,neutral,-1,-1
+568,The Flight Booking Problems section of your website seems to be broken on Chrome. Might wanna look into that.,Flight Booking Problems,service,negative,4,27
+569,you know it. Need it on my spotify stat guiltypleasures,implicit,implicit,positive,-1,-1
+570,BIG Love/gratitude.mpower w/ weRin OSCARS2105 VIPswagbags@ AvalonHollywood,seat,seating,neutral,-1,-1
+571,"Beats EPS Views, Takes On SouthwestAir VA LUV - Investor's Business Daily",business,service,neutral,59,67
+572,any plans to start flying direct from DAL to LAS?,air travel experience,experience,neutral,-1,-1
+573,"in addition, my first flight was delayed an hour and I'm arriving at my destination 8 hrs Late Flight.",flight,flight,negative,22,28
+574,"Ice, which I totally understand. But when a large number of us are facing 15+ hours of time and overnight Cancelled Flightations it seems like",Cancelled Flight,flight,negative,106,122
+575,I hope so too,carry-on,baggage,neutral,-1,-1
+576,best customer service rep in the world! irmafromDallas takes the cake!!!,customer service,service,positive,5,21
+577,I appreciate your efforts getting me home!,home,service,positive,37,41
+578,i need to change my flight thats scheduled in 9 hours and 120 min wait time on phone. Im calling intern. Help!!,flight,service,negative,20,26
+579,"gives positive outlook, but sees increased competition -",competition,market,neutral,43,54
+580,already did that at the airport and 12 hrs Late Flightr its still not here! you guys are really killing me today. trying to stay positive..,Late Flight,flight,negative,43,54
+581,wish you flew out of Atlanta... Soon?,flights,service,neutral,-1,-1
+582,Nice to see you expanding in Texas but don't forget about us here in SanDiego. I would love to see more flights out of here!,experience,service,neutral,-1,-1
+583,thnx for the info,info,implicit,positive,13,17
+584,can’t access your website from Safari on iPhone 6. Seems to work on Mac and iPad. Need iPhone to add Passbook.,website,service,negative,18,25
+585,Dmed you. Thank you,direct flights,flight,negative,-1,-1
+586,"It's taken ~3 weeks for Cust Care to respond to Case 8477733, requesting a refund for wi-fi not working. Where can I get an update?",refund for wi-fi,service,negative,75,91
+587,still waiting to see 😞,refund,service,neutral,-1,-1
+588,wow this just blew my mind,implicit,implicit,positive,-1,-1
+589,thanks so much for sharing. Just added it to my site,implicit,implicit,positive,-1,-1
+590,Other carriers are less than half price for a round trip fare. I am stunned.,fare,pricing,negative,57,61
+591,question: is it not possible to book a seat for an infant under 2? It's not giving me the option but we want a seat for him.,seat,seating,negative,39,43
+592,"I will give you one thing, you are consistent but unfortunately you are consistent at not doing your job well AlwaysDelayedOnUnited",service,service,negative,-1,-1
+593,where is my flight voucher?,flight voucher,service,neutral,12,26
+594,thank you,customer service,service,positive,-1,-1
+595,thankyou the DAL-AUS route makes my day!!!!,competition,implicit,positive,-1,-1
+596,FAIL You Cancelled Flightled our flight frm GJT and then used our reserv home to IAH (from SEA) for reFlight Booking Problems w/out OUR PERMISSION!! PH6RPS,flight,service,negative,19,25
+597,"captain ""on behalf of the front office, welcome on board."".... Never heard that before. I laughed...hard. funnycaptain",captain,staff,positive,0,7
+598,"We're on flight 910 Vegas to Boston today, checked in online but our bag count didn't register. Can I fix that somehow?",baggage,baggage,negative,-1,-1
+599,Need to start flying to . 😊😀😃😄,implicit,general,neutral,-1,-1
+600,"really? 3 hr delay, 4 gate changes, and you boarded us, sent us back up, and boarded us again. Won't change our flight. Can we go now?",delay,service,negative,13,18
+601,Woke up to notification- flight moved 1.5 hrs early. Barely made flight then 3 hrs layover in SFO - wanted to hop on earlier option,flight,service,negative,25,31
+602,Read my bio. See who I work with. I have NEVER encountered this with your airline before. Disappointed is an understatement.,airline,airline,negative,74,81
+603,adds Austin-Dallas Love Field route.,route,service,neutral,30,35
+604,"Hey why does the flight from IAH to POS leave so Late Flight, and the one back to IAH so early? I rather get to POS earlier",flight,flight,negative,17,23
+605,When will direct flights from Belfast Intl to Newark resume from their winter break? Thanks.,travel,experience,neutral,-1,-1
+606,you will match my AmericanAirlines status? Cool!,status,airline,positive,35,41
+607,I lost a voucher that I was given in Miami aeroport on jan 26. I did not use it.,voucher,service,neutral,9,16
+608,Thank you for the cheese platter and abundance of entertainment options. Time just flew by.,entertainment options,service,positive,50,71
+609,Flight Booking Problems flight to uphold my status match. Do taxes on ticket count as earned status points? statusmatch virginamerica,flight booking,service,neutral,0,14
+610,Made the upgrade list. Will fly 1st tomorrow (for 40 min) for the first time ever! 🙌 StatusMatchPaidOff,upgrade,service,positive,9,16
+611,I'm elevategold for a good reason: you rock!!,service,staff,positive,-1,-1
+612,on 4124 arriving two hours Late Flight into CLT. Now sitting on the tarmac while they move a plane from the gate. Unhappy customer.,Flight,flight,negative,32,38
+613,"done! Thank you for the quick response, apparently faster than sitting on hold ;)",response,service,positive,30,38
+614,Do you have any flights with lie flat seating from STL to PDX around the date of March 5?,compensation,service,neutral,-1,-1
+615,Gee that's like almost caring about ppl more than $$. Think I'm more int in having a trusted adult w/ daughter .,trusted adult,service,neutral,85,98
+616,"at its worse. Can't figure how to pack plane, screws up connectns then claims no hotl rooms in San Fran for stranded pax. Way to go!",hotel,service,negative,-1,-1
+617,go to hell,delays,flight,negative,-1,-1
+618,"customer service is atrocious! You have disrupted my travel plans, you have lost my luggage and it is impossible to TALK TO A HUMAN",customer service,service,negative,0,16
+619,seats in Row 8 don't recline should mention that on your website soreback,seats,service,negative,0,5
+620,"I was told it was due to be on UA23 which flies direct to Dublin, so why did it go to London? This is a complete shambles!",baggage claim,service,negative,-1,-1
+621,what time does check in open for flight no UA80 from Manchester to Newark today ?,check in,service,neutral,15,23
+622,I have no interesting flying with you after this. I will Cancelled Flight my next four flights I planned.neverflyvirginforbusiness,Cancelled Flight,flight,negative,57,73
+623,"has getaway deals through May, from $59 one-way. Lots of cool cities CheapFlights FareCompare",deals,service,positive,12,17
+624,Can you find us a flt out of LAX that is sooner than midnight on Monday? That would be great customer service 😃,customer service,service,neutral,93,109
+625,2nd flight also delayed no pilots! But they boarded is so we can just sit here! scheduling,delays,scheduling,negative,-1,-1
+626,unfortunately still on the Tarmac at and definitely missing my ride from GonnaBeALongNight,Tarmac,flight,neutral,27,33
+627,"As one of the travelers affected by the Boston storm, I'm shocked at Virgin's complete apathy toward their customers.",apathy,service,negative,87,93
+628,I like the TV and interesting video . Just disappointed in Cancelled Flightled flight when other flights went out to jfk on Saturday .,Late Flight,flight,negative,-1,-1
+629,always!!! Xoxo,implicit,implicit,positive,-1,-1
+630,"rebooting Chicago dispatch system, need as I'm tired of sitting on planes",dispatch system,service,neutral,18,33
+631,"I did start a claim but 8-10 weeks is unrealistic, am I really supposed to go that long with out a car seat for my child.Ridiculous!",car seat,baggage,negative,99,107
+632,"ok. To top things off, you've lost my luggage. Could you get ANY worse??? UnitedAirlines",luggage,airline,negative,38,45
+633,My mom left her Kindle on flight 1544 today. Burgundy case with a light. Seat 27D. Did anyone find it?,Kindle,baggage,neutral,16,22
+634,thanks! Will you guys be getting the A380s anytime soon?,A380s,airline,neutral,37,42
+635,"done. Want me to send a screen shot of the second call, which is now at over 45 minutes?",call,service,negative,50,54
+636,Big thanks to Ms. Winston for assisting me over the phone with a baggage claim issue today. She really went the extra mile!,baggage,service,positive,65,72
+637,Adds Pillows Instead of Lie-Flat Seats in First Class Arms Race by,seats,flight,neutral,33,38
+638,announced New Route to Austin w/fares from $39/way.,fares,pricing,neutral,32,37
+639,But they are not... lady one phone says its in tel aviv. Tel Aviv united says its in Newark. No one knows and I have nothing...,luggage,baggage,negative,-1,-1
+640,Need more info on that! : We have great amenity kits. PJ's not included. We status match AA. ^KP”,price,service,neutral,-1,-1
+641,check the website before you go to the airport!,website,service,neutral,10,17
+642,GRK13575M is the file reference,file reference,service,negative,17,31
+643,Decisions Decisions : We'd love for you to try our service. We offer status match too. ^KP”,amenity kits,service,neutral,-1,-1
+644,you are one great airline ❤️,airline,service,positive,18,25
+645,Not a happy flyer. UA flight 1161 from SFO to Cleveland. Sunday 2/22. Stay tuned for blog article from,baggage,service,negative,-1,-1
+646,private jet would have been cool! Do does not work. I'll try again,flights,flight,positive,-1,-1
+647,It's a shame choosing United may be the difference between reuniting with aging friends and never seeing them again PoorService,service,service,negative,120,127
+648,"yes, they said it took more than an hour!",flight,service,negative,-1,-1
+649,help. I was On Flight 27 from JKF tonight. seat 7C left portfolio. Need it back!!,portfolio,baggage,neutral,56,65
+650,thank you! See y'all soon! I'm excited to see the expansion of destinations. Spread those wings!,destinations,service,positive,63,75
+651,it was a disappointing experience which will be shared with every business traveler I meet. neverflyvirgin,experience,service,negative,23,33
+652,We've been waiting on tarmac for &gt;1hr because apparently UA1116 is overweight and we returned to gate. WTF fb,tarmac,flight,negative,22,28
+653,had me at their safety video . . . LOVED my first cross country flight. livewelltraveled sytycd,CEO,airline,positive,-1,-1
+654,they helped me at the baggage service desk. Said bc TSA screening was down in FLL not all bags made it but bag will be in EWR @ 12,baggage service desk,baggage,negative,22,42
+655,"well, you can't fix me missing my buddies 30th bday because of negligence but you can attempt to make up for it.",negligence,service,negative,63,73
+656,👍👍✈️✈️💗 When are you guys going to start flying to Paris? : You're welcome.”,flying,airline,neutral,41,47
+657,": I don't care that a link showed me a ""wrong"" price on your site—it's your site and responsibility to ensure correctness.",seating,seats,negative,-1,-1
+658,YES FYI MY BFF,implicit,implicit,neutral,-1,-1
+659,That's classy.,flights,service,positive,-1,-1
+660,"Thanks so much for the awesome support, you guys rock!",support,service,positive,31,38
+661,"Wow. What a deal. Again, 30+ plus seats available. Easy change to make a customer happy.",email,service,positive,-1,-1
+662,you guys need some serious training in customer service. Too many better options to put up with the way you guys handle ur mistakes,customer service,staff,negative,39,55
+663,This is NOT a local UNITED number for Malaysia 0011 800-55558000. What is your local United Airlines here in Kuala Lumpur ( KUL )?,phone number,contact,neutral,-1,-1
+664,why are your first fares in May over three times more than other carriers when all seats are available to select???,fares,pricing,negative,19,24
+665,"During the same round trip, my NON-English speaking friend was stranded TWICE for 12+ hours each time! Most staff members were rude.",United agent,staff,negative,-1,-1
+666,"Nice, Lofty View . SilverStatus",Status Match,service,neutral,-1,-1
+667,I emailed your customer service team. Let me know if you need the tracking number.,customer service,service,neutral,15,31
+668,So excited for my first cross country flight LAX to MCO I've heard nothing but great things about Virgin America. 29DaysToGo,seat,comfort,positive,-1,-1
+669,"beats expectations, shares take off - Santa Cruz Sentinel",implicit,implicit,neutral,-1,-1
+670,you ROCK for making it so I can watch Oscars on my flight!! redcarpet oscars oscars2015,flight,service,positive,51,57
+671,Could this email be resent as it doesnt appear to have arrived.,flight,airline,negative,-1,-1
+672,you are easily the worst company I have ever experienced. You have lost someone's personal possessions and you couldn't care less!....,personal possessions,baggage,negative,82,102
+673,please provide status for flight 769. I cant imagine it's on time as the Web indicates dude to weather here and/or Dallas,flight,flight,negative,26,32
+674,"- the passenger in 7D, Flt 338 that assaulted me shouldn't have flown. I trust he's banned. Crew filed report to",crew,staff,negative,92,96
+675,"yes, a paper voucher that I got on January 26th 2015",voucher,service,neutral,13,20
+676,Today was not your finest. All could have been prevented by one gate agent advising 200 passengers.,gate agent,staff,negative,64,74
+677,currently on board so not now. Check in was terrible. Staff rude. Expensive luggage thrown around etc.,check in,service,negative,31,39
+678,"nice your app says US 4972 delayed by weather. Pilot says waiting on fuel. One in ur control, one not",app,technology,negative,10,13
+679,"On a standby to Denver, which has been delayed, and a confirmed to Aspen, whose flights have been Cancelled Flighted all day. 0 confidence.",flight,service,negative,80,86
+680,"our flight into lga was Cancelled Flighted. We're stuck in Dallas. I called to reschedule, told I could get a flight for today...(1/2)",flight,cancellation,negative,4,10
+681,So you are inadequate by accident?,inadequate,service,negative,11,21
+682,"Trying to reset my password, email never arrives. Help?",password,service,negative,19,27
+683,OKC ticket agent Roger McLarren(sp?) LESS than helpful with our Intl group travel problems Can't find a supervisor for help.,ticket agent,staff,negative,4,16
+684,despite my bag not making it to Newark good informative email tracking updates help!,customer service,service,positive,-1,-1
+685,that's right- with an overnight Miami.,layover,flight,neutral,-1,-1
+686,is the worst airline in the world.,service,service,negative,-1,-1
+687,you got cheese pLate Flights too.,Flights,service,neutral,21,28
+688,"yes in Lusaka, Zambia. My guess is the bags never made the plane at IAD.",bags,baggage,negative,39,43
+689,Lister to my show my on Monday 1230 130,application,service,neutral,-1,-1
+690,completed form but doubt it's any use. UA doesn't care. 6 day vacation will now be 5. Sure UA won't feel responsibility for that...,vacation,experience,negative,62,70
+691,"441, which also had 1 working WC in coach. Good thing this bird landed ahead of schedule. I have to use the WC stat.",WC,facilities,positive,30,32
+692,I flew United last month and the experience was AWESOME!,connection,service,positive,-1,-1
+693,yes at 2am...but now back on a plane again and delayed again due to baggage loading issue...,baggage,service,negative,68,75
+694,A Tourist Wonder: Super Tides and Tide of the Century at French and U.K coasts:,implicit,airline,neutral,-1,-1
+695,did you know that suicide is the second leading cause of death among teens 10-24,death,implicit,neutral,57,62
+696,"found a group of people who actually hates people more than ISIS, thats right United Airlines.",frustration,experience,negative,-1,-1
+697,your website sucks donkey dicks. Just thought you should know. All best.,passbook,service,negative,-1,-1
+698,Luckily I made my flights this time but was so disappointed with the lack of communication :(,communication,airline,negative,77,90
+699,I requested a mileage challenge for status several weeks ago online but haven't heard back. How do I get help with this?,mileage challenge,service,negative,14,31
+700,Thank you for responding so quickly with a helpful tool!,tool,service,positive,51,55
+701,"Nice RT : The man of steel might be faster, but we have WiFi – just saying. ScienceBehindTheExperience",WiFi,service,positive,56,60
+702,"Done, but I need the receipt ASAP. Could you please help? 150219-000114",receipt,service,neutral,21,28
+703,"the proper response: sorry for your wait, what flight were you on so we can look into the issue. That's how would handle.",response,service,negative,11,19
+704,just wanted to let you know how wonderful Rosetta the gate agent was working flight 6457 Dan to Ase. Let her know she wasappreciated,gate agent,staff,positive,54,64
+705,"i understand, thanks",implicit,implicit,neutral,-1,-1
+706,Please than Robin at EWR Premiere Desk for helping me get on a an earlier flight. She did the work. Huge thanks.,flight,service,positive,74,80
+707,your customer service is terrible! Stood inline 3 hours no flights and 4 hours Late Flightr still no bagdisgutedindenver,customer service,service,negative,5,21
+708,trying to book a flight and your site is down 😁,airline,airline,negative,-1,-1
+709,I was so looking forward to my first flight with you today but it was Cancelled Flightled along with the subsequent one ...,flight,service,negative,37,43
+710,My bag is still in Colo Springs. I am disabled and have to search an unfamiliar airport and look for my bag. Not a good outcome,bag,baggage,negative,3,6
+711,"another perfect flight. How come on your planes, the sun visors can stay down? Other carriers make you raise them?",sun visors,seats,positive,53,63
+712,THANK U! Secured room for the night Thx to VERY helpful customer service rep N. Dorns.. I thanked her.. Can u 2? goodenoughmother,customer service,service,positive,56,72
+713,"it's really aggressive to blast obnoxious ""entertainment"" in your guests' faces and they have little recourse",entertainment,service,negative,43,56
+714,but it's hard to stay upset at someone when they at least TRY to show remorse.,neglect,customer service,negative,-1,-1
+715,you are failing your customers because your check in process does not link to TSA pre-check.,check in process,service,negative,44,60
+716,mobile apps need construction from the ground up for each OS category. It's expensive to get right .,mobile apps,technology,negative,0,11
+717,"has getaway deals through May, from $59 one-way. Lots of cool cities CheapFlights FareCompare",deals,service,neutral,12,17
+718,weather delays &gt; next few weeks ;) JFK BOS DCA,delays,weather,neutral,8,14
+719,Random Q: what's the distribution of elevate avatars? I bet that kitty has a disproportionate share,elevate avatars,app,neutral,37,52
+720,. I heard he has a virgin mobile hotspot ;),hotspot,service,neutral,33,40
+721,Are there any plans for a short haul airline in Europe? Would defiantly fly with you guys :),short haul airline,service,positive,26,44
+722,THAT'S your response? Shaking my head back and forth with a tsk. You can do better-from customer service to your apology,customer service,service,negative,88,104
+723,No. Denver said they don't handle baggage that made it to Colo. Springs. They gave me an 800 number to call. No help there either.,baggage,baggage,negative,34,41
+724,is your website ever coming back online?,website,app,neutral,8,15
+725,"""You down with RNP?"" ""Yeah you know me!""",points,service,neutral,-1,-1
+726,"I am trying to find out if the loaner seat is new or used, a used car seat is illegal according to safety regulations",details,service,neutral,-1,-1
+727,"Hi, Virgin! I'm on hold for 40-50 minutes -- are there any earlier flights from LA to NYC tonight; earlier than 11:50pm?",flights,service,negative,67,74
+728,someone needs to DM me and resolve this correctly. Extremely disappointed with the service I received. Terrible management.,service,service,negative,83,90
+729,"Kewl. Will also let them know the overhead bin over my row was ""Inop"". I love a good abbreve.",seats,service,neutral,-1,-1
+730,All were entertaining,implicit,implicit,neutral,-1,-1
+731,"If you'd love to see more girls be inspired to become pilots, RT our free WOAW event March 2-8 at ABQ.",pilots,staff,neutral,54,60
+732,"I guess that's too much ask, huh?",apology,customer service,neutral,-1,-1
+733,"fucked up, then voided my ticket, and KEPT MY MONEY. Not even an apology. I will never fly with your airline again. UnitedAirlines",ticket,service,negative,26,32
+734,please contact me about portfolio left on flight VX 27 from JFK to SFO tonite seat 7AM. Need it returned. Call 914-329-0185.,portfolio,baggage,neutral,24,33
+735,Flight 0736 DAL to DCA 2/24 2:10pm. Tried to check in could not. Status please.,check in,service,neutral,45,53
+736,"yes please! I am newly married and trying to update my last name on a preexisting international flight! It seems so easy, but...",last name,service,negative,55,64
+737,like continental's chicken feat fairs,chicken,meal,neutral,19,26
+738,The bright side would be keeping the promise that was made to me. Hope you're having a good night. Thanks.,promise,service,negative,37,44
+739,Is it normal to receive no reply from Central Baggage baggageissues smh,baggage,service,negative,46,53
+740,I think i left something on the plane yesterday. who do i call...ah!,plane,lost items,neutral,32,37
+741,Fingers crossed and its all intact. Very disappointed with this experience as before this we were actually saying we enjoyed using you,system,technology,negative,-1,-1
+742,if I pay you $25 and $35 for my luggage to be delivered when I arrive. Why should I have to wait 3 additional days for its delivery?,luggage delivery,baggage,negative,-1,-1
+743,has the most INCREDIBLE customer service I've ever experienced! So refreshing!,customer service,service,positive,24,40
+744,"Not appropriate to ask in public (hence the dm). each united employee, each a new answer. your process was such a hassle i Cancelled Flighted.",process,service,negative,95,102
+745,I can't check in or add a bag. Your website isn't working. I've tried both desktop and mobile,bag,baggage,negative,26,29
+746,"announces new nonstop connecting and , $39 intro:",route,service,neutral,-1,-1
+747,now what?!? flight was gone when I got off plane! BusinessTravel goodenoughmother,flight,service,negative,12,18
+748,Does customer care have email or a phone rep that I can speak with? We had so many issues they can't be placed in 2000 characters?,customer care,customer service,negative,5,18
+749,"Gate agent hooked me up with alternate flights. If you have a way to PREVENT the constant issues, that would rock.",departure,travel,negative,-1,-1
+750,what's a girl gotta do to get a flight name change when SHE bought one for a mean ex boyfriend and needs a girl's trip stat?!,flight,flight,neutral,32,38
+751,Many Thanks for the Follow. ourprincess freyasfund USA Bandie Looking for Any Help😍 💗🇬🇧💗🇺🇸💗 🎀🌏🎀,implicit,general,neutral,-1,-1
+752,- Let 2 scanned in passengers leave the plane than told someone to remove their bag from 1st class bin? uncomfortable,passengers,staff,negative,19,29
+753,are you ready!? Let's say it together.. 'Noooo turbulence today!' 😘,service,service,neutral,-1,-1
+754,That's real dedication and concern. Your apologies don't fix the issue nor any of the miserable issues I've had over the past 6 mos.,issues,service,negative,96,102
+755,I'm trying to check into my 10:50AM CT flight tmm on the desktop website and it's not working (some sort of caching bug) SOS,flight,check-in,negative,39,45
+756,"I'm saying I made the flight but with poor/non-communication, unaccounted for lost time and lots of frustrated flyers standing around",communication,service,negative,47,60
+757,wont transfer flight ticket to accompany an 11 yr old who's active military mom had to have emergency brain surgery? WOW!!,flight ticket,ticketing,negative,14,27
+758,“: Book out of town with fares from $59/way (+restr).,fares,pricing,neutral,25,30
+759,"I will do delayed baggage claim when I land. Hopefully the bag isn't broken into, damaged or lost w/c will result in more complaints",baggage,service,negative,18,25
+760,I have lots of flights to book and your site it not working!!!! I've been on the phone waiting for over 10 minutes..........,site,service,negative,40,44
+761,having problems Flight Booking Problems on the web site. keeps giving me an error and to contact by phone. phone is 30 minute wait.,website,app,negative,-1,-1
+762,Need to change reservation. Have Virgin credit card. Do I need to modify on phone to waive change fee? Or can I do online?,reservation,service,neutral,15,26
+763,"Just got demoted from Gold cuz my hubby got 100% of the PQD, tho there were enuf $ spent for 4 Golds.spousal.discrimination/angry.",status,service,negative,-1,-1
+764,iCloud it is not there yet -- PLEASE HELP 917 703 1472,baggage claim,service,negative,-1,-1
+765,Your website is down and I'm trying to check in!,website,service,negative,5,12
+766,that totally sucks my cousin worked at PHL said,PHL,airport,negative,39,42
+767,why no preferred security line anymore. My TSA pre-check didn't pull on my partner flight! Platinum spoiled,security line,service,negative,17,30
+768,you're the best!! Whenever I (begrudgingly) use any other airline I'm delayed and Late Flight :(,delays,flight,negative,-1,-1
+769,DM sent,delays,flight,neutral,-1,-1
+770,way to take advantage of MayweatherPacquiao :),implicit,implicit,neutral,-1,-1
+771,flight delayed-no one remembered to turn the heat on flight 559 leaving ORD-seriously???,refund claim,airline,negative,-1,-1
+772,Status match - 2 weeks have gone by and no news.Flt next week - hope flt will count towards requirement. Cust Svc no help!!!,channels,service,negative,-1,-1
+773,what is that going to do for you? Nothing just like you always do,service,service,negative,-1,-1
+774,you are the worst. I will avoid you like the plague.,airline,service,negative,-1,-1
+775,"I need the phone number to baggage claim in LAX, my mom left her phone and someone called saying they would put it there but on",customer service,service,neutral,-1,-1
+776,"bet you wont honour them, like mine ey",honour,policy,neutral,13,19
+777,"yes, David Allan send an email with this number (KMM24999563V99860L0KM) and case8719519",email,service,neutral,25,30
+778,or has lost my baggage… heard different things from different employees of . has said nothing.,ticket change fees,fees,negative,-1,-1
+779,"I just did, how can I DM? Do u have to also add me?",DM,service,neutral,22,24
+780,first time flying with United. Also last time. terrible back to for me. branson virginatlantic UnitedAirlines,communication,service,negative,-1,-1
+781,to jump into the Dallas Austin market,market,service,neutral,31,37
+782,load balancing system apparently down systemwide - major impact on all united airlines flights. Was this a cyberattack?,load balancing system,service,negative,0,21
+783,I sent the message. Let me know ASAP.,message,service,neutral,11,18
+784,can you tell me how to file a claim for clothing that had to be purchased?,claim for clothing,service,negative,30,48
+785,thank you! I absolutely will 😎,check in,service,positive,-1,-1
+786,Use another browser! 2015 and a brand with a reputation built on tech response doesn't have a cross-browser compatible website?,website,service,negative,119,126
+787,I did. The AC went on for about 20 minutes before returning to the Mojave Desert. PressureCooker HeatTrap,AC,service,negative,11,13
+788,Definitely a compliment! I really thought my bag was lost after it was sent on to another airport. In the end I am a happy customer,bag,baggage,positive,45,48
+789,that's unfortunate. The was an xmas gift and it looks like a razor ripped right through the front pocket in the picture,upgrades,service,negative,-1,-1
+790,completely awesome experience last month BOS-LAS nonstop. Thanks for such an awesome flight and depart time. VAbeatsJblue,experience,service,positive,19,29
+791,"better train your support staff with appropriate decorum, consider revisiting your terrible ""provide a death certificate' policy",apology,service,negative,-1,-1
+792,you guys continue to impress me in Houston.,phones calls,service,positive,-1,-1
+793,once united's service levels reaches those of Etihad or lets be more realistically Lufthansa then ill consider it again,service levels,service,negative,14,28
+794,On all your flights?,flights,service,neutral,12,19
+795,I need a receipt for a flight change. Can you send one?,status match request,loyalty,neutral,-1,-1
+796,.. Can you help? Left my blazer in. Kooples jacket bag at 3rd row second seat from right gate 36 T3 lax.. Flight to sfo,blazer,baggage,neutral,25,31
+797,I would like to know what's going on before his current flight lands.,flight,flight,neutral,56,62
+798,DREAM,implicit,implicit,neutral,-1,-1
+799,of course! I work for and I'm obsessed with the entire Virgin family!!,Virgin family,airline,positive,55,68
+800,was no one between the scan and inside the plane. I just asked the people in line around me where the plane was going,plane,service,negative,43,48
+801,your site is tripping. I'm trying to check in and I'm getting the plain text version. I am reluctant to enter any card info.,site,app,negative,5,9
+802,"Sorry, Mary Martin had it first!",Mary Martin,entertainment,neutral,7,18
+803,system failure again = bad trend. Software projects are like flying an airplane; there's no such thing as an emergency takeoff.,system failure,service,negative,0,14
+804,flight attendant doesn’t understand not understanding English doesn’t mean they are deaf. Stop yelling English slowly to them.,flight attendant,staff,negative,0,16
+805,common!! keep your paper work ready and don't delay our flights(1585)and meetings,connection,flight,negative,-1,-1
+806,yes I filed a claim and hope to receive by luggage by 2am. Ridiculous as I had to purchase items to go to sleep and no reimbursement.,luggage,baggage,negative,43,50
+807,please add more frequency to PDX Portland,frequency,service,neutral,16,25
+808,I flew from NYC to SFO last week and couldn't fully sit in my seat due to two large gentleman on either side of me. HELP!,flying,travel,negative,-1,-1
+809,A refund and flight vouchers or another flight on a different airline at your expense for today. 8 hour drive is very inconvenient,customer care,service,negative,-1,-1
+810,Adds Pillows Instead of Lie-Flat Seats in First Class Arms Race,seats,airline,neutral,33,38
+811,- Why can't I get a boarding pass for my Austrian Airlines codeshare flight. Rebook incls a 6 hour layover and I am stuck outside sec,boarding pass,service,negative,20,33
+812,is there special assistance if I travel alone w/2 kids and 1 infant? Priority boarding?,assistance,service,neutral,17,27
+813,partners with Checkout as mobile payment method to help boost mobile conversion rates etailwest payments visa,product,service,neutral,-1,-1
+814,I called a 3-4 weeks ago about adding 3 flights from 2014 to my Elevate...they still haven't shown up...help!,flights,service,negative,40,47
+815,I &lt;3 pretty graphics. so much better than minimal iconography. :D,graphics,design,positive,15,23
+816,"- Is Flight 713 from Love Field to SFO definitely Cancelled Flightled for Monday, February 23?",flight,flight,neutral,5,11
+817,Premier Gold desk changes flight. Waives fees. Gives me wrong flight. Now Jana Acosta in Salt Lake refuses the same service. Angry.,flight,service,negative,26,32
+818,Deep Vein thrombosis,connections,service,neutral,-1,-1
+819,Agent in LAS letting 20 customers know they can't help them rebook delayed flight to DEN unfriendlyskies,agent,staff,negative,0,5
+820,Julie Andrews. Hands down.,deal,service,neutral,-1,-1
+821,Connection at ORD was on the exact same plane again. Checked carry-on was apparently taken off and left in Chicago. Pretty ridiculous.,claim,service,negative,-1,-1
+822,do you miss me? Don't worry we'll be together very soon.,cold air,comfort,neutral,-1,-1
+823,is doing musicians real dirty at LAX. I've never been blocked from getting on a flight with my bass.,seats,service,negative,-1,-1
+824,“: Of course. Have fun celebrating!” Thanks! Happy Chinese New Year!,implicit,implicit,positive,-1,-1
+825,what is your policy on flying after surgery?,policy,health,neutral,13,19
+826,Are the hours of operation for the Club at SFO that are posted online current?,headphones,lost items,neutral,-1,-1
+827,UA63 from Madrid arrived no agent mass confusion we sent to and fro by 3 UA employees. MaryJo was rude and unhelpful.,mass confusion,staff,negative,34,48
+828,I will not be flying you again,Flight,flight,negative,-1,-1
+829,The agent that met us at the gate said any issues w/delays on UA1116 would have to be taken up online...,delays,service,negative,52,58
+830,I love your guy's song! We're dancing to it for our high school dance revue,flight,airline,positive,-1,-1
+831,"Love the team running Gate E9 at LAS tonight. Waited for a delayed flight, and they kept things entertaining",team,service,positive,9,13
+832,Having an issue finding a missing item on a plane. Can you help me find which airport my plane headed to next?,item,airline,neutral,34,38
+833,look at this beauty 😉 dc 10 united airlines 😉,airline,service,positive,35,42
+834,thanks! Y'all have some of the best customer service left in the industry.,status,service,positive,-1,-1
+835,Have a great week 🌞✈,week,implicit,positive,13,17
+836,does Virgin America fly direct from Seattle to NYC or Boston?,flights,service,neutral,-1,-1
+837,"just landed in LAX, an hour after I should of been here. Your no Late Flight bag check is not business travel friendly nomorevirgin",flight 345,flight,negative,-1,-1
+838,"nope, they told us it was time for them to go home and to sleep at the airport. Even though they assured us we would get a room...",room,accommodation,negative,123,127
+839,to jump into the Dallas-Austin market -,market,service,neutral,31,37
+840,"the internet is a great thing. I am emailing executives in your company, maybe they will respond to me in a timely manner.",internet,service,negative,4,12
+841,"your mobile site is broken, shows ""{{header.elevateUser.numOfPointsAvailable || '0' | number}} Points"", won't let me checkin",mobile site,service,negative,5,16
+842,silly I'm flying delta today. Your united club staff and attendants are surly and unhelpful and always seem bothered by pesky folk,staff,staff,negative,47,52
+843,"Thank you. Mention that before I boarded she asked 1other person to measure their bag, and it was another woman. Men not asked.",bag,baggage,negative,82,85
+844,- I would have loved to respond to your website until I saw the really long form. In business the new seats are bad,car seat,baggage,negative,-1,-1
+845,"caught earlier flight to ORD. Gate checked bag, and you've lost it at O'Hare. original flight lands in 20minutes. frustrating!",gate checked bag,baggage,negative,30,46
+846,Outbound 2 bags 70 lbs bags Returning home 1 bag 50 lbs. What is your logic? And WHY? Am I writing to a Machine? Human HELP required,bags,baggage,negative,11,15
+847,Thanks for taking care of that MR!! Happy customer.,refund,service,positive,-1,-1
+848,Very nicely done. 👏,implicit,implicit,positive,-1,-1
+849,maybe one day you'll be the one quoted on,flight,airline,negative,-1,-1
+850,the least you could do is offer me a ticket in coach instead of just Cancelled Flighting my reservation because of your glitch!!! notfair,reservation,service,negative,92,103
+851,Dad on Segway is the best part of this whole infographic!,infographic,implicit,positive,45,56
+852,how is Mexico not international from the us?,Mexico,destination,neutral,7,13
+853,“: We regret to hear this. Please let us know if you need assistance. ^KN” I was finally able to secure my seat. Thx,seat,service,negative,107,111
+854,CEO says Southwest and jetblue have strayed from low cost model.,planes,airline,neutral,-1,-1
+855,hahaha 😂 YOU GUYS ARE AMAZING. I LOVE YOU GUYS!!!💗,flight,service,positive,-1,-1
+856,pilot says we expect a choppy landing in NYC due to some gusty winds w/a temperature of about 5 degrees and w/the windchill -8,landing,flight,neutral,30,37
+857,"Done and done! Best airline around, hands down!",flight to Hawaii,routes,positive,-1,-1
+858,another awesome new plane flight 1584 and extremely nice Captain Steve Connolly.,bags,airline,positive,-1,-1
+859,Always have it together!!! You're welcome! RT : You're so welcome.,implicit,implicit,positive,-1,-1
+860,"frankly worse customer service ever. Problems will happen, how you deal defines a company. Never again United.",customer service,service,negative,14,30
+861,thats weak. See ya 👋 Hey !!,weak,service,negative,6,10
+862,that's exactly the point. It fits. I'm premier access. Boarding group 2. This was a return ticket. I've been doing this for 15 yrs,boarding,service,positive,55,63
+863,has flight number 276 from SFO to Cabo San Lucas arrived yet?,flight,service,neutral,4,10
+864,hi! i'm so excited about your $99 LGA-&gt;DAL deal- but i've been trying 2 book since last week and the page never loads. thx!,implicit,implicit,negative,-1,-1
+865,Grand Budapest Hotel OscarsCountdown,flight,airline,neutral,-1,-1
+866,Thanks for a great flight from LA to Boston! Pilots did a great job landing in the snow. Can we go back to LA now? seriously,flight,service,positive,19,25
+867,"what happened to direct flights from SFO-FLL? Looking in May, only see connecting help dontdothistome",flights,service,negative,24,31
+868,first time flying you all. do you have a different rate/policy for media Bags? Thanks,media Bags,baggage,neutral,67,77
+869,"since bulkhead seats cannot have bags on floor, why don't u reserve o/head space above those seats? In 1B on UA246 - not impressed",bulkhead seats,seats,negative,6,20
+870,will you be making BOS&gt;LAS non stop permanently anytime soon?,non stop flights,routes,neutral,-1,-1
+871,hold times at call center are a bit much,hold times,service,negative,0,10
+872,I'd thank you - but you didn't help. taking 6 hours to reply (so I get a message in the middle of the night) isn't actually helpful,flight,service,negative,-1,-1
+873,why can't we book seats on your flights when we buy them or even during check in? Creates so much anxiety! frustrated,seats,service,negative,18,23
+874,LAX to EWR - Middle seat on a red eye. Such a noob maneuver. sendambien andchexmix,elevate number,service,neutral,-1,-1
+875,"yep that's correct, I got an email at 12:30 am that the flight was Cancelled Flightled, doesn't matter now flight into atl is delayed, thx",anxiety,implicit,negative,-1,-1
+876,So they didn't drop my bag overnight and now I'm leaving for a week. This is why you were supposed to hold on to the bag....,airfare ticket,airline,negative,-1,-1
+877,Flight Booking Problems for a travel writers trip I am hosting and need to be happy when I land! Do you have the cute PJs AA does?,flight,service,neutral,0,6
+878,brought it all the way across the country today I see,itinerary section,service,neutral,-1,-1
+879,...Please come to Minneapolis St. Paul!,Minneapolis St. Paul,destination,neutral,18,38
+880,"congrats, you just got all my business from EWR to SFO/LAX. Fuck you fl1289 SFO/EWR was the clincher...",airlines,service,negative,-1,-1
+881,ok thx!,implicit,implicit,positive,-1,-1
+882,"this will definitely be a trip to remember EWR-STI second of the season, first on seat 35A because it pays to be loyal!",seat,seating,positive,82,86
+883,"Flight attendant never served me my beverage (tea), and not once checked up on me. What gives? ua6076 notcool",beverage,service,negative,36,44
+884,when can I book my flight to Hawaii??,chat support,service,neutral,-1,-1
+885,Shame that there's no flex to tickets transfer rules. Even calling from Neurosurgery ICU isn't enough!,ticket transfer rules,service,negative,-1,-1
+886,Flight UA1270 is descending into farce and we haven't left EWR yet. Is this going to get any worse?,shambles,service,negative,-1,-1
+887,"according to your DMs, I'm not owed a refund. please may I be provided with a contact number before I go to my bank to file claim",contact number,service,negative,78,92
+888,Seattle bound. Wifey got me the duffle for vday. She's a keeper!!! Holla!!!,duffle,baggage,neutral,32,38
+889,Plans to Include Austin to its Dallas Route - TopNews Arab Emirates,route,service,neutral,38,43
+890,omg omg😍😍 nonstop Dallas to Austin on virgin✨😱✈️,seat,seating,positive,-1,-1
+891,I'm very frustrated and have wasted 2 days now due to your equipment failures.,equipment failures,service,negative,59,77
+892,"yes, we've been with the agents for the last 50 minutes. One of the agents have been very rude, but thankfully Ladan has been nice.",agents,staff,negative,25,31
+893,"yes, nearly every time I fly VX this “ear worm” won’t go away :)",ear worm,entertainment,positive,38,46
+894,"booked award tix on ThaiAirways but I'm not seeing a conf for them, just the United Flight Booking Problems. Can you get get the Thai for me?",flight booking,airline,neutral,84,98
+895,thank you. We are signed up for notifications. We shall watch and wait! ❄️❄️,notifications,service,neutral,32,45
+896,I received my luggage that also looked to be left in the snow when I arrived. I'm asking for all 50 people to be refunded.,luggage,baggage,negative,14,21
+897,loved it. Can't wait for Monday's return flight... Mostly just to watch the inflight safety video again. sorrynotsorry,return flight,flight,positive,34,47
+898,SFO-PDX schedule is still MIA.,flight,travel,negative,-1,-1
+899,you have the absolute best team and customer service ever. Every time I fly with you I'm delighted. Thank you!,customer service,service,positive,36,52
+900,to begin Dallas-Austin flights in April - 88.9 KETR,policy,service,neutral,-1,-1
+901,32 people getting pretty tired about no action on solving the problem plus missing a day of vacation and skiing,problem,service,negative,62,69
+902,. What's going on with UA 236? outbound flight last thurs was delayed 4hrs How long will this delay be? worst2unitedflightsever,boarding,service,negative,-1,-1
+903,"$25 United coupon to make up for broken entertainment system on a 9-hour flight, seriously? Ridiculousness learncustomerservice",response,airline,negative,-1,-1
+904,Trying to make the change in advance (not just 24 hours prior)…tried it online earlier and it wanted $300 in change fees.,change fees,service,negative,109,120
+905,"I adore you, and am so looking forward to my flight to Austin in two weeks.",flight,service,positive,45,51
+906,on VX399 from JFK to LA - dirty plane - not up to your standards.,plane,cleanliness,negative,32,37
+907,your announcement for pre boarding only addresses mobility. My disability requires me to travel with a lot of stuff. Do I preboard?,experience,service,neutral,-1,-1
+908,"5 gate changes, two delays. Even the crew thinks the airline sucks",gate changes,delays,negative,2,14
+909,", I submitted a status match request a while back and still haven’t heard! I’m flying on Monday. Can you look / accelerate?",safety video,flight,negative,-1,-1
+910,I'd love to know what your policy is for damaged luggage.,DM,communication,neutral,-1,-1
+911,"should I be concerned that I am about to fly on a plane that needs to be delayed due to a ""tech stop""?",tech stop,flight,negative,91,100
+912,Moodlighting is the only way to fly! Best experience EVER! Cool and calming. 💜✈ MoodlitMonday,airline,branding,positive,-1,-1
+913,soooo are you guys going to leave the seatbelt light on all flight? You can barely call this turbulence :-),seatbelt light,safety,negative,38,52
+914,we just want to go home tonight - why did you Cancelled Flight the last leg of our reserv. w/out our permission??! PH6RPS,flight,service,negative,56,62
+915,How does United refuse to reissue a $400 lost voucher when their plane didn't take off due to mechanics? badcustomerservice,voucher,service,negative,46,53
+916,"a lot of ""apologies"" being thrown out to customers from what I can see.Very sad. Thanks for nothing. Worst airline ever.",airline,airline,negative,107,114
+917,But thanks for asking,gate items,service,positive,-1,-1
+918,Atlantic ploughs a lone furrow in the MiddleEast,site,booking,neutral,-1,-1
+919,"hi guys, do you have a general enquires email address please? Thanks David.",email address,customer service,neutral,40,53
+920,I used to be a committed ContinentalAirlines flyer until merger. I remember now why I switched to CommunicationFail,flight,service,negative,-1,-1
+921,momma I made it! 😁😁😁,implicit,general,neutral,-1,-1
+922,how we looking on getting those bags to Lusaka,bags,baggage,negative,32,36
+923,"did you have seen my message today?? About a mcdonnell Douglas dc 10 model?? I will hear it if you read it, Goodnight now",bags,baggage,neutral,-1,-1
+924,"yes, but still now answers. Many have not had their luggage for 3 days! Unacceptable!!",luggage,baggage,negative,52,59
+925,Bruh “: Turn down for what. VXSafetyDance”,implicit,implicit,neutral,-1,-1
+926,"And now the flight Flight Booking Problems site is totally down. Folks, what is the problem?",flight,service,negative,12,18
+927,computers are down but you stopped giving updates and took my flight info off the app. That's just ridiculous keep people updated!,updates,service,negative,42,49
+928,was wondering if you guys recieved my dm and we're able to potentially respond asap,response,service,neutral,-1,-1
+929,updated A320 aircraft has wifi and device entertainment but no outlets. I don't get it. How can I charge devices?,aircraft,service,negative,13,21
+930,those whose pay to actually fly with you over 30k/ year deserve better service than a CC holder.,baggage,service,negative,-1,-1
+931,My favorite way to travel! Thank you!,weather,experience,positive,-1,-1
+932,can you please get me to the new york area before monday afternoon,area,service,neutral,38,42
+933,Nope - still no one helped me. Giving up on united. badservice,service,service,negative,55,62
+934,did our bags leave Washington yet? That would be convenient seeing as we left there a day ago. UnitedAirlines lostluggage,bags,baggage,negative,8,12
+935,have been waiting 2 days for my military bags from an airport 3 hours away from me. Horrible.,wait time,service,negative,-1,-1
+936,I take back the comment about your team here working hard to help us A so far no solution for a hotel or food or anything fail,hotel,service,negative,96,101
+937,You have the best flight attendant ever!!!,flight attendant,service,positive,18,34
+938,hence why I've been asking for the customer service phone number so I can speak to a real person to get this sorted out,customer service,service,negative,35,51
+939,so that's it? It just ends there? Come on! I traveled for literally an extra day and a half because of this!,travel,service,negative,45,51
+940,can we make every VX plane with nerdbird? Why should Austin be the only one getting nerd love?,plane,service,neutral,21,26
+941,"Or watch some of the best student films in the country at 35,000 feet! CMFat35000feet",films,entertainment,neutral,34,39
+942,You'd think paying an extra $100 bucks RT for luggage might afford you hiring an extra hand at lame,luggage,baggage,negative,46,53
+943,Congrats on winning the award for Best Deals from an Airline (US),deals,service,positive,39,44
+944,I have just checked in flight to SFO from LAX and been told as Atlantic Flying Club Gold I get no benefits?!,benefits,loyalty program,negative,98,106
+945,we were not given the option of using our United TravelBank in a recent Flight Booking Problems! Any help in using or recouping these funds? Thanks!,flight,flight,negative,72,78
+946,thanx so much. You followed through and emailed me a $1000 ticket voucher. unitedairlines they do care,ticket voucher,compensation,positive,59,73
+947,you suck!,business,airline,negative,-1,-1
+948,Thank you “: I can certainly take a look. Please follow and DM me your confirmation number for assistance. ^JH”,assistance,service,positive,95,105
+949,Newarkliberty Airport need to indicate different gate's for terminals AandC. Flyingainteasy,gate,airport,negative,49,53
+950,posts second consecutive full-year net profit -,implicit,financial,neutral,-1,-1
+951,not yet. I complained about the guy who checked my luggage in as he was throwing the bags around. Unfortunate coincidence I hope?,luggage,baggage,negative,51,58
+952,thanks United I understand that. But he would actually like his own bag back! What have you done with it?! He also wants the money..,bag,baggage,negative,68,71
+953,currently in minute 10 of being on hold with cust. service. Do I need to do anything to add a lap child to my reservation?,cust. service,service,negative,45,58
+954,Is flight 0769 out of LGA to DFW on time?,flight,flight,neutral,3,9
+955,Already checked in so the page expired :X,page,implicit,negative,26,30
+956,by the time I finally get to Dallas I could have driven with less frustration and cheaper.,Premier Platinum,status,negative,-1,-1
+957,wifi AND better seating.,wifi,service,positive,0,4
+958,"hahaha. If they weren't an American company, i would say this was great sarcasm!!",sarcasm,service,negative,72,79
+959,should use this in their next airline commercial lol ::,airline,airline,neutral,30,37
+960,Flight Booking Problems last second flight for next week from SFO- to SAN any chance you want to gift me a promo code since I love you guys,promo code,service,positive,107,117
+961,you think you boarded flight AU1066 too early? I think so.,price,pricing,negative,-1,-1
+962,thanks!,implicit,general,positive,-1,-1
+963,very unhappy at no response to complaint emailed on 2nd Feb ref.8441639. Awful customer service!,DM,app,negative,-1,-1
+964,Sent a couple messages to the email you provided but to no avail. Will try again next year. Cheers.,email,service,negative,30,35
+965,"awaiting my return phone call, just would prefer to use your online self-service option :(",flights to Hawaii,routes,negative,-1,-1
+966,Booked a flight home over 7 months ago and requested seats together for my fiancée and I. We got 2 middle seats. UNACCEPTABLE. The,seats,airline,negative,53,58
+967,now it's just t-minus 32 minutes until my Elevate a Silver upgrade window opens . FreeNeverSucks 😃👍,upgrade,service,positive,59,66
+968,...and when that doesn't work...,mileage tickets,tickets,negative,-1,-1
+969,love all three but you really can't beat the classics!,classics,entertainment,positive,45,53
+970,when an airline causes the missed connection u would think they would take whatever steps to remedy that screw up.,reply,service,negative,-1,-1
+971,Thanks! Good times there and back! Vodkatonics the entire flight🍸sfo,flight,flight,positive,58,64
+972,Your planes are really pretty. Just thought u should know that. :),seat,seating,positive,-1,-1
+973,I applied over 2 weeks ago. Haven't heard back and I'm flying this week disappointed,cities,service,negative,-1,-1
+974,save some for 871 tomorrow AM!,trip,service,neutral,-1,-1
+975,"I received 1 bag last night, I am still missing the other one.",baggage,luggage,negative,-1,-1
+976,gave a credit for my Late Flight flight yesterday. Great service !!!! That's a Wow moment! Unexpected gesture!,receipt,flight change,positive,-1,-1

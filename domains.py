@@ -1,4 +1,4 @@
-# domains.py
+# domains.py — Fixed domain paths matching actual data/ files
 
 import os
 
@@ -21,20 +21,20 @@ def validate_selected_domains(domains, source, low_resource, zero_shot):
     return source, low_resource, zero_shot
 
 DOMAINS = {
-    "L": "data/laptops.csv",
-    "R": "data/restaurants.csv",
-    "D": "data/device.csv",
-    "S": "data/service.csv",
-    "A": "data/amazon.csv",
+    "L":  "data/laptop.csv",
+    "R":  "data/restaurant.csv",
+    "D":  "data/device.csv",
+    "S":  "data/service.csv",
+    "A":  "data/airline.csv",
     "SH": "data/shoes.csv",
-    "W": "data/water_purifier.csv",
-    "U": "data/education.csv",
-    "H": "data/healthcare.csv",
+    "W":  "data/water_purifier.csv",
+    "U":  "data/university_course.csv",
+    "H":  "data/healthcare.csv",
 }
 
-SOURCE_DOMAINS = ["L", "R"]
-LOW_RESOURCE_TARGETS = ["A"]
-ZERO_SHOT_TARGETS = ["U"]
+SOURCE_DOMAINS = ["L", "R", "D", "S"]
+LOW_RESOURCE_TARGETS = ["A", "SH", "W"]
+ZERO_SHOT_TARGETS = ["U", "H"]
 
 SOURCE_DOMAINS, LOW_RESOURCE_TARGETS, ZERO_SHOT_TARGETS = validate_selected_domains(
     DOMAINS,
