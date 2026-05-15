@@ -23,8 +23,7 @@ def compute_macro_f1(preds, labels, ignore_index=IGNORE_INDEX):
     pf, lf = pf[mask], lf[mask]
     if len(lf) == 0:
         return 0.0
-    non_o = [i for i in range(NUM_LABELS) if i != LABEL2ID["O"]]
-    return float(f1_score(lf, pf, labels=non_o, average="macro", zero_division=0)) * 100
+    return float(f1_score(lf, pf, average="macro", zero_division=0)) * 100
 
 def save_result(model_name, setting, src, tgt, macro_f1, extra=None):
     path = get_result_path(model_name, setting, src, tgt)
