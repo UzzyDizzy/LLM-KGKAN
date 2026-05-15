@@ -1,564 +1,591 @@
 """
-scripts/train_all.py — Unified training orchestrator for ALL baseline models.
-
-Each model gets a train_MODEL function that:
-1. Checks for existing checkpoint → skips if found
-2. Loads data via UnifiedABSADataset
-3. Trains the model
-4. Saves checkpoint + result JSON
-5. Returns Macro-F1
-
-All errors are caught so one model failing doesn't block others.
+train_all.py — Native training orchestrator with data conversion.
 """
-import os, sys, json, time, traceback, random, gc
-import numpy as np
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-from torch.utils.data import DataLoader
-from itertools import cycle
-from functools import partial
+import os, sys, json, subprocess, traceback, random, gc, argparse, time, re, contextlib
+import numpy as np, torch
 
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, ROOT)
 from scripts.config import *
-from scripts.data_utils import (
-    UnifiedABSADataset, collate_for_bert, collate_for_llm,
-    collate_simple, split_dataset, build_dataloaders,
-)
-from scripts.evaluate import compute_macro_f1, save_result
+from scripts.evaluate import compute_macro_f1, save_result, load_result
+from scripts.convert_data import ensure_converted
 
-def set_seed(seed=SEED):
-    random.seed(seed)
-    np.random.seed(seed)
-    torch.manual_seed(seed)
-    if torch.cuda.is_available():
-        torch.cuda.manual_seed_all(seed)
-        torch.backends.cudnn.deterministic = True
-        torch.backends.cudnn.benchmark = False
+os.environ["TOKENIZERS_PARALLELISM"]="false"
 
-def checkpoint_exists(model_name, src, tgt, variant="full"):
-    return os.path.exists(get_checkpoint_path(model_name, src, tgt, variant))
+DL = {"L":"laptop","R":"restaurant","D":"device","S":"service",
+      "A":"airline","SH":"shoes","W":"water_purifier","U":"university_course","H":"healthcare"}
 
-def save_checkpoint(model, optimizer, epoch, f1, model_name, src, tgt, variant="full"):
-    path = get_checkpoint_path(model_name, src, tgt, variant)
-    torch.save({
-        "model_state_dict": model.state_dict(),
-        "optimizer_state_dict": optimizer.state_dict() if optimizer else None,
-        "epoch": epoch, "f1": f1,
-    }, path)
-    return path
+def set_seed(s=SEED):
+    random.seed(s); np.random.seed(s); torch.manual_seed(s)
+    if torch.cuda.is_available(): torch.cuda.manual_seed_all(s)
 
-def save_training_log(log, model_name, src, tgt, variant="full"):
-    path = get_training_log_path(model_name, src, tgt, variant)
-    with open(path, "w") as f:
-        json.dump(log, f, indent=2)
+def _done(n,st,s,t): return load_result(n,st,s,t) is not None
 
-# ══════════════════════════════════════════════════════════════════════════
-# GENERIC TRAINING LOOP
-# ══════════════════════════════════════════════════════════════════════════
+def _parse_f1(stdout):
+    for line in reversed(stdout.split('\n')):
+        m = re.search(r'[Ff]1[:\s=]+([0-9.]+)', line)
+        if m:
+            v = float(m.group(1))
+            return v * 100 if v < 1 else v
+        
+        # BGCA format: "epoch-15[best]    61.82/64.00/62.89/"
+        m_bgca = re.search(r'\[best\]\s+[0-9.]+\/[0-9.]+\/([0-9.]+)\/', line)
+        if m_bgca:
+            v = float(m_bgca.group(1))
+            return v * 100 if v < 1 else v
+            
+        m_dict = re.search(r"'f1': ([0-9.]+)", line)
+        if m_dict:
+            v = float(m_dict.group(1))
+            return v * 100 if v < 1 else v
+            
+    return None
 
-def generic_train_loop(model, train_loader, val_loader, optimizer, scheduler,
-                       epochs, patience, device, model_name, src, tgt,
-                       variant="full", use_amp=True):
-    """Generic training loop with early stopping, checkpointing, AMP."""
-    scaler = torch.amp.GradScaler("cuda") if use_amp and device == "cuda" else None
-    best_f1 = 0.0
-    counter = 0
-    log = {"epochs": [], "best_f1": 0.0}
+import subprocess
+import threading
+import queue
+import time
+import sys
 
-    for epoch in range(epochs):
-        model.train()
-        total_loss = 0
-        n_batches = 0
+def run_and_stream(cmd, cwd, timeout=None):
+    print(f"\n>>> Executing: {' '.join(cmd)}\n")
 
-        for batch in train_loader:
-            optimizer.zero_grad()
-            # Move tensors to device
-            batch_d = {k: v.to(device) if isinstance(v, torch.Tensor) else v
-                       for k, v in batch.items()}
-
-            if use_amp and scaler:
-                with torch.amp.autocast("cuda", dtype=torch.float16):
-                    out = model(batch_d)
-                    loss = out["loss"] if isinstance(out, dict) else out[0]
-                scaler.scale(loss).backward()
-                scaler.unscale_(optimizer)
-                torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
-                scaler.step(optimizer)
-                scaler.update()
-            else:
-                out = model(batch_d)
-                loss = out["loss"] if isinstance(out, dict) else out[0]
-                loss.backward()
-                torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
-                optimizer.step()
-
-            if scheduler:
-                scheduler.step()
-
-            total_loss += loss.item()
-            n_batches += 1
-
-        avg_loss = total_loss / max(n_batches, 1)
-
-        # Validation
-        val_f1 = generic_evaluate(model, val_loader, device, use_amp)
-        log["epochs"].append({"epoch": epoch, "loss": avg_loss, "val_f1": val_f1})
-
-        if val_f1 > best_f1:
-            best_f1 = val_f1
-            counter = 0
-            save_checkpoint(model, optimizer, epoch, best_f1, model_name, src, tgt, variant)
-        else:
-            counter += 1
-
-        print(f"  Epoch {epoch+1}/{epochs} loss={avg_loss:.4f} val_f1={val_f1:.2f} best={best_f1:.2f}")
-
-        if counter >= patience:
-            print(f"  Early stopping at epoch {epoch+1}")
-            break
-
-    log["best_f1"] = best_f1
-    save_training_log(log, model_name, src, tgt, variant)
-    return best_f1
-
-def generic_evaluate(model, loader, device, use_amp=True):
-    """Generic evaluation."""
-    model.eval()
-    all_preds, all_labels = [], []
-    with torch.no_grad():
-        for batch in loader:
-            batch_d = {k: v.to(device) if isinstance(v, torch.Tensor) else v
-                       for k, v in batch.items()}
-            if use_amp:
-                with torch.amp.autocast("cuda", dtype=torch.float16):
-                    out = model(batch_d)
-            else:
-                out = model(batch_d)
-
-            logits = out["logits"] if isinstance(out, dict) else out[1]
-            labels = batch_d["labels"]
-            all_preds.append(logits.cpu())
-            all_labels.append(labels.cpu())
-
-    if not all_preds:
-        return 0.0
-    preds = torch.cat(all_preds, dim=0)
-    labels = torch.cat(all_labels, dim=0)
-    return compute_macro_f1(preds, labels)
-
-
-# ══════════════════════════════════════════════════════════════════════════
-# BERT-UDA TRAINING
-# ══════════════════════════════════════════════════════════════════════════
-
-class BERTUDAModel(nn.Module):
-    """Simple BERT + linear classifier for cross-domain ABSA."""
-    def __init__(self, cfg):
-        super().__init__()
-        from transformers import BertModel
-        self.bert = BertModel.from_pretrained(cfg.model_name)
-        self.dropout = nn.Dropout(cfg.dropout)
-        self.classifier = nn.Linear(cfg.hidden_size, NUM_LABELS)
-
-    def forward(self, batch):
-        out = self.bert(input_ids=batch["input_ids"],
-                       attention_mask=batch["attention_mask"])
-        h = self.dropout(out.last_hidden_state)
-        logits = self.classifier(h)
-        loss = None
-        if "labels" in batch:
-            loss = F.cross_entropy(logits.view(-1, NUM_LABELS),
-                                   batch["labels"].view(-1),
-                                   ignore_index=IGNORE_INDEX)
-        return {"loss": loss, "logits": logits}
-
-def train_bert_uda(src, tgt, setting="standard", k_shot=None):
-    """Train BERT-UDA on src→tgt."""
-    model_name = "bert_uda"
-    if checkpoint_exists(model_name, src, tgt):
-        print(f"[SKIP] {model_name} {src}→{tgt} checkpoint exists")
-        # Load and evaluate
-        r = load_result_or_none(model_name, setting, src, tgt)
-        return r["macro_f1"] if r else 0.0
-
-    set_seed()
-    cfg = BERTUDAConfig()
-    from transformers import BertTokenizerFast
-    tokenizer = BertTokenizerFast.from_pretrained(cfg.model_name)
-    collate = partial(collate_for_bert, tokenizer=tokenizer, max_len=cfg.max_len)
-
-    loaders = build_dataloaders(src, tgt, tokenizer, cfg.max_len,
-                                cfg.batch_size, k_shot=k_shot, collate_fn=collate)
-
-    model = BERTUDAModel(cfg).to(DEVICE)
-    optimizer = torch.optim.AdamW(model.parameters(), lr=cfg.lr)
-
-    f1 = generic_train_loop(
-        model, loaders["src_loader"], loaders["tgt_val_loader"],
-        optimizer, None, cfg.epochs, 3, DEVICE, model_name, src, tgt,
+    p = subprocess.Popen(
+        cmd,
+        cwd=cwd,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        universal_newlines=True,
+        bufsize=1
     )
 
-    # Test on full target
-    test_f1 = generic_evaluate(model, loaders["tgt_full_loader"], DEVICE)
-    save_result(model_name, setting, src, tgt, test_f1)
-    print(f"[DONE] {model_name} {src}→{tgt}: F1={test_f1:.2f}")
+    q = queue.Queue()
 
-    del model; gc.collect(); torch.cuda.empty_cache()
-    return test_f1
+    def enqueue_output(pipe, q):
+        try:
+            for line in iter(pipe.readline, ''):
+                q.put(line)
+        finally:
+            pipe.close()
 
+    t = threading.Thread(
+        target=enqueue_output,
+        args=(p.stdout, q),
+        daemon=True
+    )
+    t.start()
 
-# ══════════════════════════════════════════════════════════════════════════
-# AHF TRAINING (Adaptive Hybrid Framework)
-# ══════════════════════════════════════════════════════════════════════════
+    output = []
+    start = time.time()
 
-class AHFWrapper(nn.Module):
-    """AHF wrapper using BERT backbone instead of word embeddings for compatibility."""
-    def __init__(self):
-        super().__init__()
-        from transformers import BertModel
-        self.bert = BertModel.from_pretrained("bert-base-uncased")
-        d = 768
-        self.student_fc = nn.Linear(d, NUM_LABELS)
-        self.teacher_fc = nn.Linear(d, NUM_LABELS)
-        self.domain_attn = nn.Linear(d, d)
-        self.domain_v = nn.Linear(d, 1)
-        self.domain_fc = nn.Linear(d, 2)
-        self.dropout = nn.Dropout(0.5)
-        # EMA teacher init
-        self.teacher_fc.load_state_dict(self.student_fc.state_dict())
-        for p in self.teacher_fc.parameters():
-            p.requires_grad = False
+    while True:
 
-    def forward(self, batch):
-        out = self.bert(input_ids=batch["input_ids"],
-                       attention_mask=batch["attention_mask"])
-        h = self.dropout(out.last_hidden_state)
-        logits = self.student_fc(h)
-        loss = None
-        if "labels" in batch:
-            loss = F.cross_entropy(logits.view(-1, NUM_LABELS),
-                                   batch["labels"].view(-1),
-                                   ignore_index=IGNORE_INDEX)
-        return {"loss": loss, "logits": logits}
+        if timeout and time.time()-start > timeout:
+            p.kill()
+            print(f"\n[TIMEOUT after {timeout}s]")
+            break
 
-    @torch.no_grad()
-    def ema_update(self, gamma=0.98):
-        for tp, sp in zip(self.teacher_fc.parameters(), self.student_fc.parameters()):
-            tp.data = gamma * tp.data + (1 - gamma) * sp.data
+        try:
+            line = q.get(timeout=0.2)
 
-def train_ahf(src, tgt, setting="standard", k_shot=None):
-    model_name = "ahf"
-    if checkpoint_exists(model_name, src, tgt):
-        print(f"[SKIP] {model_name} {src}→{tgt} checkpoint exists")
-        return 0.0
-    set_seed()
-    from transformers import BertTokenizerFast
-    tokenizer = BertTokenizerFast.from_pretrained("bert-base-uncased")
-    collate = partial(collate_for_bert, tokenizer=tokenizer, max_len=128)
-    loaders = build_dataloaders(src, tgt, tokenizer, 128, 32, k_shot=k_shot, collate_fn=collate)
+            sys.stdout.write(line)
+            sys.stdout.flush()
 
-    model = AHFWrapper().to(DEVICE)
-    optimizer = torch.optim.AdamW(model.parameters(), lr=1e-4)
-    f1 = generic_train_loop(model, loaders["src_loader"], loaders["tgt_val_loader"],
-                            optimizer, None, 15, 3, DEVICE, model_name, src, tgt)
-    test_f1 = generic_evaluate(model, loaders["tgt_full_loader"], DEVICE)
-    save_result(model_name, setting, src, tgt, test_f1)
-    print(f"[DONE] {model_name} {src}→{tgt}: F1={test_f1:.2f}")
-    del model; gc.collect(); torch.cuda.empty_cache()
-    return test_f1
+            output.append(line)
 
-
-# ══════════════════════════════════════════════════════════════════════════
-# TRANSPROTO / BGCA / KETGM / DALM — All use BERT backbone + custom head
-# ══════════════════════════════════════════════════════════════════════════
-
-class BERTSeqLabeler(nn.Module):
-    """Generic BERT sequence labeler used for TransProto, BGCA, DALM wrappers."""
-    def __init__(self, model_name="bert-base-uncased", hidden=768,
-                 extra_layers=0, dropout=0.1):
-        super().__init__()
-        from transformers import BertModel
-        self.bert = BertModel.from_pretrained(model_name)
-        layers = []
-        for _ in range(extra_layers):
-            layers += [nn.Linear(hidden, hidden), nn.ReLU(), nn.Dropout(dropout)]
-        layers.append(nn.Linear(hidden, NUM_LABELS))
-        self.classifier = nn.Sequential(*layers)
-        self.dropout = nn.Dropout(dropout)
-
-    def forward(self, batch):
-        out = self.bert(input_ids=batch["input_ids"],
-                       attention_mask=batch["attention_mask"])
-        h = self.dropout(out.last_hidden_state)
-        logits = self.classifier(h)
-        loss = None
-        if "labels" in batch:
-            loss = F.cross_entropy(logits.view(-1, NUM_LABELS),
-                                   batch["labels"].view(-1),
-                                   ignore_index=IGNORE_INDEX)
-        return {"loss": loss, "logits": logits}
-
-def _train_bert_variant(model_name, src, tgt, setting, k_shot, epochs, lr, extra_layers=0):
-    if checkpoint_exists(model_name, src, tgt):
-        print(f"[SKIP] {model_name} {src}→{tgt} checkpoint exists")
-        return 0.0
-    set_seed()
-    from transformers import BertTokenizerFast
-    tokenizer = BertTokenizerFast.from_pretrained("bert-base-uncased")
-    collate = partial(collate_for_bert, tokenizer=tokenizer, max_len=128)
-    loaders = build_dataloaders(src, tgt, tokenizer, 128, 32, k_shot=k_shot, collate_fn=collate)
-    model = BERTSeqLabeler(extra_layers=extra_layers).to(DEVICE)
-    optimizer = torch.optim.AdamW(model.parameters(), lr=lr)
-    f1 = generic_train_loop(model, loaders["src_loader"], loaders["tgt_val_loader"],
-                            optimizer, None, epochs, 3, DEVICE, model_name, src, tgt)
-    test_f1 = generic_evaluate(model, loaders["tgt_full_loader"], DEVICE)
-    save_result(model_name, setting, src, tgt, test_f1)
-    print(f"[DONE] {model_name} {src}→{tgt}: F1={test_f1:.2f}")
-    del model; gc.collect(); torch.cuda.empty_cache()
-    return test_f1
-
-def train_transproto(src, tgt, setting="standard", k_shot=None):
-    return _train_bert_variant("transproto", src, tgt, setting, k_shot, 15, 3e-5, 1)
-
-def train_bgca(src, tgt, setting="standard", k_shot=None):
-    return _train_bert_variant("bgca", src, tgt, setting, k_shot, 20, 3e-5, 2)
-
-def train_ketgm(src, tgt, setting="standard", k_shot=None):
-    return _train_bert_variant("ketgm", src, tgt, setting, k_shot, 30, 2e-5, 1)
-
-def train_dalm(src, tgt, setting="standard", k_shot=None):
-    return _train_bert_variant("dalm", src, tgt, setting, k_shot, 20, 5e-5, 0)
-
-
-# ══════════════════════════════════════════════════════════════════════════
-# KGAN (adapted for BIO sequence labeling)
-# ══════════════════════════════════════════════════════════════════════════
-
-def train_kgan(src, tgt, setting="standard", k_shot=None):
-    """KGAN adapted: BERT backbone + attention mechanism."""
-    return _train_bert_variant("kgan", src, tgt, setting, k_shot, 20, 3e-5, 1)
-
-
-# ══════════════════════════════════════════════════════════════════════════
-# SENTICGCN (adapted for BIO sequence labeling)
-# ══════════════════════════════════════════════════════════════════════════
-
-def train_senticgcn(src, tgt, setting="standard", k_shot=None):
-    """SenticGCN adapted: BERT backbone with extra layers to capture graph-style info."""
-    return _train_bert_variant("senticgcn", src, tgt, setting, k_shot, 25, 2e-5, 2)
-
-
-# ══════════════════════════════════════════════════════════════════════════
-# LLMSYNABSA (LLM-Augment-Syntax-DA)
-# ══════════════════════════════════════════════════════════════════════════
-
-def train_llmsynabsa(src, tgt, setting="standard", k_shot=None):
-    """LLMSynABSA with LLaMA backbone + LoRA."""
-    model_name = "llmsynabsa"
-    if checkpoint_exists(model_name, src, tgt):
-        print(f"[SKIP] {model_name} {src}→{tgt} checkpoint exists")
-        return 0.0
-
-    set_seed()
-    try:
-        from transformers import AutoTokenizer, AutoModel
-        from peft import get_peft_model, LoraConfig
-
-        cfg = LLMSynABSAConfig()
-        tokenizer = AutoTokenizer.from_pretrained(cfg.model_name, token=HF_TOKEN)
-        if tokenizer.pad_token is None:
-            tokenizer.pad_token = tokenizer.eos_token
-
-        collate = partial(collate_for_llm, tokenizer=tokenizer, max_len=cfg.max_len)
-        loaders = build_dataloaders(src, tgt, tokenizer, cfg.max_len,
-                                    cfg.batch_size, k_shot=k_shot, collate_fn=collate)
-
-        # Build model
-        base = AutoModel.from_pretrained(
-            cfg.model_name, token=HF_TOKEN, torch_dtype=DTYPE,
-            device_map="auto",
-        )
-        lora_cfg = LoraConfig(
-            r=cfg.lora_r, lora_alpha=cfg.lora_alpha,
-            target_modules=["q_proj", "v_proj"],
-            lora_dropout=cfg.lora_dropout, bias="none",
-            task_type="FEATURE_EXTRACTION",
-        )
-        base = get_peft_model(base, lora_cfg)
-
-        class LLMSynWrapper(nn.Module):
-            def __init__(self, encoder, d):
-                super().__init__()
-                self.encoder = encoder
-                self.classifier = nn.Linear(d, NUM_LABELS)
-                self.dropout = nn.Dropout(0.1)
-            def forward(self, batch):
-                h = self.encoder(input_ids=batch["input_ids"],
-                                attention_mask=batch["attention_mask"]).last_hidden_state
-                logits = self.classifier(self.dropout(h))
-                loss = F.cross_entropy(logits.view(-1, NUM_LABELS),
-                                       batch["labels"].view(-1),
-                                       ignore_index=IGNORE_INDEX)
-                return {"loss": loss, "logits": logits}
-
-        d = base.config.hidden_size
-        model = LLMSynWrapper(base, d)
-        # Only train classifier + LoRA
-        optimizer = torch.optim.AdamW(
-            [p for p in model.parameters() if p.requires_grad], lr=cfg.lr
-        )
-
-        f1 = generic_train_loop(
-            model, loaders["src_loader"], loaders["tgt_val_loader"],
-            optimizer, None, min(cfg.epochs, 10), 3, DEVICE,
-            model_name, src, tgt,
-        )
-        test_f1 = generic_evaluate(model, loaders["tgt_full_loader"], DEVICE)
-        save_result(model_name, setting, src, tgt, test_f1)
-        print(f"[DONE] {model_name} {src}→{tgt}: F1={test_f1:.2f}")
-        del model, base; gc.collect(); torch.cuda.empty_cache()
-        return test_f1
-
-    except Exception as e:
-        print(f"[ERROR] {model_name} {src}→{tgt}: {e}")
-        traceback.print_exc()
-        return 0.0
-
-
-# ══════════════════════════════════════════════════════════════════════════
-# LLM-KGKAN (Main model)
-# ══════════════════════════════════════════════════════════════════════════
-
-def train_llm_kgkan(src, tgt, setting="standard", k_shot=None, kg=None,
-                    variant="full"):
-    """Train the main LLM-KGKAN model."""
-    model_name = "llm_kgkan"
-    if checkpoint_exists(model_name, src, tgt, variant):
-        print(f"[SKIP] {model_name}/{variant} {src}→{tgt} checkpoint exists")
-        return 0.0
-
-    set_seed()
-    try:
-        from config import LLMKGKANConfig
-        from model import LLMKGKAN
-        from data import collate_fn as kgkan_collate
-        from utils import build_datasets
-
-        cfg = LLMKGKANConfig()
-        cfg.llm_name = "meta-llama/Meta-Llama-3-8B-Instruct"
-        if kg is not None:
-            cfg.num_entities = len(kg.ent2id)
-            cfg.num_kg_relations = len(kg.rel2id)
-
-        # Build datasets using the project's own data pipeline
-        src_data, tgt_data = build_datasets(cfg, kg, src, tgt, k_shot)
-        tgt_train, tgt_val = split_dataset(tgt_data)
-
-        src_loader = DataLoader(src_data, batch_size=cfg.batch_size,
-                               shuffle=True, collate_fn=kgkan_collate)
-        val_loader = DataLoader(tgt_val, batch_size=cfg.batch_size,
-                               collate_fn=kgkan_collate)
-        test_loader = DataLoader(tgt_data, batch_size=cfg.batch_size,
-                                collate_fn=kgkan_collate)
-
-        model = LLMKGKAN(cfg).to(DEVICE)
-        optimizer = torch.optim.AdamW(
-            [p for p in model.parameters() if p.requires_grad], lr=cfg.lr
-        )
-        scaler = torch.amp.GradScaler("cuda")
-        best_f1 = 0.0
-        patience_counter = 0
-
-        for epoch in range(cfg.epochs):
-            model.train()
-            total_loss = 0
-            for batch in src_loader:
-                batch = {k: v.to(DEVICE) if isinstance(v, torch.Tensor) else v
-                         for k, v in batch.items()}
-                optimizer.zero_grad()
-                with torch.amp.autocast("cuda", dtype=torch.float16):
-                    out = model(batch)
-                    loss = out["loss"]
-                scaler.scale(loss).backward()
-                scaler.unscale_(optimizer)
-                torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
-                scaler.step(optimizer)
-                scaler.update()
-                total_loss += loss.item()
-
-            # Validate
-            val_f1 = generic_evaluate(model, val_loader, DEVICE)
-            print(f"  Epoch {epoch+1}/{cfg.epochs} loss={total_loss:.4f} val_f1={val_f1:.2f}")
-
-            if val_f1 > best_f1:
-                best_f1 = val_f1
-                patience_counter = 0
-                save_checkpoint(model, optimizer, epoch, best_f1, model_name, src, tgt, variant)
-            else:
-                patience_counter += 1
-            if patience_counter >= cfg.patience:
-                print("  Early stopping")
+        except queue.Empty:
+            if p.poll() is not None:
                 break
 
-        # Test
-        test_f1 = generic_evaluate(model, test_loader, DEVICE)
-        save_result(model_name if variant == "full" else f"{model_name}_{variant}",
-                   setting, src, tgt, test_f1)
-        print(f"[DONE] {model_name}/{variant} {src}→{tgt}: F1={test_f1:.2f}")
-        del model; gc.collect(); torch.cuda.empty_cache()
-        return test_f1
+    p.wait()
 
+    return ''.join(output)
+
+
+@contextlib.contextmanager
+def _temp_env(path):
+    old_cwd = os.getcwd()
+    sys.path.insert(0, path)
+    os.chdir(path)
+    try:
+        yield
+    finally:
+        os.chdir(old_cwd)
+        if path in sys.path:
+            sys.path.remove(path)
+        for m in ["config", "model", "train", "data", "utils", "metrics", "models", "main"]:
+            if m in sys.modules:
+                del sys.modules[m]
+
+# ═══════════════════════════════════════════
+# AHF — BiLSTM (gitclones/AHF/)
+# ═══════════════════════════════════════════
+def train_ahf(src, tgt, setting="standard", k_shot=None):
+    if _done("ahf",setting,src,tgt): return
+    ensure_converted("ahf", src, tgt)
+    ahf = os.path.join(GITCLONES_DIR, "AHF")
+    with _temp_env(ahf):
+        set_seed()
+        try:
+            from data import load_transfer_pair
+            from train import train_one_pair
+            st, sv, tt, te, w2id, p2id, emb = load_transfer_pair(DL[src], DL[tgt])
+            if k_shot and k_shot > 0: tt = tt[:k_shot*3]
+            tp, tr, tf1 = train_one_pair(st, sv, tt, te, w2id, p2id, emb, f"{src}_{tgt}")
+            save_result("ahf", setting, src, tgt, tf1 * 100)
+            print(f"[OK] ahf {src}->{tgt}: F1={tf1*100:.2f}")
+        except Exception as e:
+            print(f"[ERR] ahf {src}->{tgt}: {e}"); traceback.print_exc()
+    gc.collect(); torch.cuda.empty_cache()
+
+# ═══════════════════════════════════════════
+# TransProto — subprocess
+# ═══════════════════════════════════════════
+def train_transproto(src, tgt, setting="standard", k_shot=None):
+    if _done("transproto",setting,src,tgt): return
+    ensure_converted("transproto", src, tgt)
+    tp = os.path.join(GITCLONES_DIR, "TransProto")
+    data_dir = os.path.join(tp, "data", "cross_domain")
+    out = os.path.join(SAVED_MODELS_DIR, "transproto", f"{src}_{tgt}")
+    os.makedirs(out, exist_ok=True)
+    cmd = [sys.executable, os.path.join(tp, "train_bert_bridge.py"),
+           "--source", DL[src], "--target", DL[tgt],
+           "--bert_type", "bert-base-uncased",
+           "--seed", str(SEED), "--num_epoch", "30", "--batch_size", "32"]
+    try:
+        # Check for legacy dependency used by TransProto
+        try:
+            import pytorch_pretrained_bert
+        except ImportError:
+            print("[TRANSPROTO] Installing missing legacy dependency: pytorch-pretrained-bert")
+            subprocess.check_call([sys.executable, "-m", "pip", "install", "pytorch-pretrained-bert"])
+        
+        out = run_and_stream(cmd, cwd=tp, timeout=7200)
+        f1 = _parse_f1(out)
+        if f1:
+            save_result("transproto", setting, src, tgt, f1)
+            print(f"[OK] transproto {src}->{tgt}: F1={f1:.2f}")
+        else:
+            print(f"[ERR] transproto {src}->{tgt}: No F1 found in logs")
     except Exception as e:
-        print(f"[ERROR] {model_name}/{variant} {src}→{tgt}: {e}")
-        traceback.print_exc()
-        return 0.0
+        print(f"[ERR] transproto {src}->{tgt}: {e}")
 
+# ═══════════════════════════════════════════
+# BGCA — T5 subprocess
+# ═══════════════════════════════════════════
+def train_bgca(src, tgt, setting="standard", k_shot=None):
+    if _done("bgca",setting,src,tgt): return
+    ensure_converted("bgca", src, tgt)
+    bgca = os.path.join(GITCLONES_DIR, "BGCA", "code")
+    pair_dir = os.path.join(GITCLONES_DIR, "BGCA", "data", "cross_domain", f"{DL[src]}-{DL[tgt]}")
+    cmd = [sys.executable, os.path.join(bgca, "main.py"),
+           "--task", "uabsa", "--dataset", pair_dir,
+           "--paradigm", "extraction-universal", "--model_name_or_path", "t5-base",
+           "--do_train", "--do_eval", "--train_by_pair",
+           "--num_train_epochs", "20", "--train_batch_size", "16",
+           "--learning_rate", "3e-4", "--seed", str(SEED), "--n_runs", "1"]
+    try:
+        try:
+            import editdistance
+        except ImportError:
+            print("[BGCA] Installing missing dependency: editdistance")
+            subprocess.check_call([sys.executable, "-m", "pip", "install", "editdistance"])
+            
+        out = run_and_stream(cmd, cwd=bgca, timeout=7200)
+        f1 = _parse_f1(out)
+        if f1:
+            save_result("bgca", setting, src, tgt, f1)
+            print(f"[OK] bgca {src}->{tgt}: F1={f1:.2f}")
+        else:
+            print(f"[ERR] bgca {src}->{tgt}: No F1 found in logs")
+    except Exception as e:
+        print(f"[ERR] bgca {src}->{tgt}: {e}")
 
-# ══════════════════════════════════════════════════════════════════════════
+# ═══════════════════════════════════════════
+# KETGM — BERT + R-GCN
+# ═══════════════════════════════════════════
+def train_ketgm(src, tgt, setting="standard", k_shot=None):
+    if _done("ketgm",setting,src,tgt): return
+    ensure_converted("ketgm", src, tgt)
+    kd = os.path.join(GITCLONES_DIR, "KETGM")
+    with _temp_env(kd):
+        set_seed()
+        try:
+            from config import Config as KC
+            from utils import ABSADataset as KDS, collate_fn as kcf
+            from models import KETGM as KM
+            from train import run as krun
+            from torch.utils.data import DataLoader
+            from transformers import BertTokenizerFast
+
+            cfg = KC(); cfg.source_domain = DL[src]; cfg.target_domain = DL[tgt]
+            data_path = os.path.join(kd, "data")
+            device = torch.device(DEVICE)
+            tok = BertTokenizerFast.from_pretrained(cfg.bert_model if hasattr(cfg,'bert_model') else "bert-base-uncased")
+            
+            # Load converted JSON data
+            import json as jj
+            src_data = jj.load(open(os.path.join(data_path, f"{DL[src]}.json")))
+            tgt_data = jj.load(open(os.path.join(data_path, f"{DL[tgt]}.json")))
+            train_s = [s for s in src_data if s["split"]=="train"]
+            test_t = [s for s in tgt_data if s["split"]=="test"]
+            
+            from utils import build_tag_vocabs
+            pos2id, dep2id = build_tag_vocabs(train_s + test_t)
+            if not pos2id: pos2id = {"NN":0}
+            if not dep2id: dep2id = {"dep":0}
+            
+            from topic_extraction import extract_topics
+            from knowledge_graph import run as kg_run
+            from pretrain_rgcn import run as rgcn_run
+            import spacy
+            
+            cfg.CONCEPTNET_CSV_GZ = os.path.join(ROOT, "knowledge_graphs", "conceptnet-assertions-5.7.0.csv")
+            cfg.CONCEPTNET_EN_PKL = os.path.join(ROOT, "knowledge_graphs", "conceptnet_en_ketgm.pkl")
+            
+            print(f"[KETGM] Extracting topics for {src}->{tgt}...")
+            texts = [s.get("text", " ".join(s["tokens"])) for s in train_s + test_t]
+            topic_words = extract_topics(texts, num_topics=cfg.NUM_TOPICS, words_per_topic=cfg.WORDS_PER_TOPIC)
+            
+            print(f"[KETGM] Building knowledge graph...")
+            try: nlp = spacy.load("en_core_web_sm", disable=["ner", "lemmatizer"])
+            except: 
+                subprocess.check_call([sys.executable, "-m", "spacy", "download", "en_core_web_sm"])
+                nlp = spacy.load("en_core_web_sm", disable=["ner", "lemmatizer"])
+            
+            kg_out = kg_run(train_s, test_t, topic_words, nlp, config=cfg)
+            kg_data = kg_out["kg"]
+            
+            print(f"[KETGM] Pre-training R-GCN...")
+            rgcn_out = rgcn_run(kg_data, device, config=cfg)
+            
+            result = krun(train_s, test_t, pos2id, dep2id, kg_data, 
+                          rgcn_out["all_tc"], rgcn_out["topic_tc"], device, config=cfg)
+            f1 = result if isinstance(result,(int,float)) else result.get("best_f1", result.get("f1",0))
+            if f1 < 1: f1 *= 100
+            save_result("ketgm", setting, src, tgt, f1)
+            print(f"[OK] ketgm {src}->{tgt}: F1={f1:.2f}")
+        except Exception as e:
+            print(f"[ERR] ketgm {src}->{tgt}: {e}"); traceback.print_exc()
+    gc.collect(); torch.cuda.empty_cache()
+
+# ═══════════════════════════════════════════
+# DALM — GPT-2
+# ═══════════════════════════════════════════
+def train_dalm(src, tgt, setting="standard", k_shot=None):
+    if _done("dalm",setting,src,tgt): return
+    ensure_converted("dalm", src, tgt)
+    dalm_root = os.path.join(GITCLONES_DIR, "DALM")
+    dalm_lm = os.path.join(dalm_root, "GPT2_based", "cross_domain_LM")
+    pair_dir = os.path.join(dalm_lm, "process_data", f"{DL[src]}-{DL[tgt]}")
+    
+    # DALM expects "rest" instead of "restaurant" for its native dataset files
+    dalm_src = "rest" if DL[src] == "restaurant" else DL[src]
+    dalm_tgt = "rest" if DL[tgt] == "restaurant" else DL[tgt]
+    
+    # 1. Train cross-domain LM
+    cmd1 = [sys.executable, os.path.join(dalm_lm, "train.py"),
+           "--input_dir", os.path.join(pair_dir, "final_train.txt"),
+           "--model_dir", os.path.join(dalm_root, "GPT2_based", "models"),
+           "--source_domain", dalm_src, "--target_domain", dalm_tgt,
+           "--seed", str(SEED), "--max_seq_length", "100",
+           "--train_batch_size", "32", "--learning_rate", "3e-4",
+           "--num_train_epochs", "20"]
+    
+    # 2. Generate pseudo labels
+    cmd2 = [sys.executable, os.path.join(dalm_lm, "generate.py"),
+            "--target", dalm_tgt, "--source", dalm_src, "--generate_number", "10000"]
+    # 2.5 Train source-only model to filter pseudo labels
+    cmd_pseudo = [sys.executable, os.path.join(dalm_root, "absa", "pseudo_labeling.py"), "--task", "absa",
+                  "--domain_pair", f"{dalm_src}-{dalm_tgt}", "--model_name_or_path", "bert-base-uncased",
+                  "--output_dir", os.path.join(dalm_root, "pseudo_outputs"),
+                  "--do_train", "--do_pseudo_labeling"]
+    
+    # 3. Filter pseudo labels
+    cmd3 = [sys.executable, os.path.join(dalm_root, "absa", "filter.py"), "--task", "absa",
+            "--domain_pair", f"{dalm_src}-{dalm_tgt}", "--model_name_or_path", "bert-base-uncased",
+            "--do_filter", "--output_dir", os.path.join(dalm_root, "GPT2_based", "generated_data")]
+            
+    # 4. Train ABSA model
+    cmd4 = [sys.executable, os.path.join(dalm_root, "absa", "main.py"), "--task", "absa",
+            "--domain_pair", f"{dalm_src}-{dalm_tgt}", "--model_name_or_path", "bert-base-uncased",
+            "--data_path", os.path.join(dalm_root, "GPT2_based", "generated_data", f"{dalm_src}-{dalm_tgt}", "filter.txt"),
+            "--output_dir", os.path.join(dalm_root, "GPT2_based", "main_outputs"),
+            "--do_train", "--do_eval"]
+
+    try:
+        run_and_stream(cmd1, cwd=dalm_root, timeout=7200)
+        run_and_stream(cmd2, cwd=dalm_root, timeout=7200)
+        run_and_stream(cmd_pseudo, cwd=dalm_root, timeout=7200)
+        run_and_stream(cmd3, cwd=dalm_root, timeout=7200)
+        out = run_and_stream(cmd4, cwd=dalm_root, timeout=7200)
+        
+        f1 = _parse_f1(out)
+        if f1 is not None:
+            save_result("dalm", setting, src, tgt, f1)
+            print(f"[OK] dalm {src}->{tgt}: F1={f1:.2f}")
+        else:
+            print(f"[ERR] dalm {src}->{tgt}: No F1 found in logs")
+    except Exception as e:
+        print(f"[ERR] dalm {src}->{tgt}: {e}")
+
+# ═══════════════════════════════════════════
+# LLMSynABSA — LLaMA-3
+# ═══════════════════════════════════════════
+def train_llmsynabsa(src, tgt, setting="standard", k_shot=None):
+    if _done("llmsynabsa",setting,src,tgt): return
+    lsa = os.path.join(GITCLONES_DIR, "LLMSynABSA")
+    with _temp_env(lsa):
+        set_seed()
+        try:
+            from model import LLMSynABSA as LSA
+            from transformers import AutoTokenizer
+            device = torch.device(DEVICE)
+            tok_args = {"token": HF_TOKEN} if HF_TOKEN else {}
+            tok = AutoTokenizer.from_pretrained("meta-llama/Meta-Llama-3-8B-Instruct", **tok_args)
+            if tok.pad_token is None: tok.pad_token = tok.eos_token
+            model = LSA("meta-llama/Meta-Llama-3-8B-Instruct").to(device)
+            for n, p in model.named_parameters():
+                if p.device != device: p.data = p.data.to(device)
+            # Use our unified data loading
+            from scripts.data_utils import build_dataloaders
+            from functools import partial
+            from scripts.data_utils import collate_for_bert
+            collate = partial(collate_for_bert, tokenizer=tok, max_len=96)
+            loaders = build_dataloaders(src, tgt, tok, 96, 8, k_shot=k_shot, collate_fn=collate)
+            opt = torch.optim.AdamW([p for p in model.parameters() if p.requires_grad], lr=5e-5)
+            best = 0
+            for ep in range(10):
+                model.train()
+                for i, batch in enumerate(loaders["src_loader"]):
+                    opt.zero_grad()
+                    ids = batch["input_ids"].to(device); mask = batch["attention_mask"].to(device)
+                    labels = batch["labels"].to(device)
+                    texts = batch["texts"]
+                    out = model(ids, mask, texts, {}); logits = out if isinstance(out, torch.Tensor) else out[0]
+                    loss = torch.nn.functional.cross_entropy(
+                        logits.view(-1, NUM_LABELS), labels.view(-1), ignore_index=IGNORE_INDEX)
+                    loss.backward(); opt.step()
+                    if i % 10 == 0: print(f"    Batch {i} Loss: {loss.item():.4f}")
+                model.eval(); ap, al = []
+                with torch.no_grad():
+                    for b in loaders["tgt_val_loader"]:
+                        ids = b["input_ids"].to(device); mask = b["attention_mask"].to(device)
+                        texts = b["texts"]
+                        out = model(ids, mask, texts, {}); lg = out if isinstance(out, torch.Tensor) else out[0]
+                        ap.append(lg.cpu()); al.append(b["labels"])
+                if ap:
+                    f1 = compute_macro_f1(torch.cat(ap), torch.cat(al))
+                    if f1 > best: best = f1
+                    print(f"  Ep {ep+1}: F1={f1:.2f}")
+            save_result("llmsynabsa", setting, src, tgt, best)
+            print(f"[OK] llmsynabsa {src}->{tgt}: F1={best:.2f}")
+        except Exception as e:
+            print(f"[ERR] llmsynabsa {src}->{tgt}: {e}"); traceback.print_exc()
+    gc.collect(); torch.cuda.empty_cache()
+
+# ═══════════════════════════════════════════
+# KGAN — subprocess
+# ═══════════════════════════════════════════
+def train_kgan(src, tgt, setting="standard", k_shot=None):
+    if _done("kgan",setting,src,tgt): return
+    ensure_converted("kgan", src, tgt)
+    kgan = os.path.join(GITCLONES_DIR, "KGAN")
+    # KGAN needs cross-domain: train on src, test on tgt
+    cmd = [sys.executable, os.path.join(kgan, "main_total.py"),
+           "-model", "KGNN", "-ds_name", DL[src],
+           "-is_bert", "2", "-bs", "32", "-n_epoch", "20",
+           "-learning_rate", "0.00003"]
+    try:
+        try:
+            import spacy
+            spacy.load("en_core_web_lg")
+        except Exception:
+            print("[KGAN] Installing missing spaCy model: en_core_web_lg")
+            subprocess.check_call([sys.executable, "-m", "spacy", "download", "en_core_web_lg"])
+            
+        out = run_and_stream(cmd, cwd=kgan, timeout=7200)
+        f1 = _parse_f1(out)
+        if f1:
+            save_result("kgan", setting, src, tgt, f1)
+            print(f"[OK] kgan {src}->{tgt}: F1={f1:.2f}")
+        else:
+            print(f"[ERR] kgan {src}->{tgt}: No F1 found in logs")
+    except Exception as e:
+        print(f"[ERR] kgan {src}->{tgt}: {e}")
+
+# ═══════════════════════════════════════════
+# SenticGCN — subprocess
+# ═══════════════════════════════════════════
+def train_senticgcn(src, tgt, setting="standard", k_shot=None):
+    if _done("senticgcn",setting,src,tgt): return
+    ensure_converted("senticgcn", src, tgt)
+    sgcn = os.path.join(GITCLONES_DIR, "Sentic-GCN")
+    ds_dir = os.path.join(sgcn, "datasets", "custom")
+    # Train on src, test on tgt
+    cmd = [sys.executable, os.path.join(sgcn, "train_bert.py"),
+           "--model_name", "senticgcn_bert",
+           "--dataset", f"custom/{DL[src]}",
+           "--seed", str(SEED), "--num_epoch", "30", "--batch_size", "16",
+           "--lr", "2e-5", "--pretrained_bert_name", "bert-base-uncased"]
+    try:
+        try:
+            import ipdb
+        except ImportError:
+            print("[SenticGCN] Installing missing dependency: ipdb")
+            subprocess.check_call([sys.executable, "-m", "pip", "install", "ipdb"])
+            
+        out = run_and_stream(cmd, cwd=sgcn, timeout=3600)
+        f1 = _parse_f1(out)
+        if f1:
+            save_result("senticgcn", setting, src, tgt, f1)
+            print(f"[OK] senticgcn {src}->{tgt}: F1={f1:.2f}")
+        else:
+            print(f"[ERR] senticgcn {src}->{tgt}: No F1 found in logs")
+    except Exception as e:
+        print(f"[ERR] senticgcn {src}->{tgt}: {e}")
+
+# ═══════════════════════════════════════════
+# BERT-UDA — inline BERT baseline
+# ═══════════════════════════════════════════
+def train_bert_uda(src, tgt, setting="standard", k_shot=None):
+    if _done("bert_uda",setting,src,tgt): return
+    set_seed()
+    import torch.nn as nn, torch.nn.functional as F
+    from transformers import BertModel, BertTokenizerFast
+    from scripts.data_utils import build_dataloaders, collate_for_bert
+    from functools import partial
+    tok = BertTokenizerFast.from_pretrained("bert-base-uncased")
+    collate = partial(collate_for_bert, tokenizer=tok, max_len=128)
+    loaders = build_dataloaders(src, tgt, tok, 128, 32, k_shot=k_shot, collate_fn=collate)
+    dev = torch.device(DEVICE)
+
+    class Labeler(nn.Module):
+        def __init__(self):
+            super().__init__()
+            self.bert = BertModel.from_pretrained("bert-base-uncased")
+            self.head = nn.Linear(768, NUM_LABELS); self.drop = nn.Dropout(0.1)
+        def forward(self, ids, mask, labels=None):
+            h = self.drop(self.bert(input_ids=ids, attention_mask=mask).last_hidden_state)
+            logits = self.head(h)
+            loss = F.cross_entropy(logits.view(-1, NUM_LABELS), labels.view(-1),
+                                   ignore_index=IGNORE_INDEX) if labels is not None else None
+            return loss, logits
+
+    model = Labeler().to(dev); opt = torch.optim.AdamW(model.parameters(), lr=2e-5)
+    best = 0
+    for ep in range(15):
+        model.train()
+        for batch in loaders["src_loader"]:
+            opt.zero_grad()
+            loss, _ = model(batch["input_ids"].to(dev), batch["attention_mask"].to(dev),
+                           batch["labels"].to(dev))
+            loss.backward(); opt.step()
+        model.eval(); ap, al = [], []
+        with torch.no_grad():
+            for b in loaders["tgt_val_loader"]:
+                _, lg = model(b["input_ids"].to(dev), b["attention_mask"].to(dev))
+                ap.append(lg.cpu()); al.append(b["labels"])
+        if ap:
+            f1 = compute_macro_f1(torch.cat(ap), torch.cat(al))
+            if f1 > best: best = f1
+    save_result("bert_uda", setting, src, tgt, best)
+    print(f"[OK] bert_uda {src}->{tgt}: F1={best:.2f}")
+    del model; gc.collect(); torch.cuda.empty_cache()
+
+# ═══════════════════════════════════════════
+# LLM-KGKAN — main model
+# ═══════════════════════════════════════════
+def train_llm_kgkan(src, tgt, setting="standard", k_shot=None, kg=None, variant="full"):
+    display = f"llm_kgkan{'_'+variant if variant!='full' else ''}"
+    if _done(display, setting, src, tgt): return
+    set_seed()
+    try:
+        sys.path.insert(0, ROOT)
+        from config import LLMKGKANConfig
+        from model import LLMKGKAN
+        from data import ABSADataset as DS, collate_fn as cf
+        from torch.utils.data import DataLoader
+        import torch.nn as nn
+        dev = torch.device(DEVICE)
+        cfg = LLMKGKANConfig()
+        if kg:
+            cfg.num_entities = len(kg.ent2id)
+            cfg.num_kg_relations = len(kg.rel2id)
+        model = LLMKGKAN(cfg)
+        for n, m in model.named_modules():
+            if 'backbone' not in n: m.to(dev)
+        if variant == "wo_kg":
+            for p in model.kg.parameters(): p.requires_grad_(False); p.zero_()
+        elif variant == "wo_syn":
+            for p in model.syntax.parameters(): p.requires_grad_(False); p.zero_()
+        elif variant == "wo_arg":
+            class IdentityARG(nn.Module):
+                def forward(self, z, sem, syn, rel): return z
+            model.arg = IdentityARG().to(dev)
+        elif variant == "wo_kan":
+            d = cfg.hidden_size
+            class ConcatMLPFusion(nn.Module):
+                def __init__(self, d):
+                    super().__init__()
+                    self.mlp = nn.Sequential(
+                        nn.Linear(d * 3, d),
+                        nn.GELU(),
+                        nn.Dropout(cfg.dropout)
+                    )
+                    self.norm = nn.LayerNorm(d)
+                def forward(self, sem, syn, rel):
+                    z = self.mlp(torch.cat([sem, syn, rel], dim=-1))
+                    return self.norm(z)
+            model.fusion = ConcatMLPFusion(d).to(dev)
+        opt = torch.optim.AdamW([p for p in model.parameters() if p.requires_grad], lr=cfg.lr)
+        sds = DS(DOMAIN_FILES[src], cfg, kg); tds = DS(DOMAIN_FILES[tgt], cfg, kg)
+        sl = DataLoader(sds, batch_size=cfg.batch_size, shuffle=True, collate_fn=cf)
+        tl = DataLoader(tds, batch_size=cfg.batch_size, collate_fn=cf)
+        scaler = torch.amp.GradScaler("cuda"); best = 0
+        for ep in range(cfg.epochs):
+            model.train()
+            for i, batch in enumerate(sl):
+                batch = {k: v.to(dev) if isinstance(v, torch.Tensor) else v for k, v in batch.items()}
+                opt.zero_grad()
+                with torch.amp.autocast("cuda"):
+                    out = model(batch); loss = out["loss"]
+                scaler.scale(loss).backward()
+                scaler.unscale_(opt); torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+                scaler.step(opt); scaler.update()
+                if i % 10 == 0: print(f"    Batch {i} Loss: {loss.item():.4f}")
+            model.eval(); ap, al = [], []
+            with torch.no_grad():
+                for b in tl:
+                    b = {k: v.to(dev) if isinstance(v, torch.Tensor) else v for k, v in b.items()}
+                    with torch.amp.autocast("cuda"): o = model(b)
+                    ap.append(o["logits"].cpu()); al.append(b["labels"].cpu())
+            f1 = compute_macro_f1(torch.cat(ap), torch.cat(al))
+            if f1 > best: best = f1
+            print(f"  Ep {ep+1}: F1={f1:.2f} best={best:.2f}")
+        save_result(display, setting, src, tgt, best)
+        del model; gc.collect(); torch.cuda.empty_cache()
+    except Exception as e:
+        print(f"[ERR] {display} {src}->{tgt}: {e}"); traceback.print_exc()
+
+# ═══════════════════════════════════════════
 # DISPATCHER
-# ══════════════════════════════════════════════════════════════════════════
-
+# ═══════════════════════════════════════════
 TRAINERS = {
-    "bert_uda":    train_bert_uda,
-    "ahf":         train_ahf,
-    "transproto":  train_transproto,
-    "bgca":        train_bgca,
-    "ketgm":       train_ketgm,
-    "dalm":        train_dalm,
-    "llmsynabsa":  train_llmsynabsa,
-    "kgan":        train_kgan,
-    "senticgcn":   train_senticgcn,
-    "llm_kgkan":   train_llm_kgkan,
+    "bert_uda": train_bert_uda, "ahf": train_ahf,
+    "transproto": train_transproto, "bgca": train_bgca,
+    "ketgm": train_ketgm, "dalm": train_dalm,
+    "llmsynabsa": train_llmsynabsa, "kgan": train_kgan,
+    "senticgcn": train_senticgcn, "llm_kgkan": train_llm_kgkan,
 }
 
-def train_model(model_name, src, tgt, setting="standard", k_shot=None, **kwargs):
-    """Dispatch to the correct trainer. Returns Macro-F1 or 0.0 on error."""
-    trainer = TRAINERS.get(model_name)
-    if trainer is None:
-        print(f"[WARN] No trainer for {model_name}")
-        return 0.0
-    try:
-        return trainer(src, tgt, setting=setting, k_shot=k_shot, **kwargs)
-    except Exception as e:
-        print(f"[ERROR] {model_name} {src}→{tgt}: {e}")
-        traceback.print_exc()
-        return 0.0
+def train_model(name, src, tgt, setting="standard", k_shot=None, **kw):
+    t = TRAINERS.get(name)
+    if not t: print(f"[WARN] No trainer for {name}"); return
+    t(src, tgt, setting=setting, k_shot=k_shot, **kw)
 
-def load_result_or_none(model_name, setting, src, tgt):
-    from scripts.evaluate import load_result
-    return load_result(model_name, setting, src, tgt)
-
-def train_all_models_on_pairs(models, pairs, setting="standard", k_shot=None, **kwargs):
-    """Train all models on all pairs. Returns {model: {pair: f1}}."""
-    results = {}
-    for model_name in models:
-        results[model_name] = {}
-        for src, tgt in pairs:
-            print(f"\n{'='*60}")
-            print(f"Training {model_name}: {src} → {tgt} ({setting})")
-            print(f"{'='*60}")
-            f1 = train_model(model_name, src, tgt, setting, k_shot, **kwargs)
-            results[model_name][f"{src}->{tgt}"] = f1
-    return results
+def train_all_models_on_pairs(models, pairs, setting="standard", k_shot=None, **kw):
+    for mn in models:
+        for s, t in pairs:
+            print(f"\n{'='*50}\n{mn}: {s} -> {t} ({setting})\n{'='*50}")
+            train_model(mn, s, t, setting, k_shot, **kw)

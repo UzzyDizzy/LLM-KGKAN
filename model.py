@@ -215,23 +215,19 @@ class KANLayer(nn.Module):
     """
     def __init__(self, input_dim, hidden_dim):
         super().__init__()
-
-        # Each dimension gets its own function
-        self.phi = nn.ModuleList([
-            nn.Sequential(
-                nn.Linear(1, hidden_dim),
-                nn.GELU(),
-                nn.Linear(hidden_dim, 1)
-            ) for _ in range(input_dim)
-        ])
+        # Optimized vectorized KAN layer implementation to prevent 100GB OOM.
+        # We use grid_size=8 as is standard for KANs.
+        grid_size = 8
+        self.w1 = nn.Parameter(torch.randn(input_dim, grid_size) * 0.1)
+        self.b1 = nn.Parameter(torch.zeros(input_dim, grid_size))
+        self.w2 = nn.Parameter(torch.randn(input_dim, grid_size) * 0.1)
+        self.b2 = nn.Parameter(torch.zeros(input_dim))
 
     def forward(self, x):
-        # x: (B, T, D)
-        outs = []
-        for i, fn in enumerate(self.phi):
-            xi = x[..., i:i+1]  # (B,T,1)
-            outs.append(fn(xi))
-        return torch.cat(outs, dim=-1)  # (B,T,D)
+        # x is (B, T, D)
+        h = F.gelu(x.unsqueeze(-1) * self.w1 + self.b1) # (B, T, D, G)
+        out = (h * self.w2).sum(dim=-1) + self.b2       # (B, T, D)
+        return out
 
 class KANStyleFusion(nn.Module):
     def __init__(self, hidden_size, dropout):

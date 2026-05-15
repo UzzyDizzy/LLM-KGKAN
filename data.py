@@ -41,6 +41,14 @@ class ABSADataset(Dataset):
     def __len__(self):
         return len(self.data)
 
+    @staticmethod
+    def normalize_text(text):
+        """Normalize text for KG entity matching."""
+        import re
+        text = text.lower().strip()
+        text = re.sub(r'[^a-z0-9\s]', '', text)
+        return text
+
     def build_dep_graph(self, doc):
         # 🔥 truncate safely
         doc = doc[:self.max_len]
@@ -82,10 +90,10 @@ class ABSADataset(Dataset):
         return adj_padded, rel_padded
 
     def __getitem__(self, idx):
-        tokens, aspects, sentiments, starts, ends = self.data[idx]
+        text, aspects, sentiments, starts, ends = self.data[idx]
 
         # ---- TOKENIZATION (SPACY) ----
-        doc = nlp(" ".join(tokens))
+        doc = nlp(text if isinstance(text, str) else " ".join(text))
 
         # 🔥 TRUNCATE DOC TO max_len
         doc = doc[:self.max_len]

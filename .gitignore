@@ -2,5 +2,6 @@ myenv
 **/__pycache__/**
 /**__pycache__**/
 .env.local
-gitclones
-knowledge_graphs
+knowledge_graphs/conceptnet-assertions-5.7.0.csv.gz
+#gitclones
+#knowledge_graphs

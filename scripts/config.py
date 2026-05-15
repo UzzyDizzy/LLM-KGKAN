@@ -52,6 +52,9 @@ def load_env():
 load_env()
 
 HF_TOKEN      = os.environ.get("HF_TOKEN", "")
+if not HF_TOKEN and "HF_TOKEN" in os.environ:
+    del os.environ["HF_TOKEN"]
+
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "")
 ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")   # placeholder
 GOOGLE_API_KEY    = os.environ.get("GOOGLE_API_KEY", "")      # placeholder
@@ -396,6 +399,7 @@ API_MODELS = {
     "gpt-4-turbo":    {"provider": "openai", "model": "gpt-4-turbo",   "key_env": "OPENAI_API_KEY"},
     "gpt-4.1":        {"provider": "openai", "model": "gpt-4.1",       "key_env": "OPENAI_API_KEY"},
     "gpt-4.1-mini":   {"provider": "openai", "model": "gpt-4.1-mini",  "key_env": "OPENAI_API_KEY"},
+    "gpt-5.4":        {"provider": "openai", "model": "gpt-5.4",       "key_env": "OPENAI_API_KEY"},
     "claude-sonnet":  {"provider": "anthropic", "model": "claude-sonnet-4-20250514", "key_env": "ANTHROPIC_API_KEY"},
     "gemini-2.5-pro": {"provider": "google", "model": "gemini-2.5-pro", "key_env": "GOOGLE_API_KEY"},
 }
@@ -472,19 +476,35 @@ def get_training_log_path(model_name: str, src: str, tgt: str,
 # TABLE / FIGURE REFERENCE NUMBERS
 # ══════════════════════════════════════════════════════════════════════════
 
-# Models that appear in each table
+# Models that appear in Table 1 (standard benchmark)
 TABLE1_MODELS = [
     "bert_uda", "ahf", "transproto", "bgca", "ketgm", "dalm",
     "llmsynabsa",
-    "kgan", "senticgcn",  # new models added
+    "kgan", "senticgcn",  # added baselines
     "gpt-4-turbo", "gpt-4o",
     "llama-3.1-8b-instruct", "qwen2.5-7b-instruct", "qwen2.5-14b-instruct",
     "llm_kgkan",
+    # Ablations (also in Table 1)
+    "llm_kgkan_wo_kg", "llm_kgkan_wo_syn",
+    "llm_kgkan_wo_arg", "llm_kgkan_wo_kan",
 ]
 
-TABLE3_MODELS = TABLE1_MODELS + [
-    "gpt-4.1", "claude-sonnet", "gemini-2.5-pro",
+# Models for Table 3 (few-shot + zero-shot)
+TABLE3_MODELS = [
+    "bert_uda", "ahf", "transproto", "bgca", "ketgm", "dalm",
+    "llmsynabsa",
+    "kgan", "senticgcn",
+    "gpt-4o", "gpt-4-turbo", "gpt-4.1", "gpt-5.4",
+    "claude-sonnet", "gemini-2.5-pro",
+    "llama-3.1-8b-instruct", "qwen2.5-7b-instruct", "qwen2.5-14b-instruct",
+    "llm_kgkan",
+    "llm_kgkan_wo_kg", "llm_kgkan_wo_syn",
+    "llm_kgkan_wo_arg", "llm_kgkan_wo_kan",
 ]
+
+# Models for Tables 6, 7 (detailed pairwise)
+TABLE6_MODELS = TABLE3_MODELS
+TABLE7_MODELS = TABLE3_MODELS
 
 # Display names for tables
 MODEL_DISPLAY_NAMES = {
@@ -494,12 +514,13 @@ MODEL_DISPLAY_NAMES = {
     "bgca":           "BGCA",
     "ketgm":          "KETGM",
     "dalm":           "DALM",
-    "llmsynabsa":     "LLM-Augment-Syn-DA",
+    "llmsynabsa":     "LLM-Augment-Syntax-DA",
     "kgan":           "KGAN",
     "senticgcn":      "SenticGCN",
     "gpt-4-turbo":    "GPT-4 Turbo",
     "gpt-4o":         "GPT-4o",
     "gpt-4.1":        "GPT-4.1",
+    "gpt-5.4":        "GPT-5.4",
     "claude-sonnet":  "Claude Sonnet",
     "gemini-2.5-pro": "Gemini 2.5 Pro",
     "llama-3.1-8b-instruct":  "LLaMA-3.1-8B-Instruct",
