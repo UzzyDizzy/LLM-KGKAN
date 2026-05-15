@@ -1,0 +1,6 @@
+myenv
+venv
+raw_corpora
+/**__pycache__**/
+saved_models
+embbeddings
