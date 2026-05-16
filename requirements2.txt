@@ -44,5 +44,5 @@ requests>=2.28.0
 # SenticGCN specific
 # lda  # optional for topic models
 
-
+stanza
 torchstat
