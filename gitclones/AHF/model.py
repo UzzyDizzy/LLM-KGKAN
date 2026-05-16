@@ -142,7 +142,7 @@ class DomainDiscriminator(nn.Module):
         score = self.vm(m).squeeze(-1)   # [B,T]
 
         if mask is not None:
-            score = score.masked_fill(mask == 0, -1e9)
+            score = score.masked_fill(mask == 0, -1e4)
 
         # Eq (5)
         alpha = F.softmax(score, dim=1)
