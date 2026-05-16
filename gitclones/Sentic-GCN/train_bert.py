@@ -126,8 +126,8 @@ class Instructor:
                 max_val_epoch = i_epoch
                 if not os.path.exists('state_dict'):
                     os.mkdir('state_dict')
-                #path = 'state_dict/{0}_{1}_val_acc_{2}'.format(self.opt.model_name, self.opt.dataset, round(val_acc, 4))
-                path = 'state_dict/{0}_{1}{2}'.format(self.opt.model_name, self.opt.dataset, ".pkl")
+                dataset_name = self.opt.dataset.replace('/', '_')
+                path = 'state_dict/{0}_{1}{2}'.format(self.opt.model_name, dataset_name, ".pkl")
                 torch.save(self.model.state_dict(), path)
                 logger.info('>> saved: {}'.format(path))
             if val_f1 > max_val_f1:
@@ -236,6 +236,24 @@ def main():
                 'test': './datasets/semeval16/restaurant_test.raw'                                                    
                 },
     }
+    if opt.dataset.startswith('custom/'):
+        domain = opt.dataset.split('/', 1)[1]
+        dataset_files[opt.dataset] = {
+            'train': './datasets/custom/{}_train.raw'.format(domain),
+            'test': './datasets/custom/{}_test.raw'.format(domain),
+        }
+
+        from dependency_graph import process as process_dependency_graph
+        from generate_sentic_graph import process as process_sentic_graph
+        from generate_sentic_dependency_graph import process as process_sentic_dependency_graph
+
+        for path in dataset_files[opt.dataset].values():
+            if not os.path.exists(path + '.graph'):
+                process_dependency_graph(path)
+            if not os.path.exists(path + '.sentic'):
+                process_sentic_graph(path)
+            if not os.path.exists(path + '.graph_sdat'):
+                process_sentic_dependency_graph(path)
     input_colses = {
         'senticgcn_bert': ['text_bert_indices', 'text_indices', 'aspect_indices', 'bert_segments_indices', 'left_indices', 'sdat_graph'],
     }
@@ -261,7 +279,7 @@ def main():
     opt.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu') \
         if opt.device is None else torch.device(opt.device)
 
-    log_file = '{}-{}-{}.log'.format(opt.model_name, opt.dataset, strftime("%y%m%d-%H%M", localtime()))
+    log_file = '{}-{}-{}.log'.format(opt.model_name, opt.dataset.replace('/', '_'), strftime("%y%m%d-%H%M", localtime()))
     logger.addHandler(logging.FileHandler(log_file))
 
     ins = Instructor(opt)

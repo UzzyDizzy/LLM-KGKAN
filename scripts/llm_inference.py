@@ -54,7 +54,7 @@ def estimate_cost(num_samples, avg_tokens=80, model="gpt-4o"):
     costs = COST_PER_1M.get(model, (5.0, 15.0))
     return (input_tok * costs[0] + output_tok * costs[1]) / 1_000_000
 
-def infer_openai(texts, model_name="gpt-4o", api_key=None):
+def infer_openai(texts, model_name="gpt-4o", api_key=None, tokens, few_shot_str):
     """Run OpenAI inference on a batch of texts."""
     global _total_spent
     try:
@@ -72,6 +72,10 @@ def infer_openai(texts, model_name="gpt-4o", api_key=None):
     client = OpenAI(api_key=api_key)
     results = []
 
+    import logging
+    logger = logging.getLogger()
+    logger.info(f"  [OpenAI] Starting inference on {len(texts)} texts")
+
     for text in texts:
         # Check cache
         cached = _load_cache(model_name, text)
@@ -85,7 +89,13 @@ def infer_openai(texts, model_name="gpt-4o", api_key=None):
             results.append(None)
             continue
 
-        prompt = BIO_PROMPT_TEMPLATE.format(sentence=text)
+        # Pass `tokens`, `num_tokens`, and `few_shot_str` to infer_openai
+        prompt = BIO_PROMPT_TEMPLATE.format(
+            few_shot_examples=few_shot_str,
+            tokens=json.dumps(tokens),
+            num_tokens=len(tokens)
+        )
+
         for attempt in range(API_BUDGET.max_retries):
             try:
                 resp = client.chat.completions.create(
@@ -108,7 +118,8 @@ def infer_openai(texts, model_name="gpt-4o", api_key=None):
                 break
             except Exception as e:
                 if attempt < API_BUDGET.max_retries - 1:
-                    time.sleep(API_BUDGET.retry_delay * (attempt + 1))
+                    logger.info(f"    [OpenAI] Rate limiting... (sleeping {60.0/API_BUDGET.requests_per_minute:.1f}s)")
+                    time.sleep(60.0 / API_BUDGET.requests_per_minute)
                 else:
                     print(f"[ERROR] {model_name} failed on: {text[:50]}... -> {e}")
                     results.append(None)
@@ -118,8 +129,25 @@ def infer_openai(texts, model_name="gpt-4o", api_key=None):
 
     return results
 
+import json
 def parse_bio_output(output_str, num_tokens):
     """Parse LLM output into BIO tag IDs."""
+    import logging
+    logger = logging.getLogger()
+    logger.info(f"    Raw LLM output: {output_str[:100]}")
+
+    if output_str is None:
+        return [LABEL2ID["O"]] * num_tokens
+        
+    try:
+        # Strip markdown codeblocks if LLM includes them
+        if "```" in output_str:
+            output_str = output_str.split("```json")[-1].split("```")[0]
+        
+        tags_str = json.loads(output_str.strip())
+
+    except json.JSONDecodeError:
+        tags_str = output_str.strip().split() # Fallback
     if output_str is None:
         return [LABEL2ID["O"]] * num_tokens
 
@@ -138,11 +166,24 @@ def parse_bio_output(output_str, num_tokens):
     tag_ids = tag_ids[:num_tokens]
     return tag_ids
 
-def run_api_inference(model_key, samples, batch_size=None):
+def run_api_inference(model_key, samples, train_samples=None, k_shot=0, batch_size=None):
     """
     Run API inference on samples. Returns list of tag_id lists.
     samples: list of dicts with 'text' and 'tokens' keys.
     """
+    import logging
+    logger = logging.getLogger()
+    logger.info(f"[API] Starting inference for {len(samples)} samples with {model_key}")
+    # 1. Build the few_shot_examples string from `train_samples`
+    few_shot_str = ""
+    if k_shot > 0 and train_samples:
+        import random
+        # Randomly sample k_shot examples from train set
+        shots = random.sample(train_samples, k_shot)
+        for shot in shots:
+            shot_tags = [ID2LABEL[tid] for tid in shot['tag_ids'][:len(shot['tokens'])]]
+            few_shot_str += f"Tokens: {json.dumps(shot['tokens'])}\nTags: {json.dumps(shot_tags)}\n\n"
+
     if batch_size is None:
         batch_size = API_BUDGET.batch_size
 
@@ -159,6 +200,7 @@ def run_api_inference(model_key, samples, batch_size=None):
     all_results = []
 
     for i in range(0, len(texts), batch_size):
+        logger.info(f"  [API] Processing batch {i//batch_size + 1}/{(len(texts)-1)//batch_size + 1}")
         batch = texts[i:i+batch_size]
         if provider == "openai":
             batch_results = infer_openai(batch, model_name, api_key)

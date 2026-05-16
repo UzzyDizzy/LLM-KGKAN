@@ -7,9 +7,13 @@ from model.rgat_file.read_dep_graph import *
 import json
 import random
 from pytorch_pretrained_bert import BertModel, BertTokenizer
-bert_tokenizer = BertTokenizer.from_pretrained(r'./bert-base-uncased/vocab.txt')
+
+def _local_or_hf(path, hf_name):
+    return path if os.path.exists(path) else hf_name
+
+bert_tokenizer = BertTokenizer.from_pretrained(_local_or_hf(r'./bert-base-uncased/vocab.txt', 'bert-base-uncased'))
 from transformers import RobertaTokenizer, RobertaModel
-roberta_tokenizer = RobertaTokenizer.from_pretrained(r'./roberta-base')
+roberta_tokenizer = RobertaTokenizer.from_pretrained(_local_or_hf(r'./roberta-base', 'roberta-base'))
 import copy
 
 def pad_dataset(dataset, bs):
@@ -659,16 +663,17 @@ def get_embedding(vocab, ds_name, args, types):
 
         if not os.path.exists(graph_pkl):
             graph_embeddings = np.zeros((len(vocab)+1, args.dim_k), dtype='float32')
-            with open(graph_file, encoding='utf-8') as fp:
-                for line in fp:
-                    eles = line.strip().split()
-                    w = eles[0]
-                    graph_emb += 1
-                    if w in vocab:
-                        try:
-                            graph_embeddings[vocab[w]] = [float(eles[i+1]) for i in range(args.dim_k)]
-                        except ValueError:
-                            pass
+            if os.path.exists(graph_file):
+                with open(graph_file, encoding='utf-8') as fp:
+                    for line in fp:
+                        eles = line.strip().split()
+                        w = eles[0]
+                        graph_emb += 1
+                        if w in vocab:
+                            try:
+                                graph_embeddings[vocab[w]] = [float(eles[i+1]) for i in range(args.dim_k)]
+                            except ValueError:
+                                pass
             pickle.dump(graph_embeddings, open(graph_pkl, 'wb'))
         else:
             graph_embeddings = pickle.load(open(graph_pkl, 'rb'))

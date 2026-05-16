@@ -343,6 +343,19 @@ class BERT_CRF(BertPreTrainedModel):
         self.dropout = torch.nn.Dropout(config.hidden_dropout_prob)
         self.classifier = torch.nn.Linear(config.hidden_size, config.num_labels)
         self.crf = CRF(config.num_labels, batch_first = True)
+        self._init_task_layers(config)
+
+    def _init_task_layers(self, config):
+        initializer_range = getattr(config, "initializer_range", 0.02)
+        torch.nn.init.normal_(self.classifier.weight, mean=0.0, std=initializer_range)
+        if self.classifier.bias is not None:
+            torch.nn.init.zeros_(self.classifier.bias)
+        self.crf.reset_parameters()
+
+    def _init_weights(self, module):
+        super()._init_weights(module)
+        if isinstance(module, CRF):
+            module.reset_parameters()
 
     def forward(self, input_ids, attention_mask=None, labels=None):
         outputs = self.bert(input_ids, attention_mask=attention_mask)
@@ -351,13 +364,8 @@ class BERT_CRF(BertPreTrainedModel):
         logits = self.classifier(sequence_output)  # attention_mask size (batch, seq_len)
 
         if labels is not None:
-            # safe_labels: clamp -1 (CLS/SEP/PAD ignore-index) to 0.
-            # CUDA CRF kernels do raw pointer arithmetic; -1 as a tag index reads
-            # garbage GPU memory which evaluates to inf/NaN in logsumexp.
-            # torchcrf also requires mask[0].all() == True, so we keep attention_mask
-            # as the CRF mask (CLS at position 0 stays active). CLS/SEP will be
-            # scored as label 0 ("O"), which is semantically neutral and numerically safe.
-            crf_mask = attention_mask.bool()
+            crf_mask = labels.ge(0) & attention_mask.bool()
+            crf_mask[:, 0] = True
             safe_labels = torch.where(labels < 0, torch.zeros_like(labels), labels)
             log_likelihood = self.crf.forward(logits, safe_labels, mask=crf_mask, reduction='mean')
             loss = -log_likelihood

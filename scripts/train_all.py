@@ -99,7 +99,18 @@ def run_and_stream(cmd, cwd, timeout=None):
 
     p.wait()
 
+    if p.returncode != 0:
+        raise RuntimeError(f"Command failed with exit code {p.returncode}: {' '.join(cmd)}")
+
     return ''.join(output)
+
+
+def _ensure_pytorch_pretrained_bert(tag):
+    try:
+        import pytorch_pretrained_bert
+    except ImportError:
+        print(f"[{tag}] Installing missing legacy dependency: pytorch-pretrained-bert")
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "pytorch-pretrained-bert"])
 
 
 @contextlib.contextmanager
@@ -154,11 +165,7 @@ def train_transproto(src, tgt, setting="standard", k_shot=None):
            "--seed", str(SEED), "--num_epoch", "30", "--batch_size", "32"]
     try:
         # Check for legacy dependency used by TransProto
-        try:
-            import pytorch_pretrained_bert
-        except ImportError:
-            print("[TRANSPROTO] Installing missing legacy dependency: pytorch-pretrained-bert")
-            subprocess.check_call([sys.executable, "-m", "pip", "install", "pytorch-pretrained-bert"])
+        _ensure_pytorch_pretrained_bert("TRANSPROTO")
         
         out = run_and_stream(cmd, cwd=tp, timeout=7200)
         f1 = _parse_f1(out)
@@ -273,7 +280,13 @@ def train_ketgm(src, tgt, setting="standard", k_shot=None):
 # DALM — GPT-2
 # ═══════════════════════════════════════════
 def train_dalm(src, tgt, setting="standard", k_shot=None):
-    if _done("dalm",setting,src,tgt): return
+    cached = load_result("dalm", setting, src, tgt)
+    if cached is not None:
+        cached_f1 = float(cached.get("macro_f1", 0.0))
+        if cached_f1 > 0.0:
+            print(f"[SKIP] dalm {src}->{tgt}: F1={cached_f1:.2f}")
+            return
+        print(f"[RERUN] dalm {src}->{tgt}: cached F1={cached_f1:.2f}; rerunning after DALM fixes")
     ensure_converted("dalm", src, tgt)
     dalm_root = os.path.join(GITCLONES_DIR, "DALM")
     dalm_lm = os.path.join(dalm_root, "GPT2_based", "cross_domain_LM")
@@ -318,6 +331,9 @@ def train_dalm(src, tgt, setting="standard", k_shot=None):
         run_and_stream(cmd2, cwd=dalm_root, timeout=7200)
         run_and_stream(cmd_pseudo, cwd=dalm_root, timeout=7200)
         run_and_stream(cmd3, cwd=dalm_root, timeout=7200)
+        filter_path = os.path.join(dalm_root, "GPT2_based", "generated_data", f"{dalm_src}-{dalm_tgt}", "filter.txt")
+        if not os.path.exists(filter_path) or os.path.getsize(filter_path) == 0:
+            raise RuntimeError(f"DALM filter produced no training samples: {filter_path}")
         out = run_and_stream(cmd4, cwd=dalm_root, timeout=7200)
         
         f1 = _parse_f1(out)
@@ -367,7 +383,7 @@ def train_llmsynabsa(src, tgt, setting="standard", k_shot=None):
                         logits.view(-1, NUM_LABELS), labels.view(-1), ignore_index=IGNORE_INDEX)
                     loss.backward(); opt.step()
                     if i % 10 == 0: print(f"    Batch {i} Loss: {loss.item():.4f}")
-                model.eval(); ap, al = []
+                model.eval(); ap, al = [], []
                 with torch.no_grad():
                     for b in loaders["tgt_val_loader"]:
                         ids = b["input_ids"].to(device); mask = b["attention_mask"].to(device)
@@ -397,6 +413,8 @@ def train_kgan(src, tgt, setting="standard", k_shot=None):
            "-is_bert", "2", "-bs", "32", "-n_epoch", "20",
            "-learning_rate", "0.00003"]
     try:
+        _ensure_pytorch_pretrained_bert("KGAN")
+
         try:
             import spacy
             spacy.load("en_core_web_lg")
@@ -429,6 +447,8 @@ def train_senticgcn(src, tgt, setting="standard", k_shot=None):
            "--seed", str(SEED), "--num_epoch", "30", "--batch_size", "16",
            "--lr", "2e-5", "--pretrained_bert_name", "bert-base-uncased"]
     try:
+        _ensure_pytorch_pretrained_bert("SenticGCN")
+
         try:
             import ipdb
         except ImportError:
@@ -507,6 +527,8 @@ def train_llm_kgkan(src, tgt, setting="standard", k_shot=None, kg=None, variant=
         from data import ABSADataset as DS, collate_fn as cf
         from torch.utils.data import DataLoader
         import torch.nn as nn
+        from itertools import cycle
+        from sampling import few_shot_sample
         dev = torch.device(DEVICE)
         cfg = LLMKGKANConfig()
         if kg:
@@ -538,17 +560,60 @@ def train_llm_kgkan(src, tgt, setting="standard", k_shot=None, kg=None, variant=
                     z = self.mlp(torch.cat([sem, syn, rel], dim=-1))
                     return self.norm(z)
             model.fusion = ConcatMLPFusion(d).to(dev)
-        opt = torch.optim.AdamW([p for p in model.parameters() if p.requires_grad], lr=cfg.lr)
-        sds = DS(DOMAIN_FILES[src], cfg, kg); tds = DS(DOMAIN_FILES[tgt], cfg, kg)
+        opt = torch.optim.AdamW(
+            [p for p in model.parameters() if p.requires_grad],
+            lr=cfg.lr,
+            weight_decay=cfg.weight_decay,
+        )
+
+        target_has_labels = k_shot is not None and k_shot > 0
+        sds = DS(DOMAIN_FILES[src], cfg, kg, domain_id=0, use_labels=True)
+        tds_train = DS(DOMAIN_FILES[tgt], cfg, kg, domain_id=1, use_labels=target_has_labels)
+        if target_has_labels:
+            tds_train = few_shot_sample(tds_train, k_shot)
+        tds_eval = DS(DOMAIN_FILES[tgt], cfg, kg, domain_id=1, use_labels=True)
+
         sl = DataLoader(sds, batch_size=cfg.batch_size, shuffle=True, collate_fn=cf)
-        tl = DataLoader(tds, batch_size=cfg.batch_size, collate_fn=cf)
-        scaler = torch.amp.GradScaler("cuda"); best = 0
+        tl_train = DataLoader(tds_train, batch_size=cfg.batch_size, shuffle=True, collate_fn=cf)
+        tl = DataLoader(tds_eval, batch_size=cfg.batch_size, collate_fn=cf)
+
+        def pad_kg_width(batch, width):
+            batch = dict(batch)
+            cur = batch["kg_heads"].size(1)
+            if cur == width:
+                return batch
+            pad_k = width - cur
+            for key in ["kg_heads", "kg_rels", "kg_tails", "kg_mask", "kg_aspect_ids"]:
+                x = batch[key]
+                pad = torch.zeros(x.size(0), pad_k, dtype=x.dtype)
+                batch[key] = torch.cat([x, pad], dim=1)
+            m = batch["kg_token_map"]
+            pad = torch.zeros(m.size(0), m.size(1), pad_k, dtype=m.dtype)
+            batch["kg_token_map"] = torch.cat([m, pad], dim=2)
+            return batch
+
+        def merge_batches(src_batch, tgt_batch):
+            width = max(src_batch["kg_heads"].size(1), tgt_batch["kg_heads"].size(1))
+            src_batch = pad_kg_width(src_batch, width)
+            tgt_batch = pad_kg_width(tgt_batch, width)
+            merged = {}
+            for key, value in src_batch.items():
+                if isinstance(value, torch.Tensor):
+                    merged[key] = torch.cat([value, tgt_batch[key]], dim=0)
+            merged["aspect_spans"] = src_batch["aspect_spans"] + tgt_batch["aspect_spans"]
+            return merged
+
+        amp_enabled = dev.type == "cuda"
+        scaler = torch.amp.GradScaler("cuda", enabled=amp_enabled); best = 0
         for ep in range(cfg.epochs):
             model.train()
-            for i, batch in enumerate(sl):
+            tgt_iter = cycle(tl_train)
+            for i, src_batch in enumerate(sl):
+                tgt_batch = next(tgt_iter)
+                batch = merge_batches(src_batch, tgt_batch)
                 batch = {k: v.to(dev) if isinstance(v, torch.Tensor) else v for k, v in batch.items()}
                 opt.zero_grad()
-                with torch.amp.autocast("cuda"):
+                with torch.amp.autocast("cuda", enabled=amp_enabled):
                     out = model(batch); loss = out["loss"]
                 scaler.scale(loss).backward()
                 scaler.unscale_(opt); torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
@@ -558,7 +623,7 @@ def train_llm_kgkan(src, tgt, setting="standard", k_shot=None, kg=None, variant=
             with torch.no_grad():
                 for b in tl:
                     b = {k: v.to(dev) if isinstance(v, torch.Tensor) else v for k, v in b.items()}
-                    with torch.amp.autocast("cuda"): o = model(b)
+                    with torch.amp.autocast("cuda", enabled=amp_enabled): o = model(b)
                     ap.append(o["logits"].cpu()); al.append(b["labels"].cpu())
             f1 = compute_macro_f1(torch.cat(ap), torch.cat(al))
             if f1 > best: best = f1

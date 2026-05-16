@@ -101,6 +101,8 @@ def train(args, logger):
     print('training')
     label_list = data_utils.get_labels(args.task)
     model = BERT_CRF.from_pretrained(args.model_name_or_path, num_labels = len(label_list))
+    if hasattr(model, "_init_task_layers"):
+        model._init_task_layers(model.config)
 
     tokenizer = BertTokenizer.from_pretrained(args.model_name_or_path)
 
@@ -148,7 +150,7 @@ def train(args, logger):
             optimizer.zero_grad()
             if step % 25 == 0:
                 logger.info('Epoch: %d, batch: %d, absa loss: %f', 
-                            epoch, step, absa_loss)
+                            epoch, step, absa_loss.item())
 
     torch.save(model, os.path.join(args.output_dir, f"model.pt"))
 

@@ -129,17 +129,25 @@ def do_filter(args, logger):
 
         assert len(pre_list[i]) == len(token_list[i]), print(len(pre_list[i]), len(token_list[i]))
 
+    def normalize_tags(tags):
+        return ['O' if tag == 'O' else 'T-' + tag.split('-', 1)[1] for tag in tags]
+
+    exact_data_num = 0
     filtered_data_num = 0
     with open(os.path.join(args.output_dir, 'filter.txt'), 'w') as fw:
         for i in range(len(pre_list)):
-            # Keep only if predictions match GPT2 AND there is at least one aspect predicted
-            # Otherwise we fill the dataset with all-'O' sentences which ruins the training (F1=0.0)
-            if ' '.join(pre_list[i]) == ' '.join(gold_list[i]):
-                if any(tag != 'O' for tag in pre_list[i]):
-                    ts, ls = data_utils.convert_raw_data(token_list[i], pre_list[i])
-                    line = ' '.join(ts) + '####' + ' '.join(ls)
-                    fw.write(line + '\n')
-                    filtered_data_num += 1
+            norm_pre = normalize_tags(pre_list[i])
+            norm_gold = normalize_tags(gold_list[i])
+            if norm_pre == norm_gold:
+                exact_data_num += 1
+            if norm_pre == norm_gold and any(tag != 'O' for tag in norm_pre):
+                ts, ls = data_utils.convert_raw_data(token_list[i], pre_list[i])
+                line = ' '.join(ts) + '####' + ' '.join(ls)
+                fw.write(line + '\n')
+                filtered_data_num += 1
+        if filtered_data_num == 0:
+            logger.warning('No exact non-O pseudo-label agreements; filtered training data is empty.')
+    logger.info('Exact pseudo-label agreements = %d', exact_data_num)
     logger.info('Data length after done filter = %d', filtered_data_num)
 
 

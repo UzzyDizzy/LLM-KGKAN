@@ -208,20 +208,32 @@ def convert_for_dalm(src_key, tgt_key):
 # KGAN — write preprocessed data in its expected format
 # ═══════════════════════════════════════════
 def convert_for_kgan(domain_key):
-    """Write data in KGAN's expected format: word indices + aspect indices + polarity."""
+    """Write data in KGAN's expected token/sentiment marker format."""
     kgan_data = os.path.join(GITCLONES_DIR, "KGAN", "dataset")
     os.makedirs(kgan_data, exist_ok=True)
     
     df = _load_csv(domain_key)
-    pol_map = {"positive": 0, "negative": 1, "neutral": 2}
-    
-    lines = []
-    for _, r in df.iterrows():
-        text = str(r["text"])
-        aspect = str(r.get("aspect", ""))
-        polarity = pol_map.get(str(r.get("polarity", "")).lower(), 2)
-        if aspect and aspect != "NULL" and aspect != "nan":
-            lines.append(f"{text}$${aspect}$${polarity}")
+    suffix_map = {"positive": "/p", "negative": "/n", "neutral": "/0"}
+
+    def mark_aspect(text, aspect, polarity):
+        suffix = suffix_map.get(str(polarity).lower(), "/0")
+        tokens = str(text).split()
+        aspect_tokens = str(aspect).split()
+        if not tokens or not aspect_tokens:
+            return None
+        low_tokens = [t.lower().strip(".,!?;:'\"`()[]{}") for t in tokens]
+        low_aspect = [t.lower().strip(".,!?;:'\"`()[]{}") for t in aspect_tokens]
+        start = None
+        for i in range(len(tokens) - len(aspect_tokens) + 1):
+            if low_tokens[i:i + len(aspect_tokens)] == low_aspect:
+                start = i
+                break
+        if start is None:
+            return None
+        marked = list(tokens)
+        for j in range(start, start + len(aspect_tokens)):
+            marked[j] = marked[j] + suffix
+        return " ".join(marked)
     
     for split in ["train", "test"]:
         sub_df = df[df["split"] == split] if "split" in df.columns else df
@@ -229,12 +241,14 @@ def convert_for_kgan(domain_key):
         for _, r in sub_df.iterrows():
             text = str(r["text"])
             aspect = str(r.get("aspect", ""))
-            polarity = pol_map.get(str(r.get("polarity", "")).lower(), 2)
             if aspect and aspect != "NULL" and aspect != "nan":
-                sub_lines.append(f"{text}$${aspect}$${polarity}")
+                line = mark_aspect(text, aspect, r.get("polarity", "neutral"))
+                if line:
+                    sub_lines.append(line)
         
-        fname = f"{DOMAIN_LONG[domain_key]}_{split}.raw"
-        with open(os.path.join(kgan_data, fname), "w", encoding="utf-8") as f:
+        out_dir = os.path.join(kgan_data, DOMAIN_LONG[domain_key])
+        os.makedirs(out_dir, exist_ok=True)
+        with open(os.path.join(out_dir, f"{split}.txt"), "w", encoding="utf-8") as f:
             f.write("\n".join(sub_lines))
     return kgan_data
 

@@ -140,6 +140,8 @@ class LLMSynABSA(nn.Module):
         else:
             H = self.encoder(input_ids=ids, attention_mask=mask).last_hidden_state
 
+        H = H.to(self.classifier.weight.dtype)
+
         # ===== Eq 2, 3: Aspect & Sentiment classifiers =====
         H_drop = self.dropout(H)
         aspect_logits = self.aspect_fc(H_drop)       # (B, L, 3)

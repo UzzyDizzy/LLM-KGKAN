@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import argparse
+import os
 import time
 from model.ATAE_LSTM import ATAE_LSTM, ATAE_LSTM_Bert
 from model.GCAE import GCAE,  GCAE_Bert
@@ -24,6 +25,9 @@ import thop
 import logging
 logging.basicConfig(level=logging.INFO)
 warnings.filterwarnings('ignore')
+
+def local_or_hf(path, hf_name):
+    return path if os.path.exists(path) else hf_name
 
 # os.environ['CUDA_VISIBLE_DEVICES'] = "0"   #"0,1,2,3"
 seed = 14
@@ -202,9 +206,9 @@ def train_bert(args,times=0):
     n_test_batches = math.ceil(n_test / args.bs)
     train_set,test_set = dataset
     if args.is_bert == 1:
-        bert = BertModel.from_pretrained(r'./bert-base-uncased')
+        bert = BertModel.from_pretrained(local_or_hf(r'./bert-base-uncased', 'bert-base-uncased'))
     elif args.is_bert ==2:
-        bert = RobertaModel.from_pretrained(r'./roberta-base')
+        bert = RobertaModel.from_pretrained(local_or_hf(r'./roberta-base', 'roberta-base'))
 
     if args.model =='ASGCN':
         model=ASGCN_BERT(bert=bert,args=args)

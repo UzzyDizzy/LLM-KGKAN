@@ -103,6 +103,8 @@ def train(args, logger):
     print('training')
     label_list = data_utils.get_labels(args.task)
     model = BERT_CRF.from_pretrained(args.model_name_or_path, num_labels = len(label_list))
+    if hasattr(model, "_init_task_layers"):
+        model._init_task_layers(model.config)
 
     tokenizer = BertTokenizer.from_pretrained(args.model_name_or_path)
 
@@ -164,14 +166,19 @@ def train(args, logger):
             for b_idx, preds in enumerate(target_pred_raw):
                 target_pred_labels[b_idx, :len(preds)] = torch.tensor(preds, dtype=torch.long, device=target_input_ids.device)
 
+            target_pred_labels[:, 0] = 0
+            valid_lengths = target_input_masks.sum(dim=1) - 1
+            target_pred_labels[torch.arange(target_pred_labels.size(0), device=target_pred_labels.device), valid_lengths] = 0
+
             # calcualte aspect-level MMD loss between source and target domain data
             source_aspect_rep = models.get_aspect_rep(source_output, source_label_ids)
             target_aspect_rep = models.get_aspect_rep(target_output, target_pred_labels)
-            if int(source_aspect_rep.shape[0])==0 or int(target_aspect_rep.shape[0])==0:
-                continue
-            mmd_loss = models.cal_MMD(source_aspect_rep, target_aspect_rep)
-
-            loss = absa_loss + 0.01*mmd_loss
+            if int(source_aspect_rep.shape[0]) > 0 and int(target_aspect_rep.shape[0]) > 0:
+                mmd_loss = models.cal_MMD(source_aspect_rep, target_aspect_rep)
+                loss = absa_loss + 0.01*mmd_loss
+            else:
+                mmd_loss = torch.zeros((), device=absa_loss.device)
+                loss = absa_loss
 
             loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
@@ -180,7 +187,7 @@ def train(args, logger):
             optimizer.zero_grad()
             if step % 25 == 0:
                 logger.info('Epoch: %d, batch: %d, absa loss: %f, mmd loss: %f, loss: %f', 
-                            epoch, step, absa_loss, mmd_loss, loss)
+                            epoch, step, absa_loss.item(), mmd_loss.item(), loss.item())
 
     torch.save(model, os.path.join(args.output_dir, f"model.pt"))
 

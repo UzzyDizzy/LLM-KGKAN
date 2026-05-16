@@ -1,0 +1,8 @@
+[2026-05-15 22:33:04,317][_client.py][line:1025][INFO] HTTP Request: HEAD https://huggingface.co/bert-base-uncased/resolve/main/config.json "HTTP/1.1 200 OK"
+[2026-05-15 22:33:04,652][_client.py][line:1025][INFO] HTTP Request: HEAD https://huggingface.co/bert-base-uncased/resolve/main/model.safetensors "HTTP/1.1 302 Found"
+[2026-05-15 22:33:05,868][_client.py][line:1025][INFO] HTTP Request: HEAD https://huggingface.co/bert-base-uncased/resolve/main/tokenizer_config.json "HTTP/1.1 200 OK"
+[2026-05-15 22:33:06,173][_client.py][line:1025][INFO] HTTP Request: GET https://huggingface.co/api/models/bert-base-uncased/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 307 Temporary Redirect"
+[2026-05-15 22:33:06,483][_client.py][line:1025][INFO] HTTP Request: GET https://huggingface.co/api/models/google-bert/bert-base-uncased/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+[2026-05-15 22:33:06,790][_client.py][line:1025][INFO] HTTP Request: GET https://huggingface.co/api/models/bert-base-uncased/tree/main?recursive=true&expand=false "HTTP/1.1 307 Temporary Redirect"
+[2026-05-15 22:33:07,089][_client.py][line:1025][INFO] HTTP Request: GET https://huggingface.co/api/models/google-bert/bert-base-uncased/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+[2026-05-15 22:33:14,514][pseudo_labeling.py][line:117][INFO] Data length = 3877

@@ -3,7 +3,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from transformers import AutoModel, AutoConfig
-from peft import LoraConfig, get_peft_model
+from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
 
 from config import LLMKGKANConfig
 from utils import mmd_loss
@@ -28,7 +28,12 @@ class SemanticEncoder(nn.Module):
             quantization_config=bnb_config,  # QLoRA
             torch_dtype=torch.float16,
         )
+        self.backbone.config.use_cache = False
         self.backbone.gradient_checkpointing_enable()
+        self.backbone = prepare_model_for_kbit_training(
+            self.backbone,
+            use_gradient_checkpointing=True,
+        )
 
         if cfg.freeze_backbone:
             for p in self.backbone.parameters():
@@ -50,6 +55,9 @@ class SemanticEncoder(nn.Module):
         )
         self.backbone = get_peft_model(self.backbone, peft_cfg)
         self.proj = nn.Linear(self.backbone.config.hidden_size, cfg.hidden_size)
+        if self.backbone.config.hidden_size == cfg.hidden_size:
+            nn.init.eye_(self.proj.weight)
+            nn.init.zeros_(self.proj.bias)
         # === PREFIX MODULES (Eq 4) ===
         self.prefix_len = cfg.prefix_len
         d = self.backbone.config.hidden_size
@@ -84,7 +92,12 @@ class SemanticEncoder(nn.Module):
         inputs_embeds = torch.cat([task_prefix, kg_prefix, inputs_embeds], dim=1)
 
         # --- attention mask fix ---
-        prefix_mask = torch.ones(B, 2 * self.prefix_len).to(attention_mask.device)
+        prefix_mask = torch.ones(
+            B,
+            2 * self.prefix_len,
+            device=attention_mask.device,
+            dtype=attention_mask.dtype,
+        )
         attention_mask = torch.cat([prefix_mask, attention_mask], dim=1)
 
         # --- forward ---
@@ -101,10 +114,17 @@ class SemanticEncoder(nn.Module):
 
 
 class RGCNLayer(nn.Module):
-    def __init__(self, hidden_size: int, num_relations: int, dropout: float):
+    def __init__(self, hidden_size: int, num_relations: int, dropout: float, relation_mode: str = "full"):
         super().__init__()
-        self.rel_weights = nn.Parameter(torch.randn(num_relations, hidden_size, hidden_size) * 0.02)
-        self.self_weight = nn.Linear(hidden_size, hidden_size)
+        self.relation_mode = relation_mode
+        if relation_mode == "full":
+            self.rel_weights = nn.Parameter(torch.zeros(num_relations, hidden_size, hidden_size))
+        elif relation_mode == "diagonal":
+            self.rel_diag = nn.Parameter(torch.zeros(num_relations, hidden_size))
+        else:
+            raise ValueError(f"Unknown RGCN relation_mode: {relation_mode}")
+        self.self_weight = nn.Linear(hidden_size, hidden_size, bias=False)
+        nn.init.zeros_(self.self_weight.weight)
         self.dropout = nn.Dropout(dropout)
         self.norm = nn.LayerNorm(hidden_size)
         self.num_relations = num_relations
@@ -117,8 +137,11 @@ class RGCNLayer(nn.Module):
                 neigh = torch.matmul(rel_mask.float(), h)
                 deg = rel_mask.float().sum(dim=-1, keepdim=True).clamp_min(1.0)
                 neigh = neigh / deg
-                out = out + torch.einsum("btd,df->btf", neigh, self.rel_weights[r])
-        out = F.relu(out)
+                if self.relation_mode == "full":
+                    out = out + torch.einsum("btd,df->btf", neigh, self.rel_weights[r])
+                else:
+                    out = out + neigh * self.rel_diag[r]
+        out = F.gelu(out)
         out = self.dropout(out)
         return self.norm(h + out)
 
@@ -127,7 +150,15 @@ class SyntaxEncoder(nn.Module):
     def __init__(self, cfg: LLMKGKANConfig):
         super().__init__()
         self.layers = nn.ModuleList(
-            [RGCNLayer(cfg.hidden_size, cfg.num_dep_relations, cfg.dropout) for _ in range(cfg.rgcn_layers)]
+            [
+                RGCNLayer(
+                    cfg.hidden_size,
+                    cfg.num_dep_relations,
+                    cfg.dropout,
+                    relation_mode=getattr(cfg, "rgcn_relation_mode", "full"),
+                )
+                for _ in range(cfg.rgcn_layers)
+            ]
         )
 
     def forward(self, token_features: torch.Tensor, dep_rel_ids: torch.Tensor, dep_adj: torch.Tensor) -> torch.Tensor:
@@ -145,7 +176,7 @@ class KGEncoder(nn.Module):
         self.ent_emb = nn.Embedding(cfg.num_entities, cfg.kg_emb_dim)
         self.rel_emb = nn.Embedding(cfg.num_kg_relations, cfg.kg_emb_dim)
 
-        self.proj = nn.Linear(cfg.kg_emb_dim, cfg.hidden_size)
+        self.proj = nn.Linear(cfg.kg_emb_dim, cfg.hidden_size, bias=False)
         self.norm = nn.LayerNorm(cfg.hidden_size)
 
         # 🔥 NEW: attention projections
@@ -160,10 +191,10 @@ class KGEncoder(nn.Module):
 
         if self.cfg.use_distmult:
             return h * r * t
-        else:  # TransE-style
-            return h + r - t
+        else:
+            return h + r + t
 
-    def forward(self, kg_heads, kg_rels, kg_tails, kg_mask, kg_token_map, kg_aspect_ids):
+    def forward(self, kg_heads, kg_rels, kg_tails, kg_mask, kg_token_map, kg_aspect_ids, kg_num_aspects=None):
         """
         STRICT Eq (10–12) implementation
         """
@@ -184,12 +215,19 @@ class KGEncoder(nn.Module):
             aspect_vecs = []
 
             aspect_ids = kg_aspect_ids[b]
-            unique_aspects = torch.unique(aspect_ids)
+            valid_aspect_ids = aspect_ids[kg_mask[b] > 0]
+            if kg_num_aspects is not None:
+                n_aspects = int(kg_num_aspects[b].item())
+            elif valid_aspect_ids.numel() > 0:
+                n_aspects = int(valid_aspect_ids.max().item()) + 1
+            else:
+                n_aspects = 0
 
-            for a in unique_aspects:
+            for a in range(n_aspects):
                 idx = (aspect_ids == a) & (kg_mask[b] > 0)
 
                 if idx.sum() == 0:
+                    aspect_vecs.append(torch.zeros(self.cfg.kg_emb_dim, device=device))
                     continue
 
                 # mean over triples in Ga
@@ -257,6 +295,10 @@ class ARGModule(nn.Module):
         self.g_tr = nn.Linear(hidden_size, hidden_size)
         self.g_pr = nn.Linear(hidden_size, hidden_size)
         self.norm = nn.LayerNorm(hidden_size)
+        nn.init.zeros_(self.g_tr.weight)
+        nn.init.zeros_(self.g_tr.bias)
+        nn.init.zeros_(self.g_pr.weight)
+        nn.init.constant_(self.g_pr.bias, 2.0)
 
     def forward(self, z: torch.Tensor, sem: torch.Tensor, syn: torch.Tensor, rel: torch.Tensor) -> torch.Tensor:
         g_tr = torch.sigmoid(self.g_tr(z))
@@ -277,18 +319,21 @@ class LLMKGKAN(nn.Module):
         self.dropout = nn.Dropout(cfg.dropout)
 
         self.classifier = nn.Linear(cfg.hidden_size, cfg.num_labels)
+        self.register_buffer("class_weights", torch.ones(cfg.num_labels), persistent=False)
 
-    def encode(self, batch):
-        # --- KG summary (Eq 11) ---
-        triple_repr = self.kg.triple_encode(
-            batch["kg_heads"],
-            batch["kg_rels"],
-            batch["kg_tails"]
+    def set_class_weights(self, weights: torch.Tensor) -> None:
+        weights = weights.detach().float().clamp_min(1e-6)
+        self.class_weights.copy_(weights.to(self.class_weights.device))
+
+    def token_loss(self, logits: torch.Tensor, labels: torch.Tensor) -> torch.Tensor:
+        return F.cross_entropy(
+            logits.reshape(-1, self.cfg.num_labels),
+            labels.reshape(-1),
+            ignore_index=self.cfg.ignore_index,
+            weight=self.class_weights.to(logits.device, dtype=logits.dtype),
         )
 
-        mask = batch["kg_mask"].unsqueeze(-1).to(batch["kg_heads"].device)
-        triple_repr = triple_repr * mask
-
+    def encode(self, batch):
         aspect_vecs = self.kg(
             batch["kg_heads"],
             batch["kg_rels"],
@@ -296,6 +341,7 @@ class LLMKGKAN(nn.Module):
             batch["kg_mask"],
             batch["kg_token_map"],
             batch["kg_aspect_ids"],
+            batch.get("kg_num_aspects"),
         )
 
         # average over ALL aspects (paper does not specify weighting)
@@ -327,14 +373,19 @@ class LLMKGKAN(nn.Module):
             if len(spans) == 0:
                 continue
 
-            for a_idx, a_vec in enumerate(aspect_vecs[b]):
+            for a_idx, span in enumerate(spans):
+                if a_idx < len(aspect_vecs[b]):
+                    a_vec = aspect_vecs[b][a_idx]
+                else:
+                    a_vec = torch.zeros(self.cfg.kg_emb_dim, device=device)
                 a_vec_proj = self.kg.proj(a_vec)
 
-                for span in spans:
-                    start, end = int(span[0]), int(span[1])
+                start, end = int(span[0]), int(span[1])
+                start = max(0, min(start, T))
+                end = max(start, min(end, T))
 
-                    if end > start:
-                        rel[b][start:end] = a_vec_proj
+                if end > start:
+                    rel[b][start:end] = a_vec_proj
 
         # normalize
         rel = self.kg.norm(rel)
@@ -355,31 +406,21 @@ class LLMKGKAN(nn.Module):
         src_mask = domain_ids == 0
         tgt_mask = domain_ids == 1
 
-        loss = 0
+        loss = logits.new_tensor(0.0)
 
         # ✅ SOURCE LOSS (MAIN TRAINING SIGNAL)
         if src_mask.any():
-            loss += F.cross_entropy(
-                logits[src_mask].view(-1, self.cfg.num_labels),
-                labels[src_mask].view(-1),
-                ignore_index=self.cfg.ignore_index
-            )
+            loss += self.token_loss(logits[src_mask], labels[src_mask])
 
         # ✅ TARGET LOSS (few-shot ONLY)
         if tgt_mask.any() and batch["labels"][tgt_mask].ne(self.cfg.ignore_index).any():
-            loss += F.cross_entropy(
-                logits[tgt_mask].view(-1, self.cfg.num_labels),
-                labels[tgt_mask].view(-1),
-                ignore_index=self.cfg.ignore_index
-            )
+            loss += self.token_loss(logits[tgt_mask], labels[tgt_mask])
 
         # ✅ MMD ALIGNMENT
         if src_mask.any() and tgt_mask.any():
-            z_src = z[src_mask]
-            z_tgt = z[tgt_mask]
-
-            z_src = z_src.mean(dim=1)
-            z_tgt = z_tgt.mean(dim=1)
+            token_mask = batch["attention_mask"].to(z.device).bool()
+            z_src = z[src_mask][token_mask[src_mask]]
+            z_tgt = z[tgt_mask][token_mask[tgt_mask]]
 
             align_loss = mmd_loss(z_src, z_tgt)
 
