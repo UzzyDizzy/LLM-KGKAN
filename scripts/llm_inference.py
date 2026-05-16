@@ -56,16 +56,14 @@ def estimate_cost(num_samples, avg_tokens=80, model="gpt-4o"):
 
 def _build_prompt(sample, few_shot_str=""):
     tokens = sample.get("tokens") or str(sample.get("text", "")).split()
-    sentence = " ".join(tokens)
-    prompt = BIO_PROMPT_TEMPLATE.format(sentence=sentence)
-    if few_shot_str:
-        prompt = (
-            "Examples:\n"
-            f"{few_shot_str}\n"
-            "Now tag the following sentence.\n\n"
-            f"{prompt}"
-        )
-    prompt += f"\n\nTokenized input: {json.dumps(tokens)}\nNumber of tokens: {len(tokens)}"
+    
+    fs_text = f"Examples:\n{few_shot_str}\nNow tag the following sentence.\n" if few_shot_str else ""
+    
+    prompt = BIO_PROMPT_TEMPLATE.format(
+        few_shot_examples=fs_text,
+        tokens=json.dumps(tokens),
+        num_tokens=len(tokens)
+    )
     return prompt
 
 
@@ -235,3 +233,104 @@ def run_api_inference(model_key, samples, train_samples=None, k_shot=0, batch_si
 
 def get_total_spent():
     return _total_spent
+
+
+def run_hf_inference(model_key, samples, train_samples=None, k_shot=0, batch_size=None):
+    """
+    Run local inference using HuggingFace Transformers.
+    Returns list of tag_id lists.
+    """
+    import logging
+    import torch
+    import random
+    from transformers import pipeline, AutoTokenizer
+    from scripts.config import OPENSOURCE_LLMS
+    
+    logger = logging.getLogger()
+    logger.info(f"[HF Inference] Starting inference for {len(samples)} samples with {model_key}")
+    
+    if model_key not in OPENSOURCE_LLMS:
+        print(f"[ERROR] {model_key} not found in OPENSOURCE_LLMS")
+        return [None] * len(samples)
+        
+    model_id = OPENSOURCE_LLMS[model_key]
+
+    # 1. Build few_shot_str
+    few_shot_str = ""
+    if k_shot > 0 and train_samples:
+        shots = random.sample(train_samples, min(k_shot, len(train_samples)))
+        for shot in shots:
+            shot_tags = [ID2LABEL[tid] for tid in shot['tag_ids'][:len(shot['tokens'])]]
+            few_shot_str += f"Tokens: {json.dumps(shot['tokens'])}\nTags: {json.dumps(shot_tags)}\n\n"
+
+    if batch_size is None:
+        batch_size = API_BUDGET.batch_size
+
+    cache_context = f"k{k_shot}:{hashlib.md5(few_shot_str.encode()).hexdigest()}"
+
+    # 2. Load model into VRAM natively
+    if not hasattr(run_hf_inference, "pipe") or getattr(run_hf_inference, "current_model", None) != model_id:
+        logger.info(f"    [HF] Loading {model_id} into VRAM...")
+        if hasattr(run_hf_inference, "pipe"):
+            del run_hf_inference.pipe
+            del run_hf_inference.tokenizer
+            import gc
+            gc.collect()
+            torch.cuda.empty_cache()
+            
+        run_hf_inference.tokenizer = AutoTokenizer.from_pretrained(model_id)
+        run_hf_inference.pipe = pipeline(
+            "text-generation",
+            model=model_id,
+            model_kwargs={"torch_dtype": torch.bfloat16},
+            device_map="auto"
+        )
+        run_hf_inference.current_model = model_id
+
+    # 3. Process batches
+    all_results = []
+    for i in range(0, len(samples), batch_size):
+        logger.info(f"  [HF] Processing batch {i//batch_size + 1}/{(len(samples)-1)//batch_size + 1}")
+        batch = samples[i:i+batch_size]
+        batch_results = []
+        
+        for sample in batch:
+            text = sample.get("text") or " ".join(sample.get("tokens", []))
+            cached = _load_cache(model_key, text, cache_context)
+            if cached is not None:
+                batch_results.append(cached)
+                continue
+                
+            prompt = _build_prompt(sample, few_shot_str)
+            messages = [{"role": "user", "content": prompt}]
+            
+            try:
+                out = run_hf_inference.pipe(
+                    messages, 
+                    max_new_tokens=500, 
+                    temperature=0.0,
+                    do_sample=False,
+                    return_full_text=False
+                )
+                output = out[0]['generated_text'].strip()
+                
+                result = {"text": text, "output": output, "cost": 0.0}
+                _save_cache(model_key, text, result, cache_context)
+                batch_results.append(result)
+            except Exception as e:
+                logger.error(f"[ERROR] {model_key} failed on: {text[:50]}... -> {e}")
+                batch_results.append(None)
+                
+        all_results.extend(batch_results)
+
+    # 4. Parse outputs to tag IDs
+    tag_ids_list = []
+    for j, r in enumerate(all_results):
+        n_tok = len(samples[j]["tokens"])
+        if r is not None and "output" in r:
+            tag_ids_list.append(parse_bio_output(r["output"], n_tok))
+        else:
+            tag_ids_list.append(None)
+
+    return tag_ids_list
+
