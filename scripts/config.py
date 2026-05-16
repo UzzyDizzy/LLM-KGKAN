@@ -439,14 +439,14 @@ KG_SOURCES = [
 # PROMPT TEMPLATE FOR LLM BIO TAGGING
 # ══════════════════════════════════════════════════════════════════════════
 
-BIO_PROMPT_TEMPLATE = """You are an expert in aspect-based sentiment analysis. Given a sentence, identify aspect terms and their sentiment polarity using BIO tagging.
+BIO_PROMPT_TEMPLATE = """You are an expert in aspect-based sentiment analysis. Assign exactly one BIO tag for every token in the provided list.
 
 Tags: O (non-aspect), B-POS (begin positive aspect), I-POS (inside positive aspect), B-NEG (begin negative aspect), I-NEG (inside negative aspect), B-NEU (begin neutral aspect), I-NEU (inside neutral aspect).
 
-Sentence: {sentence}
+{few_shot_examples}
 
-Output ONLY the BIO tags separated by spaces, one tag per token. The number of tags must exactly match the number of tokens.
-Tags:"""
+Tokens: {tokens}
+Output ONLY a valid JSON array of strings containing exactly {num_tokens} tags."""
 
 # ══════════════════════════════════════════════════════════════════════════
 # CHECKPOINT NAMING
