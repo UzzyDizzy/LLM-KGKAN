@@ -116,15 +116,27 @@ def load_domain(domain_name):
 # --------------------------------------------------
 
 _EMBED_MODEL = None
+_CURRENT_MODEL_TYPE = None
 
-def get_embedding_model():
-    global _EMBED_MODEL
+def get_embedding_model(src_domain, tgt_domain):
+    global _EMBED_MODEL, _CURRENT_MODEL_TYPE
 
-    if _EMBED_MODEL is None:
-        print("Loading Word2Vec once...")
-        _EMBED_MODEL = Word2Vec.load(
-            "./embeddings/raw_corpus_w2v.model"
-        )
+    # Use yelp for service/restaurant related, amazon for goods/electronics
+    yelp_domains = ["restaurant", "service", "airline", "healthcare", "university_course"]
+    model_type = "yelp" if tgt_domain in yelp_domains else "amazon"
+
+    if _EMBED_MODEL is None or _CURRENT_MODEL_TYPE != model_type:
+        print(f"Loading {model_type} Word2Vec...")
+        _CURRENT_MODEL_TYPE = model_type
+        try:
+            _EMBED_MODEL = Word2Vec.load(
+                f"./embeddings/{model_type}_w2v.model"
+            )
+        except Exception as e:
+            print(f"[WARN] Word2Vec model not found ({e}). Using random embeddings.")
+            class DummyModel:
+                wv = {}
+            _EMBED_MODEL = DummyModel()
 
     return _EMBED_MODEL
 
@@ -170,7 +182,7 @@ def build_embedding_matrix(word2id, src_domain, tgt_domain):
         (len(word2id), dim)
     ).astype(np.float32)
 
-    model = get_embedding_model()
+    model = get_embedding_model(src_domain, tgt_domain)
 
     for w, idx in word2id.items():
 
