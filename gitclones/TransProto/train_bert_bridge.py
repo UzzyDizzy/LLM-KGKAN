@@ -501,8 +501,8 @@ def main():
     'service-to-device': 3
     }
 
-    opt.idx = pair_index[pair]
-    opt.tau = dataset_tau_dict[pair]
+    opt.idx = pair_index.get(pair, 99)
+    opt.tau = dataset_tau_dict.get(pair, 3)
 
     if not os.path.exists('./log/{}.{}'.format(opt.idx, pair)):
         os.makedirs('./log/{}.{}'.format(opt.idx, pair))
