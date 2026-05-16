@@ -535,8 +535,15 @@ def train_llm_kgkan(src, tgt, setting="standard", k_shot=None, kg=None, variant=
             cfg.num_entities = len(kg.ent2id)
             cfg.num_kg_relations = len(kg.rel2id)
         model = LLMKGKAN(cfg)
-        for n, m in model.named_modules():
-            if 'backbone' not in n: m.to(dev)
+        model.syntax.to(dev)
+        model.kg.to(dev)
+        model.fusion.to(dev)
+        model.arg.to(dev)
+        model.dropout.to(dev)
+        model.classifier.to(dev)
+        model.semantic.proj.to(dev)
+        model.semantic.kg_prefix_mlp.to(dev)
+        model.semantic.task_prefix.data = model.semantic.task_prefix.data.to(dev)
         if variant == "wo_kg":
             for p in model.kg.parameters(): p.requires_grad_(False); p.zero_()
         elif variant == "wo_syn":
@@ -573,8 +580,9 @@ def train_llm_kgkan(src, tgt, setting="standard", k_shot=None, kg=None, variant=
             tds_train = few_shot_sample(tds_train, k_shot)
         tds_eval = DS(DOMAIN_FILES[tgt], cfg, kg, domain_id=1, use_labels=True)
 
-        sl = DataLoader(sds, batch_size=cfg.batch_size, shuffle=True, collate_fn=cf)
-        tl_train = DataLoader(tds_train, batch_size=cfg.batch_size, shuffle=True, collate_fn=cf)
+        train_batch_size = max(1, cfg.batch_size // 2)
+        sl = DataLoader(sds, batch_size=train_batch_size, shuffle=True, collate_fn=cf)
+        tl_train = DataLoader(tds_train, batch_size=train_batch_size, shuffle=True, collate_fn=cf)
         tl = DataLoader(tds_eval, batch_size=cfg.batch_size, collate_fn=cf)
 
         def pad_kg_width(batch, width):

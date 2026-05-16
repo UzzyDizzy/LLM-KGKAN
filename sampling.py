@@ -5,25 +5,18 @@ from collections import defaultdict
 
 
 def few_shot_sample(dataset, k):
-    from collections import defaultdict
-    import random
-
     label_groups = defaultdict(list)
 
     for i, sample in enumerate(dataset.data):
-        # unpack safely (NEW FORMAT)
-        text, aspects, sentiments, starts, ends = sample
+        _, _, sentiments, _, _ = sample
 
-        if len(sentiments) == 0:
-            continue
-
-        # use first sentiment (same assumption as before)
-        label = sentiments[0]
-        label_groups[label].append(i)
+        for label in set(sentiments):
+            if isinstance(label, str) and label and label != "NULL":
+                label_groups[label.lower()].append(i)
 
     selected = set()
 
-    for label in label_groups:
+    for label in sorted(label_groups):
         choices = random.sample(
             label_groups[label],
             min(k, len(label_groups[label]))

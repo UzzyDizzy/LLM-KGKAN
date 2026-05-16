@@ -28,7 +28,7 @@ cells.append(cc("for mn in ['bert_uda','ahf','transproto','bgca','ketgm','dalm']
 
 # ── Train adapted models ──
 cells.append(mc("## Phase 1: Adapted Models (KGAN, SenticGCN)"))
-cells.append(cc("for mn in ['kgan','senticgcn']:\n    for s,t in STANDARD_PAIRS:\n        try: train_model(mn,s,t,setting='standard')\n        except Exception as e: print(f'[ERR] {mn} {s}->{t}: {e}')\n    gc.collect(); torch.cuda.empty_cache()\nprint('Adapted models done')"))
+cells.append(cc("RUN_EXTRA_BASELINES = False\nif RUN_EXTRA_BASELINES:\n    for mn in ['kgan','senticgcn']:\n        for s,t in STANDARD_PAIRS:\n            try: train_model(mn,s,t,setting='standard')\n            except Exception as e: print(f'[ERR] {mn} {s}->{t}: {e}')\n        gc.collect(); torch.cuda.empty_cache()\nelse:\n    print('Skipping KGAN/SenticGCN: not in target paper tables')"))
 
 # ── Train LLMSynABSA ──
 cells.append(mc("## Phase 1: LLMSynABSA"))
@@ -40,7 +40,7 @@ cells.append(cc("for variant in ['full','wo_kg','wo_syn','wo_arg','wo_kan']:\n  
 
 # ── Few-shot ──
 cells.append(mc("## Phase 1: Few-Shot Training (Tables 3, 6)"))
-cells.append(cc("all_t = ['bert_uda','ahf','transproto','bgca','ketgm','dalm',\n         'kgan','senticgcn','llmsynabsa']\nfor mn in all_t:\n    for s,t in FEWSHOT_PAIRS:\n        try: train_model(mn,s,t,setting='fewshot',k_shot=DEFAULT_FEWSHOT_K)\n        except: pass\n    gc.collect(); torch.cuda.empty_cache()\n# LLM-KGKAN + ablations\nfor var in ['full','wo_kg','wo_syn','wo_arg','wo_kan']:\n    for s,t in FEWSHOT_PAIRS:\n        try: train_model('llm_kgkan',s,t,setting='fewshot',k_shot=DEFAULT_FEWSHOT_K,kg=kg,variant=var)\n        except: pass\n    gc.collect(); torch.cuda.empty_cache()"))
+cells.append(cc("all_t = ['bert_uda','ahf','transproto','bgca','ketgm','dalm','llmsynabsa']\nfor mn in all_t:\n    for s,t in FEWSHOT_PAIRS:\n        try: train_model(mn,s,t,setting='fewshot',k_shot=DEFAULT_FEWSHOT_K)\n        except: pass\n    gc.collect(); torch.cuda.empty_cache()\n# LLM-KGKAN + ablations\nfor var in ['full','wo_kg','wo_syn','wo_arg','wo_kan']:\n    for s,t in FEWSHOT_PAIRS:\n        try: train_model('llm_kgkan',s,t,setting='fewshot',k_shot=DEFAULT_FEWSHOT_K,kg=kg,variant=var)\n        except: pass\n    gc.collect(); torch.cuda.empty_cache()"))
 
 # ── Zero-shot ──
 cells.append(mc("## Phase 1: Zero-Shot Evaluation (Tables 3, 7)"))
@@ -52,7 +52,7 @@ cells.append(cc("for mk in API_MODELS:\n    ok,_ = check_api_key(mk)\n    if not
 
 # ── Few-shot sensitivity ──
 cells.append(mc("## Phase 2: Few-Shot Sensitivity (Table 9)"))
-cells.append(cc("for k in FEWSHOT_K_VALUES:\n    for mn in ['llm_kgkan','llmsynabsa','ketgm','bert_uda','transproto','dalm']:\n        for s,t in FEWSHOT_PAIRS[:4]:\n            try:\n                kw={'kg':kg} if mn=='llm_kgkan' else {}\n                train_model(mn,s,t,setting=f'fewshot_k{k}',k_shot=k,**kw)\n            except: pass\n        gc.collect(); torch.cuda.empty_cache()"))
+cells.append(cc("for k in FEWSHOT_K_VALUES:\n    for mn in ['llm_kgkan','llmsynabsa','ketgm','bert_uda','transproto','dalm']:\n        for s,t in FEWSHOT_PAIRS:\n            try:\n                kw={'kg':kg} if mn=='llm_kgkan' else {}\n                train_model(mn,s,t,setting=f'fewshot_k{k}',k_shot=k,**kw)\n            except: pass\n        gc.collect(); torch.cuda.empty_cache()"))
 
 # ═══════════════════════════════════════════
 # PHASE 3: ALL 16 TABLES
@@ -89,11 +89,11 @@ cells.append(cc("t7=build_table_df(TABLE3_MODELS,ZEROSHOT_PAIRS,'zeroshot')\npri
 
 # Table 8
 cells.append(mc("### Table 8: Statistical Significance"))
-cells.append(cc("from scipy import stats as sp\nbaselines=['transproto','ketgm','dalm','gpt-4o','gpt-4-turbo',\n           'llama-3.1-8b-instruct','qwen2.5-14b-instruct']\nprint('Table 8: Paired t-test p-values (LLM-KGKAN vs baselines)')\nfor bl in baselines:\n    for sett in ['standard','fewshot','zeroshot']:\n        pairs_=STANDARD_PAIRS if sett=='standard' else (FEWSHOT_PAIRS if sett=='fewshot' else ZEROSHOT_PAIRS)\n        bv,pv=[],[]\n        for s,t in pairs_:\n            rb=load_result(bl,sett,s,t); rp=load_result('llm_kgkan',sett,s,t)\n            if rb and rp: bv.append(rb['macro_f1']); pv.append(rp['macro_f1'])\n        if len(bv)>=2:\n            _,p=sp.ttest_rel(pv,bv)\n            print(f'  {MODEL_DISPLAY_NAMES.get(bl,bl):25s} {sett:10s} p={p:.4f}')\n        else:\n            print(f'  {bl:25s} {sett:10s} N/A')"))
+cells.append(cc("from scipy import stats as sp\nbaselines=['transproto','ketgm','dalm','gpt-4o','gpt-4-turbo',\n           'llama-3-8b','qwen2-72b']\nprint('Table 8: Paired t-test p-values (LLM-KGKAN vs baselines)')\nfor bl in baselines:\n    for sett in ['standard','fewshot','zeroshot']:\n        pairs_=STANDARD_PAIRS if sett=='standard' else (FEWSHOT_PAIRS if sett=='fewshot' else ZEROSHOT_PAIRS)\n        bv,pv=[],[]\n        for s,t in pairs_:\n            rb=load_result(bl,sett,s,t); rp=load_result('llm_kgkan',sett,s,t)\n            if rb and rp: bv.append(rb['macro_f1']); pv.append(rp['macro_f1'])\n        if len(bv)>=2:\n            _,p=sp.ttest_rel(pv,bv)\n            print(f'  {MODEL_DISPLAY_NAMES.get(bl,bl):25s} {sett:10s} p={p:.4f}')\n        else:\n            print(f'  {bl:25s} {sett:10s} N/A')"))
 
 # Table 9
 cells.append(mc("### Table 9: Few-Shot Sensitivity"))
-cells.append(cc("rows=[]\nfor mn in ['transproto','ketgm','dalm','llmsynabsa','gpt-4o','gpt-4-turbo',\n           'qwen2.5-14b-instruct','llm_kgkan']:\n    row={'Model':MODEL_DISPLAY_NAMES.get(mn,mn)}\n    for k in FEWSHOT_K_VALUES:\n        vals=[]\n        for s,t in FEWSHOT_PAIRS[:4]:\n            r=load_result(mn,f'fewshot_k{k}',s,t)\n            if r: vals.append(r['macro_f1'])\n        row[f'{k}-shot']=round(np.mean(vals),2) if vals else None\n    all_v=[v for k2,v in row.items() if k2!='Model' and v is not None]\n    row['AVG']=round(np.mean(all_v),2) if all_v else None\n    rows.append(row)\nprint('Table 9: Few-shot sensitivity')\nprint(pd.DataFrame(rows).to_string(index=False))"))
+cells.append(cc("rows=[]\nfor mn in ['transproto','ketgm','dalm','llmsynabsa','gpt-4o','gpt-4-turbo',\n           'qwen2-72b','llm_kgkan']:\n    row={'Model':MODEL_DISPLAY_NAMES.get(mn,mn)}\n    for k in FEWSHOT_K_VALUES:\n        vals=[]\n        for s,t in FEWSHOT_PAIRS:\n            r=load_result(mn,f'fewshot_k{k}',s,t)\n            if r: vals.append(r['macro_f1'])\n        row[f'{k}-shot']=round(np.mean(vals),2) if vals else None\n    all_v=[v for k2,v in row.items() if k2!='Model' and v is not None]\n    row['AVG']=round(np.mean(all_v),2) if all_v else None\n    rows.append(row)\nprint('Table 9: Few-shot sensitivity')\nprint(pd.DataFrame(rows).to_string(index=False))"))
 
 # Table 10
 cells.append(mc("### Table 10: Target-Wise Few-Shot (LLM-KGKAN)"))

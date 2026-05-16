@@ -31,15 +31,20 @@ def save_result(model_name, setting, src, tgt, macro_f1, extra=None):
               "macro_f1": round(macro_f1, 2), "timestamp": time.strftime("%Y-%m-%d %H:%M:%S")}
     if extra:
         result.update(extra)
-    with open(path, "w") as f:
+    tmp = f"{path}.tmp"
+    with open(tmp, "w") as f:
         json.dump(result, f, indent=2)
+    os.replace(tmp, path)
     return path
 
 def load_result(model_name, setting, src, tgt):
     path = get_result_path(model_name, setting, src, tgt)
     if os.path.exists(path):
-        with open(path) as f:
-            return json.load(f)
+        try:
+            with open(path) as f:
+                return json.load(f)
+        except json.JSONDecodeError:
+            return None
     return None
 
 def load_all_results(setting):
@@ -69,6 +74,6 @@ def build_table_df(models, pairs, setting):
                 vals.append(r["macro_f1"])
             else:
                 row[f"{src}→{tgt}"] = None
-        row["AVG"] = round(sum(vals)/len(vals), 2) if vals else None
+        row["AVG"] = round(sum(vals)/len(vals), 2) if len(vals) == len(pairs) else None
         rows.append(row)
     return pd.DataFrame(rows)

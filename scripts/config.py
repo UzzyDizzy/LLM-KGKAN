@@ -121,7 +121,7 @@ class PEFTConfig:
     lora_dropout: float = 0.05
     lora_bias: str = "none"
     # QLoRA
-    load_in_4bit: bool = True
+    load_in_4bit: bool = False
     bnb_4bit_compute_dtype: str = "bfloat16"
     bnb_4bit_quant_type: str = "nf4"
     bnb_4bit_use_double_quant: bool = True
@@ -231,6 +231,7 @@ class LLMKGKANModelConfig:
     mmd_lambda: float = 0.2
     ignore_index: int = IGNORE_INDEX
     freeze_backbone: bool = True
+    use_4bit: bool = False
     use_distmult: bool = False
     prefix_len: int = 10
     seed: int = SEED

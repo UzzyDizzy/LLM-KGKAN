@@ -15,25 +15,31 @@ class SemanticEncoder(nn.Module):
         super().__init__()
         base_cfg = AutoConfig.from_pretrained(cfg.llm_name)
 
-        bnb_config = BitsAndBytesConfig(
-            load_in_4bit=True,
-            bnb_4bit_compute_dtype=torch.float16,
-            bnb_4bit_use_double_quant=True,
-            bnb_4bit_quant_type="nf4"
-        )
+        load_kwargs = {
+            "config": base_cfg,
+            "device_map": "auto",
+            "torch_dtype": torch.float16,
+        }
+        if getattr(cfg, "use_4bit", False):
+            load_kwargs["quantization_config"] = BitsAndBytesConfig(
+                load_in_4bit=True,
+                bnb_4bit_compute_dtype=torch.float16,
+                bnb_4bit_use_double_quant=True,
+                bnb_4bit_quant_type="nf4",
+            )
+
         self.backbone = AutoModel.from_pretrained(
             cfg.llm_name,
-            config=base_cfg,
-            device_map="auto",              # multi-GPU / auto placement
-            quantization_config=bnb_config,  # QLoRA
-            torch_dtype=torch.float16,
+            **load_kwargs,
         )
         self.backbone.config.use_cache = False
-        self.backbone.gradient_checkpointing_enable()
-        self.backbone = prepare_model_for_kbit_training(
-            self.backbone,
-            use_gradient_checkpointing=True,
-        )
+        if getattr(cfg, "use_4bit", False):
+            self.backbone = prepare_model_for_kbit_training(
+                self.backbone,
+                use_gradient_checkpointing=True,
+            )
+        else:
+            self.backbone.gradient_checkpointing_enable()
 
         if cfg.freeze_backbone:
             for p in self.backbone.parameters():
@@ -54,10 +60,10 @@ class SemanticEncoder(nn.Module):
             task_type="FEATURE_EXTRACTION",
         )
         self.backbone = get_peft_model(self.backbone, peft_cfg)
-        self.proj = nn.Linear(self.backbone.config.hidden_size, cfg.hidden_size)
         if self.backbone.config.hidden_size == cfg.hidden_size:
-            nn.init.eye_(self.proj.weight)
-            nn.init.zeros_(self.proj.bias)
+            self.proj = nn.Identity()
+        else:
+            self.proj = nn.Linear(self.backbone.config.hidden_size, cfg.hidden_size)
         # === PREFIX MODULES (Eq 4) ===
         self.prefix_len = cfg.prefix_len
         d = self.backbone.config.hidden_size
@@ -79,12 +85,13 @@ class SemanticEncoder(nn.Module):
         inputs_embeds = self.backbone.get_input_embeddings()(input_ids)
 
         # --- task prefix ---
-        task_prefix = self.task_prefix.expand(B, -1, -1)  # (B, Lp, d)
+        embed_dtype = inputs_embeds.dtype
+        task_prefix = self.task_prefix.to(dtype=embed_dtype).expand(B, -1, -1)  # (B, Lp, d)
 
         # --- KG prefix ---
         if kg_summary is not None:
             kg_prefix = self.kg_prefix_mlp(kg_summary)  # (B, Lp*d)
-            kg_prefix = kg_prefix.view(B, self.prefix_len, d)
+            kg_prefix = kg_prefix.view(B, self.prefix_len, d).to(dtype=embed_dtype)
         else:
             kg_prefix = torch.zeros_like(task_prefix)
 

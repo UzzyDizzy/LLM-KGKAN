@@ -22,6 +22,7 @@ class LLMKGKANConfig:
     mmd_lambda: float = 0.2
     ignore_index: int = -100
     freeze_backbone: bool = True
+    use_4bit: bool = False
     use_distmult: bool = False
     lr: float = 2e-4
     weight_decay: float = 1e-2

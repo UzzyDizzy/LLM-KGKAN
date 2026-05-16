@@ -2,6 +2,7 @@
 import random
 import numpy as np
 import torch
+import torch.nn.functional as F
 
 
 def set_seed(seed: int) -> None:
@@ -11,19 +12,28 @@ def set_seed(seed: int) -> None:
     torch.cuda.manual_seed_all(seed)
 
 
-def gaussian_kernel(x: torch.Tensor, y: torch.Tensor, sigma: float = 1.0) -> torch.Tensor:
-    x_norm = (x ** 2).sum(dim=1, keepdim=True)
-    y_norm = (y ** 2).sum(dim=1, keepdim=True)
-    dist = x_norm - 2.0 * x @ y.t() + y_norm.t()
-    return torch.exp(-dist / (2.0 * sigma ** 2))
-
-
-def mmd_loss(x: torch.Tensor, y: torch.Tensor, sigma: float = 1.0) -> torch.Tensor:
+def mmd_loss(x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
     if x.size(0) < 2 or y.size(0) < 2:
         return x.new_tensor(0.0)
-    k_xx = gaussian_kernel(x, x, sigma).mean()
-    k_yy = gaussian_kernel(y, y, sigma).mean()
-    k_xy = gaussian_kernel(x, y, sigma).mean()
+
+    x = F.normalize(x.float(), dim=-1)
+    y = F.normalize(y.float(), dim=-1)
+    z = torch.cat([x, y], dim=0)
+    dist_sq = torch.cdist(z, z, p=2).pow(2)
+
+    with torch.no_grad():
+        positive = dist_sq[dist_sq > 0]
+        bandwidth = positive.median().clamp_min(1e-6) if positive.numel() else dist_sq.new_tensor(1.0)
+
+    kernels = dist_sq.new_zeros(dist_sq.shape)
+    for scale in (0.25, 0.5, 1.0, 2.0, 4.0):
+        gamma = 1.0 / (2.0 * bandwidth * scale)
+        kernels = kernels + torch.exp(-gamma * dist_sq)
+
+    nx = x.size(0)
+    k_xx = kernels[:nx, :nx].mean()
+    k_yy = kernels[nx:, nx:].mean()
+    k_xy = kernels[:nx, nx:].mean()
     return k_xx + k_yy - 2.0 * k_xy
 
 
@@ -35,12 +45,11 @@ def token_accuracy(logits: torch.Tensor, labels: torch.Tensor, ignore_index: int
     return ((preds == labels) & mask).sum().item() / mask.sum().item()
 
 
-from data import ABSADataset
-from sampling import few_shot_sample
-from domains import DOMAINS
-
-
 def build_datasets(cfg, kg, src_domain, tgt_domain, k_shot=None):
+    from data import ABSADataset
+    from sampling import few_shot_sample
+    from domains import DOMAINS
+
     src_path = DOMAINS[src_domain]
     tgt_path = DOMAINS[tgt_domain]
 

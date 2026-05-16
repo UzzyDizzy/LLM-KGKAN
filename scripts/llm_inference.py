@@ -5,7 +5,7 @@ import os, json, time, hashlib
 import sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from scripts.config import (
-    API_BUDGET, API_MODELS, BIO_PROMPT_TEMPLATE, LABELS, LABEL2ID,
+    API_BUDGET, API_MODELS, BIO_PROMPT_TEMPLATE, LABELS, LABEL2ID, ID2LABEL,
     OPENAI_API_KEY, ANTHROPIC_API_KEY, GOOGLE_API_KEY, RESULTS_DIR,
 )
 
@@ -24,19 +24,19 @@ COST_PER_1M = {
     "gemini-2.5-pro": (1.25, 10.0),
 }
 
-def _cache_key(model, text):
-    h = hashlib.md5(f"{model}:{text}".encode()).hexdigest()
+def _cache_key(model, text, context=""):
+    h = hashlib.md5(f"{model}:{context}:{text}".encode()).hexdigest()
     return os.path.join(CACHE_DIR, f"{model}_{h}.json")
 
-def _load_cache(model, text):
-    p = _cache_key(model, text)
+def _load_cache(model, text, context=""):
+    p = _cache_key(model, text, context)
     if os.path.exists(p):
         with open(p) as f:
             return json.load(f)
     return None
 
-def _save_cache(model, text, result):
-    p = _cache_key(model, text)
+def _save_cache(model, text, result, context=""):
+    p = _cache_key(model, text, context)
     with open(p, "w") as f:
         json.dump(result, f)
 
@@ -54,31 +54,46 @@ def estimate_cost(num_samples, avg_tokens=80, model="gpt-4o"):
     costs = COST_PER_1M.get(model, (5.0, 15.0))
     return (input_tok * costs[0] + output_tok * costs[1]) / 1_000_000
 
-def infer_openai(texts, model_name="gpt-4o", api_key=None, tokens, few_shot_str):
-    """Run OpenAI inference on a batch of texts."""
+def _build_prompt(sample, few_shot_str=""):
+    tokens = sample.get("tokens") or str(sample.get("text", "")).split()
+    sentence = " ".join(tokens)
+    prompt = BIO_PROMPT_TEMPLATE.format(sentence=sentence)
+    if few_shot_str:
+        prompt = (
+            "Examples:\n"
+            f"{few_shot_str}\n"
+            "Now tag the following sentence.\n\n"
+            f"{prompt}"
+        )
+    prompt += f"\n\nTokenized input: {json.dumps(tokens)}\nNumber of tokens: {len(tokens)}"
+    return prompt
+
+
+def infer_openai(samples, model_name="gpt-4o", api_key=None, few_shot_str="", cache_context=""):
+    """Run OpenAI inference on a batch of ABSA samples."""
     global _total_spent
     try:
         from openai import OpenAI
     except ImportError:
         print("[WARN] openai package not installed, skipping")
-        return [None] * len(texts)
+        return [None] * len(samples)
 
     if not api_key:
         api_key = OPENAI_API_KEY
     if not api_key:
         print(f"[SKIP] No API key for {model_name}")
-        return [None] * len(texts)
+        return [None] * len(samples)
 
     client = OpenAI(api_key=api_key)
     results = []
 
     import logging
     logger = logging.getLogger()
-    logger.info(f"  [OpenAI] Starting inference on {len(texts)} texts")
+    logger.info(f"  [OpenAI] Starting inference on {len(samples)} samples")
 
-    for text in texts:
-        # Check cache
-        cached = _load_cache(model_name, text)
+    for sample in samples:
+        text = sample.get("text") or " ".join(sample.get("tokens", []))
+        cached = _load_cache(model_name, text, cache_context)
         if cached is not None:
             results.append(cached)
             continue
@@ -89,12 +104,7 @@ def infer_openai(texts, model_name="gpt-4o", api_key=None, tokens, few_shot_str)
             results.append(None)
             continue
 
-        # Pass `tokens`, `num_tokens`, and `few_shot_str` to infer_openai
-        prompt = BIO_PROMPT_TEMPLATE.format(
-            few_shot_examples=few_shot_str,
-            tokens=json.dumps(tokens),
-            num_tokens=len(tokens)
-        )
+        prompt = _build_prompt(sample, few_shot_str)
 
         for attempt in range(API_BUDGET.max_retries):
             try:
@@ -113,7 +123,7 @@ def infer_openai(texts, model_name="gpt-4o", api_key=None, tokens, few_shot_str)
                 _total_spent += cost
 
                 result = {"text": text, "output": output, "cost": cost}
-                _save_cache(model_name, text, result)
+                _save_cache(model_name, text, result, cache_context)
                 results.append(result)
                 break
             except Exception as e:
@@ -134,27 +144,24 @@ def parse_bio_output(output_str, num_tokens):
     """Parse LLM output into BIO tag IDs."""
     import logging
     logger = logging.getLogger()
+
+    if output_str is None:
+        return [LABEL2ID["O"]] * num_tokens
     logger.info(f"    Raw LLM output: {output_str[:100]}")
 
-    if output_str is None:
-        return [LABEL2ID["O"]] * num_tokens
-        
     try:
-        # Strip markdown codeblocks if LLM includes them
         if "```" in output_str:
-            output_str = output_str.split("```json")[-1].split("```")[0]
-        
-        tags_str = json.loads(output_str.strip())
+            output_str = output_str.replace("```json", "```").split("```")[1]
+        parsed = json.loads(output_str.strip())
+        if isinstance(parsed, dict):
+            parsed = parsed.get("tags", parsed.get("labels", []))
+        tags_str = parsed if isinstance(parsed, list) else str(parsed).split()
+    except Exception:
+        tags_str = output_str.replace(",", " ").replace("[", " ").replace("]", " ").split()
 
-    except json.JSONDecodeError:
-        tags_str = output_str.strip().split() # Fallback
-    if output_str is None:
-        return [LABEL2ID["O"]] * num_tokens
-
-    tags_str = output_str.strip().split()
     tag_ids = []
     for t in tags_str:
-        t = t.strip().upper()
+        t = str(t).strip().strip('"').strip("'").upper()
         if t in LABEL2ID:
             tag_ids.append(LABEL2ID[t])
         else:
@@ -178,8 +185,7 @@ def run_api_inference(model_key, samples, train_samples=None, k_shot=0, batch_si
     few_shot_str = ""
     if k_shot > 0 and train_samples:
         import random
-        # Randomly sample k_shot examples from train set
-        shots = random.sample(train_samples, k_shot)
+        shots = random.sample(train_samples, min(k_shot, len(train_samples)))
         for shot in shots:
             shot_tags = [ID2LABEL[tid] for tid in shot['tag_ids'][:len(shot['tokens'])]]
             few_shot_str += f"Tokens: {json.dumps(shot['tokens'])}\nTags: {json.dumps(shot_tags)}\n\n"
@@ -196,14 +202,20 @@ def run_api_inference(model_key, samples, train_samples=None, k_shot=0, batch_si
     provider = info["provider"]
     model_name = info["model"]
 
-    texts = [s["text"] for s in samples]
     all_results = []
 
-    for i in range(0, len(texts), batch_size):
-        logger.info(f"  [API] Processing batch {i//batch_size + 1}/{(len(texts)-1)//batch_size + 1}")
-        batch = texts[i:i+batch_size]
+    cache_context = f"k{k_shot}:{hashlib.md5(few_shot_str.encode()).hexdigest()}"
+    for i in range(0, len(samples), batch_size):
+        logger.info(f"  [API] Processing batch {i//batch_size + 1}/{(len(samples)-1)//batch_size + 1}")
+        batch = samples[i:i+batch_size]
         if provider == "openai":
-            batch_results = infer_openai(batch, model_name, api_key)
+            batch_results = infer_openai(
+                batch,
+                model_name=model_name,
+                api_key=api_key,
+                few_shot_str=few_shot_str,
+                cache_context=cache_context,
+            )
         else:
             # Placeholder for anthropic/google — skip if no implementation
             print(f"[SKIP] Provider '{provider}' not implemented yet")
