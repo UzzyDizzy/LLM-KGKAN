@@ -1,0 +1,1 @@
+{"text": "Even for two very hungry people there is plenty of food left to be taken home (it reheats really well also).", "output": "```json\n[\n    \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-POS\", \"O\", \"B-POS\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-POS\", \"O\", \"O\", \"O\"\n]\n```", "cost": 0.01826}

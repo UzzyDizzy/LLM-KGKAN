@@ -1,0 +1,1 @@
+{"text": "Thanks for remembering to load my bag onto my connecting flight. Oh wait you forgot. Iceland should be fun with no clothes....", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEU\", \"I-NEU\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.0050925}

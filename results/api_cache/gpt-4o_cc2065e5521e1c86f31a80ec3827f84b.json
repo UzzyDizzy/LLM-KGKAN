@@ -1,0 +1,1 @@
+{"text": "My academic and financial advisers have only changed once and do a much better job than the first ones .", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-POS\", \"I-POS\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.00591}

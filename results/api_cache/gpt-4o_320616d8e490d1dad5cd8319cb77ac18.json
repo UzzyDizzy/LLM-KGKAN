@@ -1,0 +1,1 @@
+{"text": "I trust the people at Go Sushi, it never disappoints.", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"B-POS\", \"I-POS\", \"O\", \"O\", \"B-POS\"]\n```", "cost": 0.0046225}

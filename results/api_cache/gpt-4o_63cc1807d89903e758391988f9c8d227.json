@@ -1,0 +1,1 @@
+{"text": "I would not want to work for such a two-faced , deceptive organization again .", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"I-NEG\", \"O\", \"O\", \"O\"]\n```", "cost": 0.0052175}

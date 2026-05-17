@@ -1,0 +1,1 @@
+{"text": "However, there are MAJOR issues with the touchpad which render the device nearly useless.", "output": "```json\n[\"O\", \"O\", \"O\", \"B-NEG\", \"I-NEG\", \"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\"]\n```", "cost": 0.0060875}

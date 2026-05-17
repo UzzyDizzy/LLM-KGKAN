@@ -1,0 +1,1 @@
+{"text": "Lister to my show my on Monday 1230 130", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEU\", \"I-NEU\", \"I-NEU\"]\n```", "cost": 0.00498}

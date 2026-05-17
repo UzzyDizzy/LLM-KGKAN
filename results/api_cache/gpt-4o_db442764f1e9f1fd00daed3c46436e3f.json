@@ -1,0 +1,1 @@
+{"text": "There were small problems with Mac office.", "output": "```json\n[\"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"B-NEU\", \"I-NEU\"]\n```", "cost": 0.0050975}

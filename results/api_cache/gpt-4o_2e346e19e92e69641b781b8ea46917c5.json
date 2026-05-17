@@ -1,0 +1,1 @@
+{"text": "Their eggplant is so delicate, sweet tender!", "output": "```json\n[\"O\", \"B-POS\", \"O\", \"O\", \"B-POS\", \"B-POS\", \"O\"]\n```", "cost": 0.0045125}

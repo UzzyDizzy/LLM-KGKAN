@@ -1,0 +1,1 @@
+{"text": "Patsy's Pizza = true love", "output": "```json\n[\"O\", \"O\", \"O\", \"B-POS\", \"O\"]\n```", "cost": 0.01609}

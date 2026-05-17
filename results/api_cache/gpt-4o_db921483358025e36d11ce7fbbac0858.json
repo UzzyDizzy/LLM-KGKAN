@@ -1,0 +1,1 @@
+{"text": "There has to be something better out there than either of these two \" institutions \" of ill repute .", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"B-NEG\", \"I-NEG\", \"O\"]\n```", "cost": 0.0066725}

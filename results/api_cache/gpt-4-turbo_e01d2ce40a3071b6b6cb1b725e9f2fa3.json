@@ -1,0 +1,1 @@
+{"text": "The filet mignon dish was superb!", "output": "```json\n[\"O\", \"B-POS\", \"I-POS\", \"I-POS\", \"O\", \"O\"]\n```", "cost": 0.01636}

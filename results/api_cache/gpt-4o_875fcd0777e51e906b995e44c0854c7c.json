@@ -1,0 +1,1 @@
+{"text": "Yeah sorry but there's always a problem with United. And you have an international reputation for having problems.", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"B-NEG\"]\n```", "cost": 0.00637}

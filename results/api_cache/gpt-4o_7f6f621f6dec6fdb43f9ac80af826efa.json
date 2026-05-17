@@ -1,0 +1,1 @@
+{"text": "the volume level of the phone is not all that good .", "output": "```json\n[\"O\", \"B-NEU\", \"I-NEU\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\"]\n```", "cost": 0.006475}

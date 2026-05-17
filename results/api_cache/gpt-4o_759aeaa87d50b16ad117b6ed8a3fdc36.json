@@ -1,0 +1,1 @@
+{"text": "I love WIndows 7 which is a vast improvment over Vista.", "output": "```json\n[\"O\", \"O\", \"B-POS\", \"I-POS\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\"]\n```", "cost": 0.005235}

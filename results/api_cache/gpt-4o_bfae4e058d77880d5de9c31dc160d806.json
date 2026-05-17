@@ -1,0 +1,1 @@
+{"text": "the lcd screen pulls out and rotates in any direction for easy pictures .", "output": "```json\n[\"O\", \"B-POS\", \"I-POS\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-POS\", \"I-POS\", \"O\"]\n```", "cost": 0.0064525}

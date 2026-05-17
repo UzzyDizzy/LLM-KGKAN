@@ -1,0 +1,1 @@
+{"text": "Money Magazine also rated E-Trade highly and gave them high marks for most of the criteria .", "output": "```json\n[\"B-NEU\", \"I-NEU\", \"O\", \"O\", \"B-NEU\", \"O\", \"O\", \"O\", \"O\", \"B-POS\", \"I-POS\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.005385}

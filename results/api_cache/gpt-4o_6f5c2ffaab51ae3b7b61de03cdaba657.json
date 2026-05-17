@@ -1,0 +1,1 @@
+{"text": "- the unit itself its well structured , with just the buttons you need and none you do n't .", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"B-POS\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.0067125}

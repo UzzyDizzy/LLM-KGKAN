@@ -1,0 +1,1 @@
+{"text": "Big thanks to Ms. Winston for assisting me over the phone with a baggage claim issue today. She really went the extra mile!", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"I-NEG\", \"I-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.006005}

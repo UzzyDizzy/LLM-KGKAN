@@ -1,0 +1,1 @@
+{"text": "But with this laptop, the bass is very weak and the sound comes out sounding tinny.", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"B-NEG\"]\n```", "cost": 0.00614}

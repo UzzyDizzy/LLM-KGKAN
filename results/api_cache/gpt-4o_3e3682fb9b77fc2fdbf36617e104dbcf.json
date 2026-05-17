@@ -1,0 +1,1 @@
+{"text": "My laptop with Windows 7 crashed and I did not want Windows 8.", "output": "```json\n[\"O\", \"O\", \"O\", \"B-NEU\", \"I-NEU\", \"B-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEU\", \"I-NEU\"]\n```", "cost": 0.005385}

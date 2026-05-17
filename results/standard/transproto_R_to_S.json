@@ -1,0 +1,8 @@
+{
+  "model": "transproto",
+  "setting": "standard",
+  "src": "R",
+  "tgt": "S",
+  "macro_f1": 50.64,
+  "timestamp": "2026-05-16 12:21:25"
+}

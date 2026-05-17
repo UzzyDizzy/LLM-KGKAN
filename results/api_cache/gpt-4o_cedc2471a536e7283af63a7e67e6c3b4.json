@@ -1,0 +1,1 @@
+{"text": "The textbooks help with the foundation and basics of the class , and the research papers help you to expand on that knowledge .", "output": "```json\n[\"O\", \"B-NEU\", \"O\", \"O\", \"O\", \"B-NEU\", \"O\", \"B-NEU\", \"O\", \"O\", \"B-NEU\", \"O\", \"O\", \"O\", \"B-NEU\", \"I-NEU\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEU\", \"O\"]\n```", "cost": 0.0057225}

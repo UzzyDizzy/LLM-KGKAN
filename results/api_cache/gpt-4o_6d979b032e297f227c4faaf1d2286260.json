@@ -1,0 +1,1 @@
+{"text": "University of Phoenix is a complete waste of time and money .", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"I-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.006335}

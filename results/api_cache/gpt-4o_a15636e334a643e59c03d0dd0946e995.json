@@ -1,0 +1,1 @@
+{"text": "agent split up my reservation? Now can't Cancelled Flight and refund credit for 2wks? Why", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"B-NEG\", \"I-NEG\", \"O\", \"B-NEG\", \"I-NEG\", \"O\", \"B-NEG\", \"O\"]\n```", "cost": 0.006295}

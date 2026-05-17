@@ -1,0 +1,8 @@
+{
+  "model": "bgca",
+  "setting": "standard",
+  "src": "R",
+  "tgt": "L",
+  "macro_f1": 47.74,
+  "timestamp": "2026-05-16 13:25:57"
+}

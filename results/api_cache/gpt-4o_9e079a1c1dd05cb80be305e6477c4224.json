@@ -1,0 +1,1 @@
+{"text": "As for the account transfer , it's another frustrating story .", "output": "```json\n[\"O\", \"O\", \"O\", \"B-NEG\", \"I-NEG\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"O\"]\n```", "cost": 0.005085}

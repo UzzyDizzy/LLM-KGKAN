@@ -1,0 +1,1 @@
+{"text": "Not one of our meals was edible - bland and/or made with weird rosemary or orange flavoring.", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"B-NEG\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"B-NEG\", \"B-NEG\", \"O\", \"B-NEG\", \"B-NEG\"]\n```", "cost": 0.0049725}

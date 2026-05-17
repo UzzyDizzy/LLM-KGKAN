@@ -1,0 +1,1 @@
+{"text": "Is flight 0769 out of LGA to DFW on time?", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEU\", \"O\", \"B-NEU\", \"O\", \"B-NEU\"]\n```", "cost": 0.0046525}

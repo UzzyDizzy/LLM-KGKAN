@@ -1,0 +1,1 @@
+{"text": "the only problem i had was a small glitch with t-mobile .", "output": "```json\n[\"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEU\", \"O\", \"B-NEU\", \"O\"]\n```", "cost": 0.00648}

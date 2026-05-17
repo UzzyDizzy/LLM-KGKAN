@@ -1,0 +1,1 @@
+{"text": "I've owned this labtop for less then two months, already the mouse button has broke.", "output": "```json\n[\"O\", \"O\", \"O\", \"B-NEU\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"I-NEG\", \"O\", \"O\"]\n```", "cost": 0.00539}

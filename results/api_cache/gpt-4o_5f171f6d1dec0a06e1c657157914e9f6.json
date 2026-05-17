@@ -1,0 +1,1 @@
+{"text": "The $72 Delmonico steak had to be sent back because it was not cooked to order.", "output": "```json\n[\"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.0049425}

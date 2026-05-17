@@ -1,0 +1,1 @@
+{"text": "its just a fun place to go, not a five star restaraunt.", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"B-NEU\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEU\"]\n```", "cost": 0.01706}

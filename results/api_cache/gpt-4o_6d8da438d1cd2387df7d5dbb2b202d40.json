@@ -1,0 +1,1 @@
+{"text": "Anyone can teach anything at UMUC seems to be the policy .", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.005085}

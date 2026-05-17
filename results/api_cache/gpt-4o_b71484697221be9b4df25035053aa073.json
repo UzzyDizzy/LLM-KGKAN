@@ -1,0 +1,1 @@
+{"text": "And their overall attitude towards me was not the greatest .", "output": "```json\n[\"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\"]\n```", "cost": 0.00507}

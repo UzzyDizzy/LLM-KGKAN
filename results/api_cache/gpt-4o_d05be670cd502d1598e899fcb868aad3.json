@@ -1,0 +1,1 @@
+{"text": "It saves walking in and waiting for a table in the often noisy, crowded bar at dinnertime.", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"I-NEG\", \"I-NEG\", \"O\", \"O\", \"O\"]\n```", "cost": 0.0050225}

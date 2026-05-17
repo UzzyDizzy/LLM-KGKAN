@@ -1,0 +1,1 @@
+{"text": "the one i purchased for a frend as a gift will not read any dvd disc .", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"I-NEG\", \"O\"]\n```", "cost": 0.006525}

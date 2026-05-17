@@ -1,0 +1,8 @@
+{
+  "model": "ahf",
+  "setting": "fewshot",
+  "src": "L",
+  "tgt": "W",
+  "macro_f1": 0.47,
+  "timestamp": "2026-05-16 18:51:55"
+}

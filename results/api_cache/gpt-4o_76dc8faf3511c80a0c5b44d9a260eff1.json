@@ -1,0 +1,1 @@
+{"text": "Power Point is considered an acceptable format for term papers !", "output": "```json\n[\"B-NEU\", \"I-NEU\", \"O\", \"O\", \"O\", \"B-NEU\", \"I-NEU\", \"O\", \"B-NEU\", \"I-NEU\", \"O\"]\n```", "cost": 0.005205}

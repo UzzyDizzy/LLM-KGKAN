@@ -1,0 +1,1 @@
+{"text": "My daughter's wedding reception at Water's Edge received the highest compliments from our guests.", "output": "```json\n[\"O\", \"O\", \"B-POS\", \"I-POS\", \"O\", \"B-POS\", \"I-POS\", \"O\", \"O\", \"O\", \"B-POS\", \"O\", \"O\", \"O\"]\n```", "cost": 0.0059775}

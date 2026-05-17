@@ -1,0 +1,8 @@
+{
+  "model": "bert_uda",
+  "setting": "standard",
+  "src": "R",
+  "tgt": "L",
+  "macro_f1": 43.86,
+  "timestamp": "2026-05-16 11:14:48"
+}

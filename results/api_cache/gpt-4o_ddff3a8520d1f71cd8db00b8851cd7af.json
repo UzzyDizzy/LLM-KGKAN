@@ -1,0 +1,1 @@
+{"text": ":-)If you buy this - don't go into it expecting 7 hrs of battery life, and you'll be perfectly satisfied.", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"I-NEG\", \"O\", \"B-NEG\", \"I-NEG\", \"O\", \"O\", \"O\", \"B-POS\", \"I-POS\"]\n```", "cost": 0.0063525}

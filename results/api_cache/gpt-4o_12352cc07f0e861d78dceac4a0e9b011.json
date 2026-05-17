@@ -1,0 +1,1 @@
+{"text": "- light , compact design", "output": "```json\n[\"O\", \"B-POS\", \"O\", \"B-POS\", \"I-POS\"]\n```", "cost": 0.0060875}

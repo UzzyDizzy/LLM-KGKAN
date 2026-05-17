@@ -1,0 +1,1 @@
+{"text": "While the ambiance and atmosphere were great, the food and service could have been a lot better.", "output": "```json\n[\"O\", \"O\", \"B-POS\", \"O\", \"B-POS\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.0050375}

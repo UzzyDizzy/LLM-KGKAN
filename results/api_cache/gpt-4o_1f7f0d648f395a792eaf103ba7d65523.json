@@ -1,0 +1,1 @@
+{"text": "I am a current CTU international student .", "output": "```json\n[\"O\", \"O\", \"O\", \"B-NEU\", \"I-NEU\", \"I-NEU\", \"O\", \"O\"]\n```", "cost": 0.0050025}

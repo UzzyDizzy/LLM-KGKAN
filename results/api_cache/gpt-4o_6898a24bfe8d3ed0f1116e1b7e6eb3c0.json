@@ -1,0 +1,1 @@
+{"text": "I manage a couple lists through egroups and I really like the options they offer to list managers .", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-POS\", \"I-POS\", \"O\", \"O\", \"O\", \"O\", \"B-POS\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.0066225}

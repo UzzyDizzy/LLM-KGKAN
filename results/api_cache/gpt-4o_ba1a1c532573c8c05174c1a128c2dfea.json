@@ -1,0 +1,1 @@
+{"text": "The commission fee is high at $20 per trade , but you get unlimited free realtime quotes , and lots of research options .", "output": "```json\n[\"O\", \"B-NEG\", \"I-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-POS\", \"I-POS\", \"I-POS\", \"O\", \"O\", \"O\", \"O\", \"B-POS\", \"I-POS\", \"I-POS\", \"O\"]\n```", "cost": 0.0069025}

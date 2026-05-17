@@ -1,0 +1,1 @@
+{"text": "I was just admitted to the Masters of Science in Management - Project Management program and my advisor was extremely helpful .", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEU\", \"I-NEU\", \"I-NEU\", \"I-NEU\", \"I-NEU\", \"O\", \"B-NEU\", \"I-NEU\", \"I-NEU\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-POS\", \"O\"]\n```", "cost": 0.0056975}

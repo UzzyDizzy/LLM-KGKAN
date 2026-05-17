@@ -1,0 +1,1 @@
+{"text": "The service leaves much to be desired, from feeling like you are rushed the place your order, to being ignored the rest of the night.", "output": "```json\n[\"B-NEG\", \"I-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.0063225}

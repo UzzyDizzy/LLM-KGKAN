@@ -1,0 +1,1 @@
+{"text": "i do here a constant high-pitched distorted sound , not to mention the volume does not seem to be loud enough .", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"I-NEG\", \"I-NEG\", \"I-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"I-NEG\", \"O\"]\n```", "cost": 0.00682}

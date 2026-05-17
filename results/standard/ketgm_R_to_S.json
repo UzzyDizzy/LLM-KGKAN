@@ -1,0 +1,8 @@
+{
+  "model": "ketgm",
+  "setting": "standard",
+  "src": "R",
+  "tgt": "S",
+  "macro_f1": 34.56,
+  "timestamp": "2026-05-16 14:50:07"
+}

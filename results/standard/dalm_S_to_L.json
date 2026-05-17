@@ -1,0 +1,8 @@
+{
+  "model": "dalm",
+  "setting": "standard",
+  "src": "S",
+  "tgt": "L",
+  "macro_f1": 39.36,
+  "timestamp": "2026-05-16 17:54:45"
+}

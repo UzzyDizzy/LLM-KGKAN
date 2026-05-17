@@ -1,0 +1,1 @@
+{"text": "The menu has so many fish items and oysters.", "output": "```json\n[\"O\", \"B-NEU\", \"O\", \"O\", \"O\", \"B-NEU\", \"I-NEU\", \"O\", \"B-NEU\"]\n```", "cost": 0.00464}

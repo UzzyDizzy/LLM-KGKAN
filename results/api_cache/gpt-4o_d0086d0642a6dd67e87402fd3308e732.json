@@ -1,0 +1,1 @@
+{"text": "This supposedly military friendly school scammed me .", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"O\"]\n```", "cost": 0.0061725}

@@ -1,0 +1,1 @@
+{"text": "the homemade Guacamole, the unbelievable entree, and thee most amazing deserts.", "output": "```json\n[\"O\", \"B-POS\", \"I-POS\", \"O\", \"B-POS\", \"I-POS\", \"O\", \"O\", \"B-POS\", \"I-POS\", \"I-POS\"]\n```", "cost": 0.0048875}

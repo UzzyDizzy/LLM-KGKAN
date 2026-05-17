@@ -1,0 +1,1 @@
+{"text": "The menu is limited but almost all of the dishes are excellent.", "output": "```json\n[\"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-POS\"]\n```", "cost": 0.0046725}

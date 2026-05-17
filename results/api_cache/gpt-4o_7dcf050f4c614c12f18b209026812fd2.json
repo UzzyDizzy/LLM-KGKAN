@@ -1,0 +1,1 @@
+{"text": "This must be a drone \u201c: We understand your frustration. Our Bag team is working hard to get your bag(s) to you...\"", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"B-NEU\", \"I-NEU\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.005105}

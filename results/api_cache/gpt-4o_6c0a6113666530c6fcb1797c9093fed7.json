@@ -1,0 +1,1 @@
+{"text": "My counselor will not return my phone calls .", "output": "```json\n[\"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"I-NEG\", \"O\"]\n```", "cost": 0.0062475}

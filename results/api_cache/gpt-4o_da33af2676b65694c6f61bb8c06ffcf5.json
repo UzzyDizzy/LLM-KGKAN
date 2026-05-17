@@ -1,0 +1,1 @@
+{"text": "I reccomend the fried pork dumplings, the orange chicken/beef, and the fried rice.", "output": "```json\n[\"O\", \"O\", \"O\", \"B-POS\", \"I-POS\", \"O\", \"O\", \"B-POS\", \"I-POS\", \"O\", \"O\", \"B-POS\", \"I-POS\"]\n```", "cost": 0.00596}

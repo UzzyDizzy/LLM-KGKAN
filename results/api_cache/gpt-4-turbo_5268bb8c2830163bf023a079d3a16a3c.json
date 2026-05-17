@@ -1,0 +1,1 @@
+{"text": "The porcini mushroom pasta special was tasteless, so was the seafood tagliatelle.", "output": "```json\n[\"O\", \"B-NEG\", \"I-NEG\", \"I-NEG\", \"I-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"I-NEG\"]\n```", "cost": 0.01733}

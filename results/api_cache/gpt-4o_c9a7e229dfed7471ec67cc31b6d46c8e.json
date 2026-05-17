@@ -1,0 +1,1 @@
+{"text": "on iPad and iPhone, clicking the CHECKIN link in the email I received at 24hrs before flight", "output": "```json\n[\"O\", \"B-NEU\", \"O\", \"B-NEU\", \"O\", \"O\", \"B-NEU\", \"I-NEU\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.0049475}

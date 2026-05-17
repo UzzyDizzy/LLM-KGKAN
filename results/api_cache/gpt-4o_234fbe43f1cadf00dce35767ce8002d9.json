@@ -1,0 +1,1 @@
+{"text": "After replacing the hard drive the battery stopped working (3 months of use) which was frustrating.", "output": "```json\n[\"O\", \"O\", \"O\", \"B-NEG\", \"I-NEG\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\"]\n```", "cost": 0.0054425}

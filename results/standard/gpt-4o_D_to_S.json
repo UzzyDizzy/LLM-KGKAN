@@ -1,0 +1,8 @@
+{
+  "model": "gpt-4o",
+  "setting": "standard",
+  "src": "D",
+  "tgt": "S",
+  "macro_f1": 33.5,
+  "timestamp": "2026-05-16 18:20:25"
+}

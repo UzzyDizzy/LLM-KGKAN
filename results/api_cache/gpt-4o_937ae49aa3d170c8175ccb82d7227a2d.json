@@ -1,0 +1,1 @@
+{"text": "My post was just more of disappointment. I'm a frequent United flyer, it was a simple ??. 1 bad apple doesn't spoil the bunch.", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"B-POS\", \"I-POS\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"I-NEG\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.006085}

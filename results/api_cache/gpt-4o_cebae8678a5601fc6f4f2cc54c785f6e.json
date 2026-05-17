@@ -1,0 +1,1 @@
+{"text": "The course texts were too basic , and for intro level students , I expected something more challenging form the UMUC experience .", "output": "```json\n[\"O\", \"B-NEG\", \"I-NEG\", \"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEU\", \"I-NEU\", \"O\"]\n```", "cost": 0.0055925}

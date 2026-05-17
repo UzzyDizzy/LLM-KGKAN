@@ -1,0 +1,1 @@
+{"text": "EGROUPS also has some other interesting options .", "output": "```json\n[\"B-NEU\", \"O\", \"O\", \"O\", \"O\", \"B-NEU\", \"I-NEU\", \"O\"]\n```", "cost": 0.005005}

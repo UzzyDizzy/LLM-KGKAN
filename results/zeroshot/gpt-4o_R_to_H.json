@@ -1,0 +1,8 @@
+{
+  "model": "gpt-4o",
+  "setting": "zeroshot",
+  "src": "R",
+  "tgt": "H",
+  "macro_f1": 14.21,
+  "timestamp": "2026-05-16 20:22:28"
+}

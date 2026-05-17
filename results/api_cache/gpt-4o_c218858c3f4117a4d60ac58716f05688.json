@@ -1,0 +1,1 @@
+{"text": "I wish Toshiba would allow their customers to select an option that only boots the OS at setup and removes all the unnecessary stuff.", "output": "```json\n[\"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\"]\n```", "cost": 0.0064225}

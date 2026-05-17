@@ -1,0 +1,1 @@
+{"text": "it seems to me that after the focus and metering are complete there is quite a lag before the shutter ?", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEU\", \"O\", \"B-NEU\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\"]\n```", "cost": 0.0067175}

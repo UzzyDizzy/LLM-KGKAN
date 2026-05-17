@@ -1,0 +1,1 @@
+{"text": "good selection of wines ranging from affordable to high end.", "output": "```json\n[\"O\", \"B-POS\", \"I-POS\", \"I-POS\", \"O\", \"O\", \"B-POS\", \"O\", \"B-POS\", \"O\"]\n```", "cost": 0.01695}

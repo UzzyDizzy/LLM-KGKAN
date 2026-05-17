@@ -1,0 +1,1 @@
+{"text": "the menus are very easy to navigate .", "output": "```json\n[\"O\", \"B-POS\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.006265}

@@ -1,0 +1,1 @@
+{"text": "plus, i am allergic to rice, and the waitstaff was unbelievably accomodating -- didn't even bat an eye!", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-POS\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.01771}

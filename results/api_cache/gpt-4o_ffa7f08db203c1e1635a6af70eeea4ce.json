@@ -1,0 +1,1 @@
+{"text": "The Apple engineers have not yet discovered the delete key.", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\"]\n```", "cost": 0.0058725}

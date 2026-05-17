@@ -1,0 +1,1 @@
+{"text": "Basically , their service is quite slow", "output": "```json\n[\"O\", \"O\", \"B-NEG\", \"I-NEG\", \"O\", \"O\", \"O\"]\n```", "cost": 0.006145}

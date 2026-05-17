@@ -1,0 +1,1 @@
+{"text": "so easy to set up , had some problems with my archos .", "output": "```json\n[\"O\", \"B-POS\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"B-NEU\", \"O\"]\n```", "cost": 0.006505}

@@ -1,0 +1,1 @@
+{"text": "And they have these home made potato chips at the bar that are the most delicious things in the world!", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-POS\", \"I-POS\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-POS\", \"I-POS\", \"O\", \"O\", \"O\"]\n```", "cost": 0.0050175}

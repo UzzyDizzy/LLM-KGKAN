@@ -1,0 +1,1 @@
+{"text": "Joya used to be a cool spot with decent food and a colorful - if not relaxed - atmosphere.", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"B-POS\", \"O\", \"O\", \"B-NEU\", \"O\", \"O\", \"O\", \"B-POS\", \"O\", \"O\", \"O\", \"B-POS\", \"O\", \"O\"]\n```", "cost": 0.00512}

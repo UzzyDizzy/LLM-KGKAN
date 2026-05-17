@@ -1,0 +1,1 @@
+{"text": "the shoes i ordered are very nice and comfortable . i would buy again and i will continue to order from finisine", "output": "```json\n[\"O\", \"B-POS\", \"O\", \"O\", \"O\", \"O\", \"B-POS\", \"O\", \"B-POS\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-POS\"]\n```", "cost": 0.00693}

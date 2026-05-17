@@ -1,0 +1,1 @@
+{"text": "so far the software for the pc works easily .", "output": "```json\n[\"O\", \"O\", \"O\", \"B-POS\", \"O\", \"O\", \"O\", \"O\", \"B-POS\", \"O\"]\n```", "cost": 0.00626}

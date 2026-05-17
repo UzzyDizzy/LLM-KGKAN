@@ -1,0 +1,1 @@
+{"text": "Despite the confusing mirrors this will likely be my go-to for modern Japanese food for the foreseeable future.", "output": "```json\n[\"O\", \"O\", \"B-NEG\", \"I-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-POS\", \"O\", \"O\", \"B-POS\", \"I-POS\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.01793}

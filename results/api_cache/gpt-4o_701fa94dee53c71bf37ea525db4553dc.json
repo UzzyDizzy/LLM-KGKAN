@@ -1,0 +1,1 @@
+{"text": "All are GREAT - poori, naan, paratha all FRESH.", "output": "```json\n[\"O\", \"O\", \"B-POS\", \"O\", \"B-POS\", \"I-POS\", \"I-POS\", \"O\", \"B-POS\"]\n```", "cost": 0.004755}

@@ -1,0 +1,1 @@
+{"text": "The staff is very attentive and we can almost always get a table.", "output": "```json\n[\"O\", \"B-POS\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-POS\"]\n```", "cost": 0.01712}

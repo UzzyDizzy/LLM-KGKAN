@@ -1,0 +1,1 @@
+{"text": "My main complaint with UMUC is the disorganization among their administration .", "output": "```json\n[\"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.00511}

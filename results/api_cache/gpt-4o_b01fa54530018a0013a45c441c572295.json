@@ -1,0 +1,1 @@
+{"text": "UOP provides a solid education and forces students to develop a sound understanding of computer technologies .", "output": "```json\n[\"O\", \"O\", \"O\", \"B-POS\", \"I-POS\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-POS\", \"I-POS\", \"O\", \"B-NEU\", \"I-NEU\", \"O\"]\n```", "cost": 0.0053975}

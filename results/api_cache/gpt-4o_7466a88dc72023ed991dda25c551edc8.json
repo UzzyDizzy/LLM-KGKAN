@@ -1,0 +1,1 @@
+{"text": "In other words, if they aren't making $$ off of you then you don't rate high on their 'service scale'.", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"I-NEG\", \"O\", \"O\", \"B-NEG\", \"I-NEG\"]\n```", "cost": 0.0050125}

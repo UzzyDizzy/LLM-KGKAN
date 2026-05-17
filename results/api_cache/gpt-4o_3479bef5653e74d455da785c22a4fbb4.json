@@ -1,0 +1,1 @@
+{"text": "don't see a justifiable cost to get on an early flight with seats. No airline charges to conveniently get their passengers in early", "output": "```json\n[\"O\", \"O\", \"O\", \"B-NEG\", \"I-NEG\", \"O\", \"O\", \"O\", \"O\", \"B-NEU\", \"I-NEU\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEU\", \"O\"]\n```", "cost": 0.00556}

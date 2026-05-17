@@ -1,0 +1,1 @@
+{"text": "The wait staff was loud and inconsiderate.", "output": "```json\n[\"O\", \"O\", \"B-NEG\", \"O\", \"B-NEG\", \"O\", \"I-NEG\"]\n```", "cost": 0.0046425}

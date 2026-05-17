@@ -1,0 +1,1 @@
+{"text": "All the appetizers and salads were fabulous, the steak was mouth watering and the pasta was delicious!!!", "output": "```json\n[\"O\", \"O\", \"B-POS\", \"O\", \"B-POS\", \"O\", \"B-POS\", \"O\", \"B-POS\", \"O\", \"B-POS\", \"I-POS\", \"O\", \"O\", \"B-POS\", \"O\", \"B-POS\"]\n```", "cost": 0.0049975}

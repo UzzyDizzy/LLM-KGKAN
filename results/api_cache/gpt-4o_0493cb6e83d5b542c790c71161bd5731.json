@@ -1,0 +1,1 @@
+{"text": "the service from t-mobile is very good too .", "output": "```json\n[\"O\", \"B-POS\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.0062025}

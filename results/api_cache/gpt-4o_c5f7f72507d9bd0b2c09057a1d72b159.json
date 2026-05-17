@@ -1,0 +1,1 @@
+{"text": "It came in brand new and works perfectly.", "output": "```json\n[\"O\", \"O\", \"O\", \"B-POS\", \"I-POS\", \"O\", \"O\", \"B-POS\"]\n```", "cost": 0.005115}

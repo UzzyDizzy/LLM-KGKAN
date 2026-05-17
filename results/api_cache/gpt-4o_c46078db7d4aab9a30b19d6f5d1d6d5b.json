@@ -1,0 +1,1 @@
+{"text": "It is these additions that put Etrade a notch ahead of the rest of the online trading community .", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-POS\", \"I-POS\", \"I-POS\", \"I-POS\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.006645}

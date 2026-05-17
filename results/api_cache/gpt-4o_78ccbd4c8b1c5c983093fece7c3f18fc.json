@@ -1,0 +1,1 @@
+{"text": "2.The wireless card is low quality.", "output": "```json\n[\"O\", \"B-NEG\", \"I-NEG\", \"O\", \"B-NEG\", \"O\"]\n```", "cost": 0.0050425}

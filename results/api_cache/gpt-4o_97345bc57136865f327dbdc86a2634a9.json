@@ -1,0 +1,1 @@
+{"text": "It was very easy to just pick up and use-- It did not take long to get used to the Mac OS.", "output": "```json\n[\"O\", \"O\", \"O\", \"B-POS\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEU\", \"I-NEU\"]\n```", "cost": 0.00566}

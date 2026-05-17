@@ -1,0 +1,1 @@
+{"text": "Egroups is by far the most popular site for free email-groups , and it's very easy to see why .", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"B-POS\", \"I-POS\", \"O\", \"O\", \"B-POS\", \"I-POS\", \"O\", \"O\", \"O\", \"O\", \"B-POS\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.00597}

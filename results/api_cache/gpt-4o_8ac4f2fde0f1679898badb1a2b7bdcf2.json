@@ -1,0 +1,1 @@
+{"text": "It's just you and your date and an occasional cute \u2018excuse me' before the waiter opens the little curtain to your booth!", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-POS\", \"I-POS\", \"I-POS\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.0052225}

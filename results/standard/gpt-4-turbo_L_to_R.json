@@ -1,0 +1,8 @@
+{
+  "model": "gpt-4-turbo",
+  "setting": "standard",
+  "src": "L",
+  "tgt": "R",
+  "macro_f1": 46.54,
+  "timestamp": "2026-05-16 20:29:43"
+}

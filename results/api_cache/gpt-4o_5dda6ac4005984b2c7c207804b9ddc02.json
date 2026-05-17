@@ -1,0 +1,1 @@
+{"text": "they are nice , but they run small . 1 / 2 - 1 size small .", "output": "```json\n[\"O\", \"O\", \"B-POS\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.0050825}

@@ -1,0 +1,1 @@
+{"text": "i assumed they had exceptional service , but their reception in my area ( los angeles ) is horrendous .", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"B-POS\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\"]\n```", "cost": 0.0067625}

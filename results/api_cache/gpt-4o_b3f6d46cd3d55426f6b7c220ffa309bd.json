@@ -1,0 +1,1 @@
+{"text": "This place is really trendi but they have forgotten about the most important part of a restaurant, the food.", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"B-POS\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\"]\n```", "cost": 0.006095}

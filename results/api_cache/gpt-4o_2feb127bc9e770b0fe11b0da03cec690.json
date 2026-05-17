@@ -1,0 +1,1 @@
+{"text": "UMUC seems to have disregarded this information , took the $2 million , and turned the other way .", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.005875}

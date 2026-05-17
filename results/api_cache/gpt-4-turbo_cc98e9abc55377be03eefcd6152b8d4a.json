@@ -1,0 +1,1 @@
+{"text": "I had been a regular due to the consistently good food and ease of getting a table.", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-POS\", \"I-POS\", \"O\", \"B-POS\", \"I-POS\", \"I-POS\", \"O\", \"O\"]\n```", "cost": 0.01778}

@@ -1,0 +1,1 @@
+{"text": "Ok thank you, do you provide complimentary hotel accommodations since I'll have to stay overnight?", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-POS\", \"I-POS\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.0062225}

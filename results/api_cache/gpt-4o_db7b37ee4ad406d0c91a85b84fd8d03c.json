@@ -1,0 +1,1 @@
+{"text": "The material is challenging and learning environment is unique .", "output": "```json\n[\"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"B-POS\", \"I-POS\", \"O\", \"B-POS\", \"O\"]\n```", "cost": 0.0050675}

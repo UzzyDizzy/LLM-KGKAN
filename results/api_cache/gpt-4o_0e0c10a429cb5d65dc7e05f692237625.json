@@ -1,0 +1,1 @@
+{"text": "every time nomad thinks the file is corrupt the os freezes .", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.0063225}

@@ -1,0 +1,1 @@
+{"text": "one beef is the scroll , it does n't work as well as i 'd like .", "output": "```json\n[\"O\", \"B-NEG\", \"O\", \"O\", \"B-NEU\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.0066325}

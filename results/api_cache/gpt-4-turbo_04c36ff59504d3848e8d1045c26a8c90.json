@@ -1,0 +1,1 @@
+{"text": "\u2013 I recently had the pleasure of dining as this delightful restaurant on 2nd street and wow what a great evening we had.", "output": "```json\n[\n    \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-POS\", \"I-POS\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-POS\", \"I-POS\", \"O\", \"O\"\n]\n```", "cost": 0.01861}

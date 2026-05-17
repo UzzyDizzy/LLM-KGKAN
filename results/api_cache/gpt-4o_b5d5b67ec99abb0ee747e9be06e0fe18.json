@@ -1,0 +1,1 @@
+{"text": "do you have an application for iOS? Was looking and only saw Virgin Mexico :( &lt;/3", "output": "```json\n[\"O\", \"O\", \"O\", \"B-NEU\", \"O\", \"O\", \"B-NEU\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEU\", \"I-NEU\", \"O\", \"O\"]\n```", "cost": 0.0052775}

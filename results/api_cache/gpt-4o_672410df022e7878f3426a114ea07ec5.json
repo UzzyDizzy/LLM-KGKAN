@@ -1,0 +1,1 @@
+{"text": "Eventually my battery wouldn't charge, so unless I had it plugged in it wouldn't even power on.", "output": "```json\n[\"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.0054175}

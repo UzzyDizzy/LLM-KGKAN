@@ -1,0 +1,1 @@
+{"text": "NOT so smart water - beach clean up", "output": "```json\n[\"O\", \"O\", \"B-NEG\", \"I-NEG\", \"O\", \"B-POS\", \"I-POS\", \"O\"]\n```", "cost": 0.00435}

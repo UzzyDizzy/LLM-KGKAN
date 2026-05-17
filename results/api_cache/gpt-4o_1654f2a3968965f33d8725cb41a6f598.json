@@ -1,0 +1,1 @@
+{"text": "Another included program that is laughable is the chess game.", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"B-NEU\", \"I-NEU\"]\n```", "cost": 0.0052125}

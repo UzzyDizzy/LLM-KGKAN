@@ -1,0 +1,1 @@
+{"text": "The chicken and steak were seasoned and cooked to perfection, and the lamb sandwhich is great for heartier appetites.", "output": "```json\n[\"O\", \"B-POS\", \"O\", \"B-POS\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-POS\", \"O\", \"O\", \"B-POS\", \"I-POS\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.00515}

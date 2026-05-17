@@ -1,0 +1,1 @@
+{"text": "The professors were excellent as well the financial aid office .", "output": "```json\n[\"O\", \"B-POS\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEU\", \"I-NEU\", \"I-NEU\", \"O\"]\n```", "cost": 0.00637}

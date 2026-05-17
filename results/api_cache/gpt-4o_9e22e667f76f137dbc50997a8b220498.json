@@ -1,0 +1,1 @@
+{"text": "The laptop is outstanding in all aspects except that it has the Windows 7 starter and not the full Windows 7.", "output": "```json\n[\"O\", \"O\", \"O\", \"B-POS\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEU\", \"I-NEU\", \"I-NEU\", \"O\", \"O\", \"O\", \"O\", \"B-NEU\", \"I-NEU\"]\n```", "cost": 0.0057175}

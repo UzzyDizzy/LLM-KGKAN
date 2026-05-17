@@ -1,0 +1,1 @@
+{"text": "one downside : as of this writing , t-mobile has n't updated their t-zone system to fully support the 6610 .", "output": "```json\n[\"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"I-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.006715}

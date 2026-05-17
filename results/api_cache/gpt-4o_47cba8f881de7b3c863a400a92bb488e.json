@@ -1,0 +1,1 @@
+{"text": "I bought it from HSN because it was \"bundled\" with extra software, but as it turns out, that software just crashes it more often.....", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"I-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.0064475}

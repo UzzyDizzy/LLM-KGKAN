@@ -1,0 +1,1 @@
+{"text": "Debbie Baldwin gave a rockstar performance of the safety demo this evening on VX919 LAS2SFO BestCrew SheRocks", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"B-POS\", \"I-POS\", \"O\", \"O\", \"B-NEU\", \"I-NEU\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.0063775}

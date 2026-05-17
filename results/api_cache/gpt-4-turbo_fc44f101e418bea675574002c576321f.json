@@ -1,0 +1,1 @@
+{"text": "people are rude bit again it's new york!", "output": "```json\n[\"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"B-NEU\", \"O\"]\n```", "cost": 0.01657}

@@ -1,0 +1,1 @@
+{"text": "The food is terrible and overall, I would have to say avoid at all costs.", "output": "```json\n[\"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\"]\n```", "cost": 0.005945}

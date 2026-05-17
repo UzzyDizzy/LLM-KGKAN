@@ -1,0 +1,1 @@
+{"text": "The recent merger of eGroups and ONElist has created a much better service than was available before .", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-POS\", \"I-POS\", \"I-POS\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.0058575}

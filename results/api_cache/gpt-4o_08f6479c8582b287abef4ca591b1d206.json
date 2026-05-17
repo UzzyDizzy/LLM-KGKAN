@@ -1,0 +1,1 @@
+{"text": "i highly recommend this phone to anyone .", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"B-POS\", \"O\", \"O\", \"O\"]\n```", "cost": 0.0061675}

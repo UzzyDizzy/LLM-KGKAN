@@ -1,0 +1,1 @@
+{"text": "I tend to judge a sushi restaurant by its sea urchin, which was heavenly at sushi rose.", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEU\", \"I-NEU\", \"O\", \"O\", \"B-POS\", \"I-POS\", \"O\", \"O\", \"O\", \"O\", \"B-NEU\", \"I-NEU\"]\n```", "cost": 0.005125}

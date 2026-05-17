@@ -1,0 +1,1 @@
+{"text": "Their customer service is quick to answer the phone and very knowledgeable .", "output": "```json\n[\"O\", \"B-POS\", \"I-POS\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.0063725}

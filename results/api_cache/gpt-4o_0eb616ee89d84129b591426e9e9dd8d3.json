@@ -1,0 +1,1 @@
+{"text": "i wear an 81 / 2 . your size 81 / 2 is too small for my foot .", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.00674}

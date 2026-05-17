@@ -1,0 +1,8 @@
+{
+  "model": "bert_uda",
+  "setting": "fewshot",
+  "src": "D",
+  "tgt": "SH",
+  "macro_f1": 30.14,
+  "timestamp": "2026-05-16 18:43:27"
+}

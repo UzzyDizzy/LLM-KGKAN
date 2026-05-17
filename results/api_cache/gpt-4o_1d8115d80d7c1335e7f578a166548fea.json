@@ -1,0 +1,1 @@
+{"text": "Did not enjoy the new Windows 8 and touchscreen functions.", "output": "```json\n[\"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"B-NEG\", \"I-NEG\", \"O\", \"B-NEG\", \"I-NEG\"]\n```", "cost": 0.0059525}

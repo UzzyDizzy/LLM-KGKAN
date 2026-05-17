@@ -1,0 +1,1 @@
+{"text": "The Chicago/Schaumburg classes are great !", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"B-POS\", \"O\"]\n```", "cost": 0.00537}

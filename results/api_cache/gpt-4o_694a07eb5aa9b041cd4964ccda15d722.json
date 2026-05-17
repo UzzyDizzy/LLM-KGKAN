@@ -1,0 +1,1 @@
+{"text": "\u2013 Great drinks , corn beef hash, coffee, B Fast burritos, Gluten Free menu.", "output": "```json\n[\"O\", \"B-POS\", \"O\", \"B-POS\", \"I-POS\", \"I-POS\", \"I-POS\", \"B-POS\", \"B-POS\", \"I-POS\", \"I-POS\", \"B-POS\", \"I-POS\", \"I-POS\"]\n```", "cost": 0.00612}

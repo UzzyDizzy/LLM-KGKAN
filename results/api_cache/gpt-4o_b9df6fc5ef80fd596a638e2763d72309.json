@@ -1,0 +1,1 @@
+{"text": "It has so much more speed and the screen is very sharp.", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"B-POS\", \"O\", \"O\", \"B-POS\", \"O\", \"O\", \"B-POS\"]\n```", "cost": 0.0052625}

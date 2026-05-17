@@ -1,0 +1,1 @@
+{"text": "If you ask me, for this price it should be included.", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\"]\n```", "cost": 0.005905}

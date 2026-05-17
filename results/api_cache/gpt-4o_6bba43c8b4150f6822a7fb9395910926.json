@@ -1,0 +1,1 @@
+{"text": "There was no ambiance.", "output": "```json\n[\"O\", \"O\", \"B-NEG\", \"O\"]\n```", "cost": 0.0043525}

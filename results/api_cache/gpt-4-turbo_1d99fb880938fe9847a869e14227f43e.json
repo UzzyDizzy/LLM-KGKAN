@@ -1,0 +1,1 @@
+{"text": "limited menu, no-so-fresh ingredients, thinly-sliced fish, fall-apart rice.", "output": "```json\n[\"B-NEG\", \"I-NEG\", \"B-NEG\", \"I-NEG\", \"B-NEG\", \"I-NEG\", \"B-NEG\", \"I-NEG\"]\n```", "cost": 0.01694}

@@ -1,0 +1,1 @@
+{"text": "The chips and salsa are so yummy, and the prices are fabulous.", "output": "```json\n[\"O\", \"B-POS\", \"O\", \"B-POS\", \"O\", \"O\", \"B-POS\", \"O\", \"O\", \"B-POS\", \"O\", \"B-POS\"]\n```", "cost": 0.0047375}

@@ -1,0 +1,1 @@
+{"text": "the all-u-can-eat sushi is definitely in very poor quality.", "output": "```json\n[\"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"I-NEG\"]\n```", "cost": 0.0045925}

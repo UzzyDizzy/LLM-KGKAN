@@ -1,0 +1,1 @@
+{"text": "iPhotos is an excellent program for storing and organizing photos.", "output": "```json\n[\"O\", \"O\", \"O\", \"B-POS\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.005155}

@@ -1,0 +1,1 @@
+{"text": "I had a nightmare with Capella University .", "output": "```json\n[\"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"B-NEU\", \"I-NEU\", \"O\"]\n```", "cost": 0.004995}

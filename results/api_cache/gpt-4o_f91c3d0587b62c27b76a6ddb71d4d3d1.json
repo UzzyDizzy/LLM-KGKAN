@@ -1,0 +1,1 @@
+{"text": "It is easy to use, its keyboard easily accommodates large hands, and its weight is fantasic.", "output": "```json\n[\"O\", \"O\", \"B-POS\", \"O\", \"O\", \"O\", \"B-POS\", \"O\", \"O\", \"B-POS\", \"I-POS\", \"O\", \"O\", \"B-POS\", \"O\", \"B-POS\"]\n```", "cost": 0.0054825}

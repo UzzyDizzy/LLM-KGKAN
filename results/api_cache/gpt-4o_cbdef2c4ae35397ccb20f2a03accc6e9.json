@@ -1,0 +1,1 @@
+{"text": "I found system performance good before and after .", "output": "```json\n[\"O\", \"O\", \"B-POS\", \"I-POS\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.00622}

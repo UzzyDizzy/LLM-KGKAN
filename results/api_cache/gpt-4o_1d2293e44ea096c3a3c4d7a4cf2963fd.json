@@ -1,0 +1,1 @@
+{"text": "I am currently a student at UoP , and for every post on here there are some truth to them .", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEU\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.0066625}

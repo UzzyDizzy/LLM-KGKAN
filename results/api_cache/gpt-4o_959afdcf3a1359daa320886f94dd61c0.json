@@ -1,0 +1,1 @@
+{"text": "I have no idea how to burn cd's or to use the web cam, just for starters.", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEU\", \"O\", \"O\", \"O\", \"O\", \"B-NEU\", \"I-NEU\", \"O\", \"O\", \"O\"]\n```", "cost": 0.005485}

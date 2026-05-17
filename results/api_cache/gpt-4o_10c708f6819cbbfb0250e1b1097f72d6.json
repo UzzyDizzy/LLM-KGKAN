@@ -1,0 +1,1 @@
+{"text": "first and foremost , it will take better pic 's than most film camera 's .", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-POS\", \"I-POS\", \"I-POS\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.0065025}

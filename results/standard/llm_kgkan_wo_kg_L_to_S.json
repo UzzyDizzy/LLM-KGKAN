@@ -1,0 +1,8 @@
+{
+  "model": "llm_kgkan_wo_kg",
+  "setting": "standard",
+  "src": "L",
+  "tgt": "S",
+  "macro_f1": 30.44,
+  "timestamp": "2026-05-16 20:12:16"
+}

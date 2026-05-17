@@ -1,0 +1,1 @@
+{"text": "i send my camera to nikon for servicing , took them a whole 6 weeks to diagnose the problem .", "output": "```json\n[\"O\", \"O\", \"O\", \"B-NEU\", \"O\", \"B-NEU\", \"O\", \"B-NEU\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEU\", \"I-NEU\", \"O\", \"O\", \"O\", \"B-NEU\", \"O\"]\n```", "cost": 0.0068825}

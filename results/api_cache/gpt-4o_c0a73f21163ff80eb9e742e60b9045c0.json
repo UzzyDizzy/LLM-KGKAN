@@ -1,0 +1,1 @@
+{"text": "The keyboard has a wonderful nature feel.", "output": "```json\n[\"O\", \"B-POS\", \"O\", \"O\", \"B-POS\", \"I-POS\", \"I-POS\"]\n```", "cost": 0.0050975}

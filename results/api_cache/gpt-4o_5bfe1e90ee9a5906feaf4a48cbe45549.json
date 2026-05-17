@@ -1,0 +1,1 @@
+{"text": "i did not managed to make creative nomad explorer to work .", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"I-NEG\", \"I-NEG\", \"O\", \"O\", \"O\"]\n```", "cost": 0.0063575}

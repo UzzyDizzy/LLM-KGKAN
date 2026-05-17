@@ -1,0 +1,1 @@
+{"text": "There was a really nice vibe about the place...good music, atmosphere and happy looking people.", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"B-POS\", \"I-POS\", \"O\", \"O\", \"O\", \"B-POS\", \"O\", \"B-POS\", \"O\", \"B-POS\", \"O\"]\n```", "cost": 0.0060125}

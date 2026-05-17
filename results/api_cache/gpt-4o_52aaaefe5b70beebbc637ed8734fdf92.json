@@ -1,0 +1,1 @@
+{"text": "It's boring on the inside, and our sushi was pretty below average... the tuna was soggy and the other rolls had no flavor.", "output": "```json\n[\"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\"]\n```", "cost": 0.0063175}

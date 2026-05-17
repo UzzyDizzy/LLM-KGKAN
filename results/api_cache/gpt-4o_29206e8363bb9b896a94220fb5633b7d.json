@@ -1,0 +1,1 @@
+{"text": "Vanison was good but not amazing.", "output": "```json\n[\"O\", \"O\", \"B-POS\", \"O\", \"O\", \"B-NEG\"]\n```", "cost": 0.0045825}

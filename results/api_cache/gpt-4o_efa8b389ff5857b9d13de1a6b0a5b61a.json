@@ -1,0 +1,1 @@
+{"text": "the battery life is ok , but can be somewhat short when working a lot with the monitor on .", "output": "```json\n[\"O\", \"B-NEU\", \"I-NEU\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEU\", \"O\", \"O\"]\n```", "cost": 0.006805}

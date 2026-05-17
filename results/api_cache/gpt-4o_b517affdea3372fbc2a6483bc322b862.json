@@ -1,0 +1,1 @@
+{"text": "Then I've fixed the DC jack (inside the unit), rewired the DC jack to the OUTside of the laptop, replaced the power brick.", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"B-NEU\", \"I-NEU\", \"O\", \"O\", \"O\", \"O\", \"B-NEU\", \"I-NEU\", \"O\", \"O\", \"B-NEU\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEU\", \"I-NEU\", \"O\"]\n```", "cost": 0.0065575}

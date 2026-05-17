@@ -1,0 +1,1 @@
+{"text": "I care more about the food and ambience.", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"B-NEU\", \"O\", \"B-NEU\", \"O\"]\n```", "cost": 0.0045425}

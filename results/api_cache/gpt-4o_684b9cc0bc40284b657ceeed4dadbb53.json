@@ -1,0 +1,1 @@
+{"text": "It's fast, it's easy easy easy to set up, easy to hook to my wireless network.", "output": "```json\n[\"O\", \"B-POS\", \"O\", \"B-POS\", \"I-POS\", \"I-POS\", \"O\", \"O\", \"O\", \"B-POS\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.006175}

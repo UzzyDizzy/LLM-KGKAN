@@ -1,0 +1,1 @@
+{"text": "As colleges go , sorry UMUC just doesn't rate very well .", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.0063175}

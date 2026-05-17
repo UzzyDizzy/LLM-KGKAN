@@ -1,0 +1,1 @@
+{"text": "Do not attend this school if you havent already enrolled .", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.005555}

@@ -1,0 +1,1 @@
+{"text": "My son and his girlfriend both wanted cheeseburgers and they were huge!", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-POS\", \"O\", \"O\", \"O\", \"B-POS\"]\n```", "cost": 0.01703}

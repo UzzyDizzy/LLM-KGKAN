@@ -1,0 +1,1 @@
+{"text": "you will match my AmericanAirlines status? Cool!", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"B-NEU\", \"O\", \"B-POS\"]\n```", "cost": 0.00539}

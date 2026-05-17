@@ -1,0 +1,1 @@
+{"text": "The iLife software that comes with the computer is so simple to use and produces a great finished product.", "output": "```json\n[\"O\", \"B-POS\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-POS\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-POS\", \"I-POS\", \"I-POS\"]\n```", "cost": 0.00629}

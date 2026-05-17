@@ -1,0 +1,1 @@
+{"text": "The bagels are also reasonably priced for NYC.", "output": "```json\n[\"O\", \"B-POS\", \"O\", \"O\", \"O\", \"B-POS\", \"O\", \"B-NEU\"]\n```", "cost": 0.01663}

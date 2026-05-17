@@ -1,0 +1,1 @@
+{"text": "software is easy to use ( although redhat software is better , but costs money )", "output": "```json\n[\"B-POS\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-POS\", \"I-POS\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.0065025}

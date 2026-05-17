@@ -1,0 +1,1 @@
+{"text": "I had to install Mountain Lion and it took a good two hours.", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"B-NEU\", \"I-NEU\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEU\", \"I-NEU\"]\n```", "cost": 0.0053625}

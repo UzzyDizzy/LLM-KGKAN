@@ -1,0 +1,1 @@
+{"text": ": I don't care that a link showed me a \"wrong\" price on your site\u2014it's your site and responsibility to ensure correctness.", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"B-NEG\"]\n```", "cost": 0.0051}

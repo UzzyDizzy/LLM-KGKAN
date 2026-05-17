@@ -1,0 +1,1 @@
+{"text": "typically , the problem is the headphone jack -- it was for me and many others .", "output": "```json\n[\"O\", \"O\", \"O\", \"B-NEU\", \"O\", \"O\", \"B-NEU\", \"I-NEU\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.00667}

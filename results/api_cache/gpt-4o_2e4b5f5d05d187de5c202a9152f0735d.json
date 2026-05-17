@@ -1,0 +1,1 @@
+{"text": "While I like the idea of this feature it has it's faults .", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"B-POS\", \"O\", \"O\", \"B-NEU\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\"]\n```", "cost": 0.00517}

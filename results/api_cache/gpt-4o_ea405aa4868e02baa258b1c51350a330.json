@@ -1,0 +1,1 @@
+{"text": "the music plays awesome , never skips , even if u run for a bit , so you can listen to music without interruption .", "output": "```json\n[\"O\", \"B-POS\", \"O\", \"B-POS\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-POS\", \"O\", \"B-POS\", \"O\"]\n```", "cost": 0.00696}

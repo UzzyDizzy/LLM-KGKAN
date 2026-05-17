@@ -1,0 +1,1 @@
+{"text": "The drawbacks of the school is the poor customer service and relaxed admissions standards .", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"I-NEG\", \"I-NEG\", \"O\", \"B-NEG\", \"I-NEG\", \"I-NEG\", \"O\"]\n```", "cost": 0.0058075}

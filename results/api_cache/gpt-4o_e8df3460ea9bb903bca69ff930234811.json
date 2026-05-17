@@ -1,0 +1,1 @@
+{"text": "love this shoe . it ' s one of my all - time favorite classic shoes .", "output": "```json\n[\"O\", \"O\", \"B-POS\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-POS\", \"I-POS\", \"O\"]\n```", "cost": 0.0051075}

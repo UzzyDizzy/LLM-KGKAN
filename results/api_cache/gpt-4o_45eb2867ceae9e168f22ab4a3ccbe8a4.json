@@ -1,0 +1,1 @@
+{"text": "After a little more than a year of owning my MacBook Pro, the monitor has completely died.", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"I-NEG\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\"]\n```", "cost": 0.00618}

@@ -1,0 +1,1 @@
+{"text": "kudos for not Cancelled Flightling flights from DFW this morning. United usually first to panic...", "output": "```json\n[\"O\", \"O\", \"O\", \"B-NEG\", \"I-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.004795}

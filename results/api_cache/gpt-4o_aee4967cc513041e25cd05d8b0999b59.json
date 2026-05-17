@@ -1,0 +1,1 @@
+{"text": "We've never had any problems with the staff but maybe we've been lucky?", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"B-NEU\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.00486}

@@ -1,0 +1,1 @@
+{"text": "The makhani was OK --the korma was bland.", "output": "```json\n[\"O\", \"B-NEU\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"O\"]\n```", "cost": 0.01658}

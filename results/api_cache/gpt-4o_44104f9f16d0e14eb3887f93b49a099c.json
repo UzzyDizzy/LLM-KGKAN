@@ -1,0 +1,1 @@
+{"text": "I felt comfortable with the measures they were taking to protect my lists , even though I still didn't like the idea of Yahoo !", "output": "```json\n[\"O\", \"O\", \"B-POS\", \"O\", \"O\", \"B-NEU\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEU\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\"]\n```", "cost": 0.00565}

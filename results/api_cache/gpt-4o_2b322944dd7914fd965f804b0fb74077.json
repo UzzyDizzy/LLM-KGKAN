@@ -1,0 +1,1 @@
+{"text": "Flight UA1270 is descending into farce and we haven't left EWR yet. Is this going to get any worse?", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.0063575}

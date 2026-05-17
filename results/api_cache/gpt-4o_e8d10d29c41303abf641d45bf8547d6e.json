@@ -1,0 +1,1 @@
+{"text": "previous laptops were pc's, still have them, but the mac osx is a clean and smooth operating system.", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-POS\", \"I-POS\", \"O\", \"O\", \"B-POS\", \"O\", \"B-POS\", \"B-POS\", \"I-POS\"]\n```", "cost": 0.0055575}

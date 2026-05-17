@@ -1,0 +1,1 @@
+{"text": "They have wheat crusted pizza made with really fresh and yummy ingredients.", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"B-POS\", \"I-POS\", \"O\", \"B-POS\", \"O\"]\n```", "cost": 0.00483}

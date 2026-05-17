@@ -1,0 +1,1 @@
+{"text": "We started with the scallops and asparagus and also had the soft shell crab as well as the cheese plate.", "output": "```json\n[\"O\", \"O\", \"O\", \"O\", \"B-NEU\", \"O\", \"B-NEU\", \"O\", \"O\", \"O\", \"O\", \"B-NEU\", \"I-NEU\", \"I-NEU\", \"O\", \"O\", \"O\", \"O\", \"B-NEU\", \"I-NEU\"]\n```", "cost": 0.0185}

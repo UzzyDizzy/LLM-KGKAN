@@ -1,0 +1,1 @@
+{"text": "Mostly I love the drag and drop feature.", "output": "```json\n[\"O\", \"O\", \"B-POS\", \"O\", \"B-POS\", \"I-POS\", \"I-POS\", \"O\"]\n```", "cost": 0.0058525}

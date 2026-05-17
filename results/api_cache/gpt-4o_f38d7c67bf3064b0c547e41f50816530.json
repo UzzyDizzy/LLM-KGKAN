@@ -1,0 +1,1 @@
+{"text": "software - the software is crap .", "output": "```json\n[\"O\", \"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\"]\n```", "cost": 0.0061225}

@@ -1,0 +1,1 @@
+{"text": "Also a little more expensive than your average bagel place.", "output": "```json\n[\"O\", \"O\", \"B-NEG\", \"I-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.0046}

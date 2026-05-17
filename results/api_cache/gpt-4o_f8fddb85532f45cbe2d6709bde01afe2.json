@@ -1,0 +1,1 @@
+{"text": "It's so bad that I'm thinking I only got half a battery or something.", "output": "```json\n[\"O\", \"O\", \"B-NEG\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\", \"O\"]\n```", "cost": 0.0052975}
