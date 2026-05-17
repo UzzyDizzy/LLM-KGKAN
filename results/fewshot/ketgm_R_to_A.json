@@ -1,0 +1,8 @@
+{
+  "model": "ketgm",
+  "setting": "fewshot",
+  "src": "R",
+  "tgt": "A",
+  "macro_f1": 25.84,
+  "timestamp": "2026-05-17 02:08:48"
+}
